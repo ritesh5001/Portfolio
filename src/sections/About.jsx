@@ -58,49 +58,54 @@ const About = () => {
     <section id="about" className="min-h-screen bg-black rounded-b-4xl">
       <AnimatedHeaderSection
         subTitle={"Professional Experience, Education & Achievements"}
-        title={"About Me"}
+        title={"About"}
         text={text}
         textColor={"text-white"}
         withScrollTrigger={true}
       />
       <div className="px-1 sm:px-1 md:px-3 lg:px-6 pb-16 ultra-small-screen">
-        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] items-start">
-          <article className="rounded-3xl border border-white/20 bg-white/[0.03] p-4 md:p-6 shadow-2xl shadow-black/20">
-            <img
-              ref={imgRef}
-              src={contactInfo.profileImage}
-              alt={contactInfo.name}
-              className="w-full rounded-2xl object-cover"
-            />
-            <div className="mt-4 flex flex-wrap gap-3 text-xs md:text-sm uppercase tracking-[0.35em] text-white/60">
-              <span className="rounded-full border border-white/15 px-3 py-2">Software Engineer</span>
-              <span className="rounded-full border border-white/15 px-3 py-2">Full Stack</span>
-              <span className="rounded-full border border-white/15 px-3 py-2">AI Systems</span>
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[360px_1fr] items-start">
+          <article className="rounded-3xl border border-white/20 bg-white/[0.02] p-4 md:p-5 shadow-xl shadow-black/20 lg:sticky lg:top-24">
+            <div className="overflow-hidden rounded-2xl border border-white/10">
+              <img
+                ref={imgRef}
+                src={contactInfo.profileImage}
+                alt={contactInfo.name}
+                className="h-[500px] w-full object-cover object-top"
+              />
+            </div>
+            <div className="mt-5 space-y-1">
+              <h3 className="text-white text-2xl md:text-3xl">{contactInfo.name}</h3>
+              <p className="text-white/70 text-base md:text-lg">{contactInfo.title}</p>
+              <p className="text-white/55 text-sm md:text-base">{contactInfo.location}</p>
             </div>
           </article>
 
-          <article className="rounded-3xl border border-white/20 bg-white/[0.03] p-5 md:p-7 lg:p-8 text-white">
-            <div className="space-y-4">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-3 text-white/70 text-sm uppercase tracking-[0.4em]">
-                  <Icon icon="lucide:user-circle-2" className="text-gold" />
-                  <span>{contactInfo.name}</span>
-                </div>
+          <article className="rounded-3xl border border-white/20 bg-white/[0.02] p-6 md:p-7 lg:p-8 text-white">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <p className="text-xs md:text-sm uppercase tracking-[0.32em] text-white/50">Professional Summary</p>
                 <h3 className="text-3xl md:text-4xl lg:text-5xl leading-tight text-white">
-                  Building products that ship cleanly and scale confidently.
+                  Building reliable products with strong engineering fundamentals.
                 </h3>
               </div>
-              <AnimatedTextLines text={aboutText} className={"w-full text-white/70 text-lg md:text-xl lg:text-2xl leading-relaxed"} />
-              <div className="grid gap-4 sm:grid-cols-3">
+
+              <AnimatedTextLines
+                text={aboutText}
+                className={"w-full text-white/72 text-lg md:text-xl lg:text-2xl leading-relaxed"}
+              />
+
+              <div className="grid gap-4 sm:grid-cols-3 pt-2">
                 {highlights.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-white/15 bg-black/20 p-4">
+                  <div key={item.label} className="rounded-2xl border border-white/15 bg-black/25 p-4 md:p-5">
                     <div className="text-3xl md:text-4xl font-semibold text-white">{item.value}</div>
-                    <div className="mt-2 text-sm uppercase tracking-[0.25em] text-white/55">{item.label}</div>
+                    <div className="mt-1 text-xs md:text-sm uppercase tracking-[0.22em] text-white/55">{item.label}</div>
                   </div>
                 ))}
               </div>
-              <div className="grid gap-3 md:grid-cols-2 pt-2">
-                <div className="space-y-2 rounded-2xl border border-white/15 bg-black/20 p-4">
+
+              <div className="grid gap-4 md:grid-cols-2 pt-1">
+                <div className="space-y-2 rounded-2xl border border-white/15 bg-black/25 p-5">
                   <div className="flex items-center gap-2 text-white/90">
                     <Icon icon="lucide:briefcase-business" className="text-gold" />
                     <span className="uppercase tracking-[0.25em] text-sm">Current Focus</span>
@@ -111,7 +116,7 @@ const About = () => {
                     ))}
                   </ul>
                 </div>
-                <div className="space-y-2 rounded-2xl border border-white/15 bg-black/20 p-4">
+                <div className="space-y-2 rounded-2xl border border-white/15 bg-black/25 p-5">
                   <div className="flex items-center gap-2 text-white/90">
                     <Icon icon="lucide:map-pin" className="text-gold" />
                     <span className="uppercase tracking-[0.25em] text-sm">Based In</span>
