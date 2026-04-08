@@ -200,7 +200,7 @@ export const projects = [
 export const socials = [
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/ritesh-kumar-giri",
+    href: "https://linkedin.com/in/ritesh5001",
   },
   {
     name: "GitHub",
