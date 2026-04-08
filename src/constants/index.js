@@ -4,6 +4,7 @@ export const contactInfo = {
   location: "Lucknow, India",
   phone: "+91-7007436164",
   email: "rgiri5001@gmail.com",
+  profileImage: "/images/pfp.png",
 };
 
 export const servicesData = [
