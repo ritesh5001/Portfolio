@@ -3,11 +3,15 @@ import { contactInfo, socials } from "../constants";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Link } from "react-scroll";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const navRef = useRef(null);
   const linksRef = useRef([]);
   const contactRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const topLineRef = useRef(null);
   const bottomLineRef = useRef(null);
   const tl = useRef(null);
@@ -114,20 +118,38 @@ const Navbar = () => {
         <div className="flex flex-col text-5xl gap-y-2 md:text-6xl lg:text-8xl">
           {navLinks.map((section, index) => (
               <div key={index} ref={(el) => (linksRef.current[index] = el)}>
-                <Link
-                  className="transition-all duration-300 cursor-pointer hover:text-white"
-                  to={section.id}
-                  smooth
-                  offset={0}
-                  duration={2000}
-                  onClick={() => {
-                    tl.current.reverse();
-                    iconTl.current.reverse();
-                    setIsOpen(false);
-                  }}
-                >
-                  {section.label}
-                </Link>
+                {isHomePage ? (
+                  <Link
+                    className="transition-all duration-300 cursor-pointer hover:text-white"
+                    to={section.id}
+                    smooth
+                    offset={0}
+                    duration={2000}
+                    onClick={() => {
+                      tl.current.reverse();
+                      iconTl.current.reverse();
+                      setIsOpen(false);
+                    }}
+                  >
+                    {section.label}
+                  </Link>
+                ) : (
+                  <span
+                    className="transition-all duration-300 cursor-pointer hover:text-white"
+                    onClick={() => {
+                      tl.current.reverse();
+                      iconTl.current.reverse();
+                      setIsOpen(false);
+                      navigate(`/#${section.id}`);
+                      setTimeout(() => {
+                        const el = document.getElementById(section.id);
+                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
+                    }}
+                  >
+                    {section.label}
+                  </span>
+                )}
               </div>
             ))}
         </div>

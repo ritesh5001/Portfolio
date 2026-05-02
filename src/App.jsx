@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import ServiceSummary from "./sections/ServiceSummary";
@@ -9,8 +10,9 @@ import Works from "./sections/Works";
 import ContactSummary from "./sections/ContactSummary";
 import Contact from "./sections/Contact";
 import { useProgress } from "@react-three/drei";
+import ProjectPage from "./pages/ProjectPage";
 
-const App = () => {
+const HomePage = () => {
   const { progress } = useProgress();
   const [isReady, setIsReady] = useState(false);
 
@@ -50,6 +52,17 @@ const App = () => {
         <Contact />
       </div>
     </ReactLenis>
+  );
+};
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects/:slug" element={<ProjectPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
