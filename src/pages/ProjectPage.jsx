@@ -4,6 +4,8 @@ import { clientProjects } from "../constants";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import SEO from "../components/SEO";
+import { buildProjectSeo } from "../lib/seo";
 
 const ProjectPage = () => {
   const { slug } = useParams();
@@ -46,9 +48,11 @@ const ProjectPage = () => {
 
   const prevImage = () => setActiveImage((i) => (i - 1 + project.images.length) % project.images.length);
   const nextImage = () => setActiveImage((i) => (i + 1) % project.images.length);
+  const projectSeo = buildProjectSeo(project);
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <SEO {...projectSeo} />
       {/* Sticky nav bar */}
       <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-5 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/[0.06]">
         <button

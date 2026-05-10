@@ -11,6 +11,8 @@ import ContactSummary from "./sections/ContactSummary";
 import Contact from "./sections/Contact";
 import { useProgress } from "@react-three/drei";
 import ProjectPage from "./pages/ProjectPage";
+import SEO from "./components/SEO";
+import { homeJsonLd, homeSeo } from "./lib/seo";
 
 const HomePage = () => {
   const { progress } = useProgress();
@@ -24,6 +26,7 @@ const HomePage = () => {
 
   return (
     <ReactLenis root className="relative w-screen min-h-screen overflow-x-hidden">
+      <SEO {...homeSeo} jsonLd={homeJsonLd} />
       {!isReady && (
         <div className="fixed inset-0 z-[999] flex flex-col items-center justify-center bg-black text-white transition-opacity duration-700 font-light">
           <p className="mb-4 text-xl tracking-widest animate-pulse">

@@ -7,17 +7,18 @@ import { contactInfo } from "../constants";
 
 const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 853 });
-  const text = `Software Engineer building scalable full-stack products,
-real-time systems, and AI-powered experiences
-from idea to production.`;
+  const text = `${contactInfo.name} builds React, Next.js, Node.js,
+WordPress, WooCommerce, and AI-powered products
+for clients in India and worldwide.`;
 
   return (
     <section id="home" className="flex flex-col justify-end min-h-screen">
       <AnimatedHeaderSection
-        subTitle={`${contactInfo.title} | Full Stack Developer`}
-        title={contactInfo.name}
+        subTitle={`${contactInfo.name} | ${contactInfo.title}`}
+        title={"Freelance Full-Stack Developer"}
         text={text}
         textColor={"text-black"}
+        headingTag="h1"
       />
       <figure
         className="absolute inset-0 -z-50"
