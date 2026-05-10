@@ -3,7 +3,10 @@ import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
 import { clientProjects, projects } from "../constants";
 import { useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
 import { useNavigate } from "react-router-dom";
 
 const Works = () => {
@@ -29,21 +32,23 @@ const Works = () => {
       },
     });
     gsap.from(".featured-card", {
-      y: 80,
-      opacity: 0,
+      y: 60,
       duration: 1,
       stagger: 0.2,
       ease: "power3.out",
-      scrollTrigger: { trigger: ".featured-card" },
+      scrollTrigger: { trigger: ".featured-card", start: "top 90%", once: true },
     });
     gsap.from(".client-card", {
-      y: 60,
-      opacity: 0,
+      y: 40,
       duration: 0.8,
       stagger: 0.1,
       ease: "power2.out",
-      scrollTrigger: { trigger: ".client-card" },
+      scrollTrigger: { trigger: ".client-card", start: "top 95%", once: true },
     });
+
+    const refreshOnLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refreshOnLoad);
+    return () => window.removeEventListener("load", refreshOnLoad);
   }, []);
 
   const handleMouseEnter = (index) => {
