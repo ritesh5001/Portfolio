@@ -1,7 +1,8 @@
 import { contactInfo, socials } from "../constants";
 
 export const SITE_URL = "https://riteshgiri.dev";
-export const PROFILE_IMAGE = `${SITE_URL}${contactInfo.profileImage}`;
+// Crawler-facing images stay JPEG; WebP og:image is unreliable on LinkedIn/WhatsApp.
+export const PROFILE_IMAGE = `${SITE_URL}${contactInfo.profileImageOg}`;
 
 export const absoluteUrl = (path = "/") => {
   if (/^https?:\/\//.test(path)) return path;
@@ -96,7 +97,7 @@ export const homeJsonLd = {
 
 export const buildProjectSeo = (project) => {
   const canonical = `${SITE_URL}/projects/${project.slug}`;
-  const image = absoluteUrl(project.images?.[0] || contactInfo.profileImage);
+  const image = absoluteUrl(project.ogImage || contactInfo.profileImageOg);
   const title = `${project.name} Case Study | Freelance Full-Stack Developer`;
   const description = `${project.tagline}. ${project.description}`;
   const trimmedDescription =

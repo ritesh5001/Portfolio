@@ -4,7 +4,9 @@ export const contactInfo = {
   location: "Lucknow, India",
   phone: "+91-7007436164",
   email: "rgiri5001@gmail.com",
-  profileImage: "/images/pfp.png",
+  profileImage: "/images/pfp.webp",
+  // Social crawlers (LinkedIn, WhatsApp) do not reliably render WebP og:image.
+  profileImageOg: "/images/pfp.jpg",
 };
 
 export const servicesData = [
@@ -132,8 +134,8 @@ export const projects = [
       "Built a full-stack maritime marketplace with RFQ posting, quote submission, role-based approvals, Socket.IO chat, analytics, and automated transactional emails.",
     liveUrl: "https://maribiz.ai",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/mobile-accessories-store.jpg",
-    bgImage: "/assets/backgrounds/blanket.jpg",
+    image: "/assets/projects/mobile-accessories-store.webp",
+    bgImage: "/assets/backgrounds/blanket.webp",
     frameworks: [
       { id: 1, name: "Next.js" },
       { id: 2, name: "Node.js" },
@@ -150,8 +152,8 @@ export const projects = [
       "Engineered a scalable multi-vendor commerce platform with JWT RBAC, real-time inventory, atomic checkout, Redis caching, and layered monolith architecture.",
     liveUrl: "https://tatvivahtrends.com",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/plant-shop.jpg",
-    bgImage: "/assets/backgrounds/curtains.jpg",
+    image: "/assets/projects/plant-shop.webp",
+    bgImage: "/assets/backgrounds/curtains.webp",
     frameworks: [
       { id: 1, name: "TypeScript" },
       { id: 2, name: "Node.js" },
@@ -167,8 +169,8 @@ export const projects = [
       "Architected a microservices-based travel ecosystem with API gateway, Groq AI trip planning, travel buddy matching, social feed, and real-time Socket.IO messaging.",
     liveUrl: "https://explorefusion.online",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/apple-tech-store.jpg",
-    bgImage: "/assets/backgrounds/map.jpg",
+    image: "/assets/projects/apple-tech-store.webp",
+    bgImage: "/assets/backgrounds/map.webp",
     frameworks: [
       { id: 1, name: "React" },
       { id: 2, name: "Node.js" },
@@ -185,8 +187,8 @@ export const projects = [
       "Developed an AI chat platform with secure JWT auth, long-term conversational memory via Pinecone, and context-aware responses using Google Gemini API.",
     liveUrl: "https://jarvisai.riteshgiri.dev",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/electronics-store.jpg",
-    bgImage: "/assets/backgrounds/poster.jpg",
+    image: "/assets/projects/electronics-store.webp",
+    bgImage: "/assets/backgrounds/poster.webp",
     frameworks: [
       { id: 1, name: "React" },
       { id: 2, name: "Node.js" },
@@ -218,10 +220,11 @@ export const clientProjects = [
       "Wedding Fashion E-Commerce",
     ],
     tech: ["Next.js", "TypeScript", "Node.js", "Razorpay", "PostgreSQL", "Prisma"],
+    ogImage: "/assets/projects/tatvivahtrends/og.jpg",
     images: [
-      "/assets/projects/tatvivahtrends/1.png",
-      "/assets/projects/tatvivahtrends/2.png",
-      "/assets/projects/tatvivahtrends/3.png",
+      "/assets/projects/tatvivahtrends/1.webp",
+      "/assets/projects/tatvivahtrends/2.webp",
+      "/assets/projects/tatvivahtrends/3.webp",
     ],
   },
   {
@@ -244,10 +247,11 @@ export const clientProjects = [
       "Maritime Industry Solutions",
     ],
     tech: ["Next.js", "Node.js", "Express", "PostgreSQL", "Socket.IO", "Prisma"],
+    ogImage: "/assets/projects/maribiz/og.jpg",
     images: [
-      "/assets/projects/maribiz/1.png",
-      "/assets/projects/maribiz/2.png",
-      "/assets/projects/maribiz/3.png",
+      "/assets/projects/maribiz/1.webp",
+      "/assets/projects/maribiz/2.webp",
+      "/assets/projects/maribiz/3.webp",
     ],
   },
   {
@@ -270,7 +274,8 @@ export const clientProjects = [
       "Service Portfolio Showcase",
     ],
     tech: ["WordPress", "PHP", "HTML5", "CSS3", "JavaScript"],
-    images: ["/assets/projects/hcbengineering/1.png"],
+    ogImage: "/assets/projects/hcbengineering/og.jpg",
+    images: ["/assets/projects/hcbengineering/1.webp"],
   },
   {
     id: "samaraha",
@@ -292,7 +297,8 @@ export const clientProjects = [
       "SSL Security & Checkout Optimization",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/samaraha/1.png"],
+    ogImage: "/assets/projects/samaraha/og.jpg",
+    images: ["/assets/projects/samaraha/1.webp"],
   },
   {
     id: "thegrafftee",
@@ -314,7 +320,8 @@ export const clientProjects = [
       "Service Module Architecture",
     ],
     tech: ["WordPress", "PHP", "JavaScript", "HTML5", "CSS3"],
-    images: ["/assets/projects/thegrafftee/1.png"],
+    ogImage: "/assets/projects/thegrafftee/og.jpg",
+    images: ["/assets/projects/thegrafftee/1.webp"],
   },
   {
     id: "saurally",
@@ -336,7 +343,8 @@ export const clientProjects = [
       "Customer Support Integration",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/saurally/1.png"],
+    ogImage: "/assets/projects/saurally/og.jpg",
+    images: ["/assets/projects/saurally/1.webp"],
   },
   {
     id: "terrestrialyt",
@@ -358,7 +366,8 @@ export const clientProjects = [
       "Merchandise Store Design",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/terrestrialyt/1.png"],
+    ogImage: "/assets/projects/terrestrialyt/og.jpg",
+    images: ["/assets/projects/terrestrialyt/1.webp"],
   },
   {
     id: "newsaraswatisareecentre",
@@ -380,7 +389,8 @@ export const clientProjects = [
       "Mobile-Responsive Design",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/newsaraswatisareecentre/1.png"],
+    ogImage: "/assets/projects/newsaraswatisareecentre/og.jpg",
+    images: ["/assets/projects/newsaraswatisareecentre/1.webp"],
   },
   {
     id: "sitaravastram",
@@ -402,7 +412,8 @@ export const clientProjects = [
       "Premium Fashion Store Design",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/sitaravastram/1.png"],
+    ogImage: "/assets/projects/sitaravastram/og.jpg",
+    images: ["/assets/projects/sitaravastram/1.webp"],
   },
   {
     id: "clickngreet",
@@ -424,7 +435,8 @@ export const clientProjects = [
       "Personalized Product Showcase",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/clickngreet/1.png"],
+    ogImage: "/assets/projects/clickngreet/og.jpg",
+    images: ["/assets/projects/clickngreet/1.webp"],
   },
   {
     id: "krushidoctor",
@@ -446,7 +458,8 @@ export const clientProjects = [
       "Farmer Community & Testimonial Platform",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/krushidoctor/1.png"],
+    ogImage: "/assets/projects/krushidoctor/og.jpg",
+    images: ["/assets/projects/krushidoctor/1.webp"],
   },
   {
     id: "kalamohini",
@@ -468,7 +481,8 @@ export const clientProjects = [
       "Brand Identity & UI Design",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/kalamohini/1.png"],
+    ogImage: "/assets/projects/kalamohini/og.jpg",
+    images: ["/assets/projects/kalamohini/1.webp"],
   },
   {
     id: "mahhika",
@@ -490,7 +504,8 @@ export const clientProjects = [
       "Responsive Mobile Design",
     ],
     tech: ["WooCommerce", "WordPress", "PHP", "JavaScript", "CSS3"],
-    images: ["/assets/projects/mahhika/1.png"],
+    ogImage: "/assets/projects/mahhika/og.jpg",
+    images: ["/assets/projects/mahhika/1.webp"],
   },
 ];
 

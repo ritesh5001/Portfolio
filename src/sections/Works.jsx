@@ -129,8 +129,8 @@ const Works = () => {
               </p>
             </div>
             <div className="relative flex items-center justify-center px-1 sm:px-1 md:px-3 lg:px-6 md:hidden h-[400px] ultra-small-screen">
-              <img src={project.bgImage} alt={`${project.name}-bg-image`} className="object-cover w-full h-full rounded-md brightness-50" />
-              <img src={project.image} alt={`${project.name}-image`} className="absolute bg-center px-14 rounded-xl" />
+              <img src={project.bgImage} alt={`${project.name}-bg-image`} loading="lazy" decoding="async" className="object-cover w-full h-full rounded-md brightness-50" />
+              <img src={project.image} alt={`${project.name}-image`} loading="lazy" decoding="async" className="absolute bg-center px-14 rounded-xl" />
             </div>
           </div>
         ))}
@@ -164,6 +164,8 @@ const Works = () => {
                   <img
                     src={project.images[0]}
                     alt={project.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/20 to-transparent" />
@@ -230,6 +232,8 @@ const Works = () => {
                   <img
                     src={project.images[0]}
                     alt={project.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-600"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-transparent" />
