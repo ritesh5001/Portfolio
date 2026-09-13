@@ -27,3 +27,9 @@ dist-ssr
 
 # vscode
 .vscode
+.gstack/
+
+# next.js
+/.next/
+/out/
+next-env.d.ts

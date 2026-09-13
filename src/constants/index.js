@@ -134,7 +134,9 @@ export const projects = [
       "Built a full-stack maritime marketplace with RFQ posting, quote submission, role-based approvals, Socket.IO chat, analytics, and automated transactional emails.",
     liveUrl: "https://maribiz.ai",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/mobile-accessories-store.webp",
+    image: "/assets/projects/personal/maribiz.webp",
+    imageAlt:
+      "MariBiz marketplace homepage showing the quick RFQ form and vendor counts",
     bgImage: "/assets/backgrounds/blanket.webp",
     frameworks: [
       { id: 1, name: "Next.js" },
@@ -152,7 +154,9 @@ export const projects = [
       "Engineered a scalable multi-vendor commerce platform with JWT RBAC, real-time inventory, atomic checkout, Redis caching, and layered monolith architecture.",
     liveUrl: "https://tatvivahtrends.com",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/plant-shop.webp",
+    image: "/assets/projects/personal/tatvivah.webp",
+    imageAlt:
+      "Tat Vivah storefront showing the ethnic wedding wear catalogue",
     bgImage: "/assets/backgrounds/curtains.webp",
     frameworks: [
       { id: 1, name: "TypeScript" },
@@ -169,7 +173,9 @@ export const projects = [
       "Architected a microservices-based travel ecosystem with API gateway, Groq AI trip planning, travel buddy matching, social feed, and real-time Socket.IO messaging.",
     liveUrl: "https://explorefusion.online",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/apple-tech-store.webp",
+    image: "/assets/projects/personal/explorefusion.webp",
+    imageAlt:
+      "Explore Fusion travel app landing page with AI trip planning",
     bgImage: "/assets/backgrounds/map.webp",
     frameworks: [
       { id: 1, name: "React" },
@@ -187,7 +193,9 @@ export const projects = [
       "Developed an AI chat platform with secure JWT auth, long-term conversational memory via Pinecone, and context-aware responses using Google Gemini API.",
     liveUrl: "https://jarvisai.riteshgiri.dev",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/electronics-store.webp",
+    image: "/assets/projects/personal/jarvisai.webp",
+    imageAlt:
+      "JARVIS AI chat interface with conversation sidebar",
     bgImage: "/assets/backgrounds/poster.webp",
     frameworks: [
       { id: 1, name: "React" },
@@ -261,7 +269,9 @@ export const clientProjects = [
     name: "HCB Engineering",
     tagline: "Electrical Solutions Website Development",
     domain: "hcbengineering.in",
-    liveUrl: "https://hcbengineering.in",
+    // Domain lapsed and no longer resolves; the case study stays, the dead
+    // outbound link does not.
+    liveUrl: null,
     role: "Full-Stack Developer",
     type: "WordPress",
     description:
