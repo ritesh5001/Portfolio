@@ -11,7 +11,7 @@ export default function sitemap() {
   const lastModified = new Date();
 
   // Paths are slash-free so each entry matches the canonical tag Next emits
-  // (it normalises "https://riteshgiri.dev/" to "https://riteshgiri.dev").
+  // (it normalises "https://www.riteshgiri.dev/" to "https://www.riteshgiri.dev").
   const staticRoutes = [
     { path: "", priority: 1 },
     { path: "/hire-web-developer-in-lucknow", priority: 0.9 },

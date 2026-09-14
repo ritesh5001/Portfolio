@@ -2,19 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  // Canonical host is the apex domain. Everything (canonical tags, JSON-LD @id,
-  // sitemap, robots.txt) points at https://riteshgiri.dev, so www must redirect
-  // rather than serve a parallel copy.
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.riteshgiri.dev" }],
-        destination: "https://riteshgiri.dev/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // No host redirect here: Vercel's own Domains settings already redirect the
+  // apex (riteshgiri.dev) -> www at the platform level. An app-level redirect
+  // in the opposite direction previously caused an infinite redirect loop
+  // (ERR_TOO_MANY_REDIRECTS) fighting that platform redirect. SITE_URL in
+  // src/lib/seo.js is the single source of truth for the canonical host and
+  // must stay in sync with whichever domain Vercel treats as primary.
 };
 
 export default nextConfig;

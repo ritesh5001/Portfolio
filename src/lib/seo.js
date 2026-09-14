@@ -1,8 +1,9 @@
 import { contactInfo, socials } from "../constants";
 
-// Canonical host is the apex domain. next.config.mjs 301s www -> apex so that
-// canonical, og:url, JSON-LD @id, sitemap and robots.txt all agree on one host.
-export const SITE_URL = "https://riteshgiri.dev";
+// Canonical host is www. Vercel's own domain settings already redirect the
+// apex (riteshgiri.dev) -> www at the platform level, so this file just has to
+// agree with that rather than adding a second, conflicting app-level redirect.
+export const SITE_URL = "https://www.riteshgiri.dev";
 
 export const LOCALITY = "Lucknow";
 export const REGION = "Uttar Pradesh";
