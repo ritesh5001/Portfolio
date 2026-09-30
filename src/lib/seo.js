@@ -271,3 +271,68 @@ export const buildProjectSeo = (project) => {
     },
   };
 };
+
+export const blogSeo = {
+  title: "Blog — Web Development Notes from Lucknow | Ritesh Giri",
+  description:
+    "Practical write-ups on Next.js, WooCommerce, Shopify and shipping websites for Indian businesses, from a freelance full-stack developer in Lucknow.",
+  path: "/blog",
+};
+
+export const buildPostSeo = (post) => {
+  const path = `/blog/${post.slug}`;
+  const url = absoluteUrl(path);
+  // Rendered by src/app/blog/[slug]/opengraph-image.jsx at build time.
+  const image = `${url}/opengraph-image`;
+
+  // Brand suffix only when it fits in the ~60 characters Google displays;
+  // otherwise it would push the post's own keywords into the truncation.
+  const suffixed = `${post.title} | Ritesh Giri`;
+  const metadata = buildMetadata({
+    title: suffixed.length <= 60 ? suffixed : post.title,
+    description: post.description,
+    path,
+    image,
+    imageAlt: post.title,
+    type: "article",
+  });
+
+  metadata.openGraph = {
+    ...metadata.openGraph,
+    publishedTime: post.date,
+    modifiedTime: post.updated,
+    authors: [`${SITE_URL}/about`],
+    tags: post.tags,
+  };
+  metadata.keywords = [post.keyword, ...post.tags];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        headline: post.title,
+        description: post.description,
+        url,
+        mainEntityOfPage: url,
+        image,
+        datePublished: post.date,
+        dateModified: post.updated,
+        inLanguage: "en-IN",
+        keywords: [post.keyword, ...post.tags].join(", "),
+        timeRequired: `PT${post.readingMinutes}M`,
+        author: { "@id": personId },
+        publisher: { "@id": personId },
+        isPartOf: { "@id": `${absoluteUrl("/blog")}#blog` },
+      },
+      buildBreadcrumbs([
+        { name: "Home", path: "/" },
+        { name: "Blog", path: "/blog" },
+        { name: post.title, path },
+      ]),
+    ],
+  };
+
+  return { metadata, jsonLd };
+};

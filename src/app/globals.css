@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Amiamie Regular */
 @font-face {
@@ -208,3 +209,62 @@ body {
   @apply text-[28px] sm:text-[36px] md:text-[42px] lg:text-[52px] xl:text-[62px] 2xl:text-[100px];
 }
 
+
+/* ---------- Blog article body ---------- */
+.post-body {
+  --tw-prose-invert-links: #cfa355;
+  --tw-prose-invert-bold: #ffffff;
+  --tw-prose-invert-code: #e5e5e0;
+  --tw-prose-invert-quote-borders: #cfa355;
+}
+
+.post-body :where(h2, h3) {
+  scroll-margin-top: 6rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Headings are wrapped in a self-link by rehype-autolink-headings; keep them
+   looking like headings, not links. */
+.post-body .heading-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+.post-body .heading-anchor:hover {
+  color: #cfa355;
+}
+
+.post-body figure[data-rehype-pretty-code-figure] {
+  margin: 1.75rem 0;
+}
+.post-body figure[data-rehype-pretty-code-figure] pre {
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.post-body figure[data-rehype-pretty-code-figure] pre > code {
+  display: grid;
+}
+.post-body figure[data-rehype-pretty-code-figure] [data-line] {
+  padding: 0 1.25rem;
+}
+
+/* Inline code: drop the typography plugin's literal backticks. */
+.post-body :not(pre) > code {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0.3rem;
+  padding: 0.15em 0.4em;
+  font-weight: 400;
+}
+.post-body :not(pre) > code::before,
+.post-body :not(pre) > code::after {
+  content: none;
+}
+
+.post-body table {
+  display: block;
+  overflow-x: auto;
+}

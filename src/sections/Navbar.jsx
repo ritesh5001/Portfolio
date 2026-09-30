@@ -24,7 +24,7 @@ const pageLinks = [
   { label: "about ritesh", href: "/about" },
 ];
 
-const Navbar = () => {
+const Navbar = ({ showBlog = false }) => {
   const navRef = useRef(null);
   const linksRef = useRef([]);
   const contactRef = useRef(null);
@@ -154,7 +154,10 @@ const Navbar = () => {
           ))}
 
           <div className="mt-8 flex flex-col gap-y-3 text-lg md:text-xl">
-            {pageLinks.map((page) => (
+            {(showBlog
+              ? [...pageLinks, { label: "blog", href: "/blog" }]
+              : pageLinks
+            ).map((page) => (
               <Link
                 key={page.href}
                 href={page.href}

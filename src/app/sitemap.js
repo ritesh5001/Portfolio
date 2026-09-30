@@ -1,6 +1,26 @@
 import { clientProjects } from "../constants";
 import { servicePages } from "../constants/services";
 import { SITE_URL } from "../lib/seo";
+import { getAllPosts } from "../lib/blog";
+
+const blogEntries = () => {
+  const posts = getAllPosts().filter((post) => !post.draft);
+  if (posts.length === 0) return [];
+  return [
+    {
+      url: `${SITE_URL}/blog`,
+      lastModified: new Date(posts[0].updated),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...posts.map((post) => ({
+      url: `${SITE_URL}/blog/${post.slug}`,
+      lastModified: new Date(post.updated),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    })),
+  ];
+};
 
 /**
  * Generated from the same data that generates the routes, so a sitemap entry
@@ -33,6 +53,7 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.8,
     })),
+    ...blogEntries(),
     ...clientProjects.map((project) => ({
       url: `${SITE_URL}/projects/${project.slug}`,
       lastModified,
