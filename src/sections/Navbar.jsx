@@ -25,6 +25,11 @@ const pageLinks = [
 ];
 
 const Navbar = ({ showBlog = false }) => {
+  // Blog sits in the main list (not the small links) so it is easy to find.
+  // It is a separate page, so handleSectionClick lets the click navigate.
+  const mainLinks = showBlog
+    ? [...navLinks.slice(0, 4), { id: "blog", label: "blog", href: "/blog" }, navLinks[4]]
+    : navLinks;
   const navRef = useRef(null);
   const linksRef = useRef([]);
   const contactRef = useRef(null);
@@ -141,7 +146,7 @@ const Navbar = ({ showBlog = false }) => {
         className="fixed z-50 flex flex-col justify-between w-full h-full px-10 uppercase bg-black text-white/80 py-28 gap-y-10 md:w-1/2 md:left-1/2 overflow-y-auto"
       >
         <div className="flex flex-col text-5xl gap-y-2 md:text-6xl lg:text-7xl">
-          {navLinks.map((section, index) => (
+          {mainLinks.map((section, index) => (
             <div key={section.id} ref={(el) => (linksRef.current[index] = el)}>
               <Link
                 href={section.href}
@@ -154,10 +159,7 @@ const Navbar = ({ showBlog = false }) => {
           ))}
 
           <div className="mt-8 flex flex-col gap-y-3 text-lg md:text-xl">
-            {(showBlog
-              ? [...pageLinks, { label: "blog", href: "/blog" }]
-              : pageLinks
-            ).map((page) => (
+            {pageLinks.map((page) => (
               <Link
                 key={page.href}
                 href={page.href}

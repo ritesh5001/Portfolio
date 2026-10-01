@@ -322,6 +322,17 @@ export const buildPostSeo = (post) => {
         inLanguage: "en-IN",
         keywords: [post.keyword, ...post.tags].join(", "),
         timeRequired: `PT${post.readingMinutes}M`,
+        ...(post.country
+          ? {
+              spatialCoverage: post.city
+                ? {
+                    "@type": "City",
+                    name: post.city,
+                    containedInPlace: { "@type": "Country", name: post.country },
+                  }
+                : { "@type": "Country", name: post.country },
+            }
+          : {}),
         author: { "@id": personId },
         publisher: { "@id": personId },
         isPartOf: { "@id": `${absoluteUrl("/blog")}#blog` },

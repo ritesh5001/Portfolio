@@ -69,8 +69,8 @@ Every post draws on work you've actually done. The **Source** column is what to 
 
 | When | Title (working) | Primary keyword | Cluster | Source |
 |---|---|---|---|---|
-| Oct wk 1 | Fixing ERR_TOO_MANY_REDIRECTS on Vercel with Next.js | err_too_many_redirects vercel | D | **Drafted** — this site's redirect loop |
-| Oct wk 3 | React SEO: Why Google Saw an Empty Page on My Site | react seo | D | **Drafted** — this site's Next.js migration |
+| Oct wk 1 | Fixing ERR_TOO_MANY_REDIRECTS on Vercel with Next.js | err_too_many_redirects vercel | D | **Published 1 Oct** |
+| Oct wk 3 | React SEO: Why Google Saw an Empty Page on My Site | react seo | D | **Published 1 Oct** |
 | Nov wk 1 | How Much Does a Website Cost in Lucknow? (2026) ✱ | website cost in lucknow | A | Your real price ranges by project type |
 | Nov wk 3 | WooCommerce vs Shopify for Indian Small Businesses | woocommerce vs shopify india | B/C | Your store builds on both platforms |
 | Dec wk 1 | Partial COD in WooCommerce: Take an Advance, Collect the Rest | woocommerce partial cod | B | Your partial-COD plugin work |
@@ -85,6 +85,49 @@ Every post draws on work you've actually done. The **Source** column is what to 
 Next quarter, from the backlog: Next.js vs WordPress for a business site · Long-term chatbot memory with Pinecone and Gemini (JARVIS AI) · Shopify vs WooCommerce total cost in India ✱ · WooCommerce GST invoices · Migrating WooCommerce to Shopify.
 
 **Avoid:** "best web developer in Lucknow". Google reads "best" as a request for a list, and the results are directories and listicles. Get *listed* in those instead (Clutch, GoodFirms, Sortlist).
+
+## Location guides (cities and countries)
+
+Location guides target searches like "website development in Mumbai". They work, but only under one condition: **each guide must be genuinely different from the others.** Google's spam policies call near-identical pages with the place name swapped "doorway pages", and mass-producing them is "scaled content abuse". Either can push down the whole site, not just those pages.
+
+**Published (1 October 2026):** an [India hub](/blog/website-development-in-india) plus Delhi, Mumbai, Bengaluru, Kolkata, Chennai, Hyderabad, Jaipur, Agra, Varanasi and Goa. Lucknow is covered by `/hire-web-developer-in-lucknow`. Don't write a separate Lucknow post, because the two would compete for the same searches.
+
+**What makes each guide different (keep doing this):**
+- It starts from what businesses in *that* place actually sell or do: Jaipur jewellery, Varanasi Banarasi silk, Chennai manufacturing, Goa villas.
+- It links to your real projects in those industries, and it's honest about location. It only says "my client in X" when the client really is in X (Lady Scooty Trainer in Delhi, Vashtara Heaven in Mumbai).
+- It has its own FAQ answering questions specific to that city's businesses.
+- It's honest about how you work: based in Lucknow, remote, with a NextGen Fusion team in Mumbai.
+- It sets `city:` (and `country:` outside India) in the frontmatter, so the structured data names the place.
+
+**Next Indian cities**, chosen because your work actually fits them:
+- **Surat** (textiles: Surat Collection, Jayanti Textiles)
+- **Kanpur** and **Noida** (Uttar Pradesh, near you)
+- **Pune** and **Ahmedabad** (D2C, manufacturing)
+- **Indore** and **Patna** (growing local e-commerce)
+
+### Countries: a short list, not all 75
+
+Writing a page for every country in the list, one a day, is the pattern that gets flagged. You have no clients or connection in most of those countries, so the pages would say the same thing with the name changed. Target a country only when **both** of these are true:
+
+1. You have a real client there, or a specific reason to serve it well: time zone, language, Indian business community, payment setup.
+2. The page can say something specific about building websites for businesses *there*.
+
+Candidates that pass, in order:
+
+| Country | Why it passes |
+|---|---|
+| United Kingdom | Real client (Royal Vastar, royalvaster.co.uk); large Indian-owned business community |
+| Italy | Real client (Souk Profumi, soukprofumi.it) |
+| UAE (Dubai) | Large Indian business community; time zone 1.5 hours from India |
+| United States / Canada | Indian-owned and diaspora businesses; write only once you have a client to point to |
+| Australia / Singapore | Same as above |
+| Nepal | Close market, Hindi widely understood; check demand first |
+
+**Cadence:** at most 1–2 location guides a week, each written individually, mixed in with the technical and client posts above. "Daily" is fine as a posting rhythm only if most posts are different kinds of content, not another location page.
+
+### Tech and AI posts
+
+Posts about the tech you work with (Next.js, WooCommerce, AI integrations with Gemini, Pinecone and Groq) fit cluster D and E above. **"Tech news" posts need sources:** link to the original announcement and say what it means for a business website or software project. Never write news from memory. A news post with wrong facts costs more trust than it earns traffic.
 
 ## How to write each post
 

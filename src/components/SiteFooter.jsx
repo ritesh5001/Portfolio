@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { contactInfo, socials } from "../constants";
 import { LOCALITY, REGION } from "../lib/seo";
-import { hasPosts } from "../lib/blog";
+import { getPost, hasPosts } from "../lib/blog";
 
 const serviceLinks = [
   { href: "/services/wordpress-woocommerce-development", label: "WordPress & WooCommerce Development" },
@@ -20,9 +20,15 @@ const siteLinks = [
  * site is reachable from any page without running JavaScript.
  */
 const SiteFooter = () => {
-  const exploreLinks = hasPosts()
-    ? [...siteLinks, { href: "/blog", label: "Blog" }]
-    : siteLinks;
+  // The India guide is the hub for the city guides; linking it sitewide puts
+  // every city page two clicks from anywhere on the site.
+  const exploreLinks = [
+    ...siteLinks,
+    ...(hasPosts() ? [{ href: "/blog", label: "Blog" }] : []),
+    ...(getPost("website-development-in-india")
+      ? [{ href: "/blog/website-development-in-india", label: "Web Development in India" }]
+      : []),
+  ];
 
   return (
     <footer className="bg-black text-white border-t border-white/10">

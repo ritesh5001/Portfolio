@@ -74,6 +74,10 @@ const readPostFile = (filename) => {
     // Optional slug from constants/services.js; the post links to that service
     // page so its ranking value flows toward pages that bring in work.
     service: data.service ?? null,
+    // Optional place a location guide is about; becomes spatialCoverage in
+    // the BlogPosting schema. `city` without `country` is treated as India.
+    city: data.city ?? null,
+    country: data.country ?? (data.city ? "India" : null),
     draft: data.draft === true,
     readingMinutes: readingMinutes(content),
     content,

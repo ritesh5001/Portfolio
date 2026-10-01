@@ -5,7 +5,7 @@ date: 2026-09-30
 keyword: "react seo"
 tags: ["React", "Next.js", "SEO"]
 service: "mern-nextjs-development"
-draft: true
+draft: false
 ---
 
 My portfolio looked finished. It had a title tag, a meta description, Open Graph tags, a JSON-LD graph, a sitemap and a `robots.txt`. It still didn't show up for my own name.

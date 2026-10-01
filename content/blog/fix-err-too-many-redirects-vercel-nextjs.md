@@ -5,7 +5,7 @@ date: 2026-09-30
 keyword: "err_too_many_redirects vercel"
 tags: ["Next.js", "Vercel", "Debugging"]
 service: "mern-nextjs-development"
-draft: true
+draft: false
 ---
 
 Right after deploying a rebuilt version of this site, every visit to it failed with Chrome's **"This page isn't working — redirected you too many times"** (`ERR_TOO_MANY_REDIRECTS`). The build was green. The code was fine. The problem was that two different layers were each trying to decide which domain was the "real" one, and they disagreed.
