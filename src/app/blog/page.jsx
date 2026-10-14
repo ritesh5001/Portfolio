@@ -116,8 +116,8 @@ export default function BlogIndexPage() {
                         alt=""
                         loading="lazy"
                         width="384"
-                        height="256"
-                        className="w-full aspect-[3/2] object-cover group-hover:scale-105 transition-transform duration-500"
+                        height="216"
+                        className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     </Link>
                   )}

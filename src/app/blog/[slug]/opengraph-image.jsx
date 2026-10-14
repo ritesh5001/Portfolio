@@ -11,7 +11,6 @@ export const alt = "Blog post by Ritesh Kumar Giri";
 // (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
 export const revalidate = 600;
 
-
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
@@ -33,6 +32,18 @@ export default async function OpengraphImage({ params }) {
     font("Amiamie-Black-og.ttf"),
   ]);
 
+  // Posts with a cover image use it as the card background. JPEG only: the
+  // renderer (Satori) can't decode WebP.
+  let cover = null;
+  if (post?.image && /\.jpe?g$/i.test(post.image)) {
+    try {
+      const bytes = await fs.readFile(path.join(process.cwd(), "public", post.image));
+      cover = `data:image/jpeg;base64,${bytes.toString("base64")}`;
+    } catch {
+      cover = null;
+    }
+  }
+
   return new ImageResponse(
     (
       <div
@@ -43,12 +54,35 @@ export default async function OpengraphImage({ params }) {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "68px 76px",
+          position: "relative",
           background:
             "radial-gradient(circle at 88% 8%, rgba(207,163,85,0.28), rgba(10,10,10,0) 45%), #0a0a0a",
           color: "#e5e5e0",
           fontFamily: "Amiamie",
         }}
       >
+        {cover && (
+          <img
+            src={cover}
+            width={1200}
+            height={630}
+            style={{ position: "absolute", top: 0, left: 0, width: 1200, height: 630, objectFit: "cover" }}
+          />
+        )}
+        {cover && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: 1200,
+              height: 630,
+              display: "flex",
+              background:
+                "linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.35) 35%, rgba(10,10,10,0.92) 100%)",
+            }}
+          />
+        )}
         <div
           style={{
             display: "flex",

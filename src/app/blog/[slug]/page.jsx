@@ -160,9 +160,9 @@ export default async function BlogPostPage({ params }) {
                 <img
                   src={post.image}
                   alt={post.imageAlt}
-                  width="1536"
-                  height="1024"
-                  className="mb-10 w-full rounded-2xl border border-white/10 object-cover aspect-[3/2]"
+                  width="1280"
+                  height="720"
+                  className="mb-10 w-full rounded-2xl border border-white/10 object-cover aspect-video"
                 />
               )}
               <article
