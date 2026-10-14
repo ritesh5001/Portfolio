@@ -63,12 +63,14 @@ const WorkDirectory = ({ hasShot }) => {
                   {shot ? (
                     <img
                       src={shot}
-                      alt={`${project.name} website homepage — ${project.category} site built by Ritesh Kumar Giri`}
+                      alt={`${project.name} website homepage — ${project.category} site built by Ritesh Kumar Giri${project.offline ? " (archived screenshot)" : ""}`}
                       loading="lazy"
                       decoding="async"
                       width="1200"
                       height="750"
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      className={`w-full h-full object-cover object-top transition-transform duration-500 ${
+                        project.offline ? "grayscale opacity-60" : "group-hover:scale-105"
+                      }`}
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-white/25 text-xs tracking-[0.3em] uppercase px-4 text-center">
@@ -101,15 +103,23 @@ const WorkDirectory = ({ hasShot }) => {
                         <Icon icon="lucide:arrow-right" className="size-3" />
                       </Link>
                     )}
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener"
-                      className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-white/45 hover:text-white transition-colors"
-                    >
-                      Live site
-                      <Icon icon="lucide:arrow-up-right" className="size-3" />
-                    </a>
+                    {project.offline ? (
+                      // No link: the domain no longer serves this site.
+                      <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-white/30">
+                        <Icon icon="lucide:circle-off" className="size-3" />
+                        Offline
+                      </span>
+                    ) : (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener"
+                        className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-white/45 hover:text-white transition-colors"
+                      >
+                        Live site
+                        <Icon icon="lucide:arrow-up-right" className="size-3" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </article>

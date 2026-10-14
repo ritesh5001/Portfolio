@@ -3,7 +3,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
 import { clientProjects, projects } from "../constants";
-import { directoryProjects } from "../constants/directory";
+import { liveProjects } from "../constants/directory";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
@@ -347,7 +347,7 @@ const Works = () => {
           >
             <span>
               <span className="block text-lg md:text-2xl font-light">
-                See all {directoryProjects.length} live sites
+                See all {liveProjects.length} live sites
               </span>
               <span className="block text-xs md:text-sm text-white/50 group-hover:text-black/60 mt-1">
                 E-commerce, service and custom builds delivered to date

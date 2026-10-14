@@ -11,7 +11,7 @@ import {
   leadership,
   socials,
 } from "../../constants";
-import { directoryProjects } from "../../constants/directory";
+import { liveProjects } from "../../constants/directory";
 import {
   LOCALITY,
   REGION,
@@ -23,7 +23,7 @@ import {
 } from "../../lib/seo";
 
 const title = `About Ritesh Kumar Giri — Full-Stack Developer in ${LOCALITY}`;
-const description = `Ritesh Kumar Giri is a full-stack developer based in Lucknow, Uttar Pradesh. Software engineer at CleanShip (MariBiz.ai) and founder of NextGen Fusion, with ${directoryProjects.length}+ sites in production.`;
+const description = `Ritesh Kumar Giri is a full-stack developer based in Lucknow, Uttar Pradesh. Software engineer at CleanShip (MariBiz.ai) and founder of NextGen Fusion, with ${liveProjects.length}+ sites in production.`;
 
 export const metadata = buildMetadata({ title, description, path: "/about" });
 
@@ -91,7 +91,7 @@ export default function AboutPage() {
                   through which most of my client work ships.
                 </p>
                 <p className="mt-4 text-white/65 text-lg font-light leading-relaxed">
-                  {directoryProjects.length} sites are live in production —
+                  {liveProjects.length} sites are live in production —
                   e-commerce storefronts on WooCommerce and Shopify, B2B
                   marketplaces and quoting engines on Next.js, and content-led
                   sites for manufacturers, engineering firms and institutes.

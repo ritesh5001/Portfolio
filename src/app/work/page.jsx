@@ -5,7 +5,7 @@ import JsonLd from "../../components/JsonLd";
 import SiteFooter from "../../components/SiteFooter";
 import WorkDirectory from "../../components/WorkDirectory";
 import PageNav from "../../components/PageNav";
-import { directoryProjects } from "../../constants/directory";
+import { directoryProjects, liveProjects } from "../../constants/directory";
 import { clientProjects } from "../../constants";
 import {
   LOCALITY,
@@ -15,7 +15,7 @@ import {
   buildMetadata,
 } from "../../lib/seo";
 
-const title = `Client Work — ${directoryProjects.length} Live Websites Built by Ritesh Giri`;
+const title = `Client Work — ${liveProjects.length} Live Websites Built by Ritesh Giri`;
 const description = `Every site delivered to date: WooCommerce and Shopify storefronts, B2B marketplaces and custom Next.js builds for clients in Lucknow and across India.`;
 
 export const metadata = buildMetadata({
@@ -64,8 +64,9 @@ export default function WorkPage() {
         "@type": "ItemList",
         "@id": `${absoluteUrl("/work")}#itemlist`,
         name: "Websites built by Ritesh Kumar Giri",
-        numberOfItems: directoryProjects.length,
-        itemListElement: directoryProjects.map((project, index) => ({
+        // Only live sites: an ItemList entry should point somewhere real.
+        numberOfItems: liveProjects.length,
+        itemListElement: liveProjects.map((project, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: project.name,
@@ -104,10 +105,10 @@ export default function WorkPage() {
               Client Work
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light uppercase leading-tight max-w-4xl">
-              {directoryProjects.length} live websites, built and shipped
+              {liveProjects.length} live websites, built and shipped
             </h1>
             <p className="mt-6 text-white/60 text-base md:text-lg font-light leading-relaxed max-w-3xl">
-              Everything below is live in production. The work splits three ways:
+              Everything below was built and shipped to production. The work splits three ways:
               storefronts on WooCommerce and Shopify where catalogue, checkout
               and speed on a mid-range phone decide the outcome; custom builds on
               Next.js where the business model is unusual enough that a platform
@@ -119,6 +120,14 @@ export default function WorkPage() {
               {clientProjects.length} of them have a written case study covering
               the brief, the build and the stack. The rest link straight through
               to the live site — click any of them and judge the work directly.
+              {directoryProjects.length > liveProjects.length && (
+                <>
+                  {" "}
+                  {directoryProjects.length - liveProjects.length} older projects
+                  whose domains have since lapsed are marked offline and kept
+                  here as a record of the work.
+                </>
+              )}
             </p>
             <p className="mt-6 text-white/50 text-sm">
               Looking for a specific capability?{" "}

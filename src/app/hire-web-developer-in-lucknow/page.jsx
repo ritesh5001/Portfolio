@@ -3,7 +3,7 @@ import JsonLd from "../../components/JsonLd";
 import PageNav from "../../components/PageNav";
 import SiteFooter from "../../components/SiteFooter";
 import { clientProjects, contactInfo } from "../../constants";
-import { directoryProjects } from "../../constants/directory";
+import { liveProjects } from "../../constants/directory";
 import {
   LOCALITY,
   REGION,
@@ -16,7 +16,7 @@ import {
 
 const path = "/hire-web-developer-in-lucknow";
 const title = `Hire a Web Developer in ${LOCALITY} — Ritesh Kumar Giri`;
-const description = `Freelance web developer in Lucknow building WordPress, WooCommerce, Shopify and Next.js websites. ${directoryProjects.length}+ sites live in production. Direct contact, no agency markup.`;
+const description = `Freelance web developer in Lucknow building WordPress, WooCommerce, Shopify and Next.js websites. ${liveProjects.length}+ sites live in production. Direct contact, no agency markup.`;
 
 export const metadata = buildMetadata({ title, description, path });
 
@@ -115,7 +115,7 @@ export default function HirePage() {
             </h1>
             <p className="mt-6 text-white/65 text-lg md:text-xl font-light leading-relaxed">
               I am {contactInfo.name}, a full-stack and WordPress developer based
-              in {LOCALITY}. I have put {directoryProjects.length} sites into
+              in {LOCALITY}. I have put {liveProjects.length} sites into
               production — e-commerce storefronts, B2B marketplaces, and
               content-led sites for service businesses — and I do the
               engineering myself rather than passing it down a chain.
@@ -181,7 +181,7 @@ export default function HirePage() {
               <div className="space-y-2">
                 <h3 className="text-lg font-light">Production track record</h3>
                 <p className="text-sm text-white/55 leading-relaxed font-light">
-                  {directoryProjects.length} live sites across fashion, jewellery,
+                  {liveProjects.length} live sites across fashion, jewellery,
                   beauty, food, manufacturing and engineering.{" "}
                   <Link href="/work" className="text-gold hover:text-white underline underline-offset-4">
                     See all of them
