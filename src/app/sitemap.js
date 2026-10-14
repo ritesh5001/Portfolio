@@ -3,8 +3,12 @@ import { servicePages } from "../constants/services";
 import { SITE_URL } from "../lib/seo";
 import { getAllPosts } from "../lib/blog";
 
+// Re-check for newly due scheduled posts every 10 minutes
+// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
+export const revalidate = 600;
+
 const blogEntries = () => {
-  const posts = getAllPosts().filter((post) => !post.draft);
+  const posts = getAllPosts().filter((post) => !post.draft && !post.scheduled);
   if (posts.length === 0) return [];
   return [
     {

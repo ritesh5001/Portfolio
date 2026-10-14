@@ -7,6 +7,10 @@ import { getAllPosts, getPost } from "../../../lib/blog";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = "Blog post by Ritesh Kumar Giri";
+// Re-check for newly due scheduled posts every 10 minutes
+// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
+export const revalidate = 600;
+
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));

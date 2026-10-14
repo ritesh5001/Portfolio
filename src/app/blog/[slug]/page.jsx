@@ -17,7 +17,13 @@ export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
 }
 
-export const dynamicParams = false;
+// Scheduled posts aren't in generateStaticParams yet; when one comes due,
+// its page is rendered on first request and then cached.
+export const dynamicParams = true;
+// Re-check for newly due scheduled posts every 10 minutes
+// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
+export const revalidate = 600;
+
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -54,6 +60,17 @@ export default async function BlogPostPage({ params }) {
       <JsonLd data={jsonLd} />
       <PageNav />
       <main className="min-h-screen bg-[#0a0a0a] text-white pt-24">
+        {post.scheduled && !post.draft && (
+          <div className="bg-white/10 text-white text-center text-xs tracking-[0.2em] uppercase py-2">
+            Scheduled preview — goes live{" "}
+            {new Date(post.publishedAt).toLocaleString("en-IN", {
+              timeZone: "Asia/Kolkata",
+              dateStyle: "medium",
+              timeStyle: "short",
+            })}{" "}
+            IST
+          </div>
+        )}
         {post.draft && (
           <div className="bg-gold text-black text-center text-xs tracking-[0.2em] uppercase py-2">
             Draft preview — set <code>draft: false</code> to publish
@@ -138,10 +155,42 @@ export default async function BlogPostPage({ params }) {
 
         <div className="px-6 md:px-10 lg:px-16 py-12">
           <div className="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1fr_240px]">
-            <article
-              className="post-body prose prose-invert prose-lg max-w-3xl min-w-0 prose-headings:font-light prose-a:underline-offset-4 prose-img:rounded-xl"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
+            <div className="max-w-3xl min-w-0">
+              {post.image && (
+                <img
+                  src={post.image}
+                  alt={post.imageAlt}
+                  width="1536"
+                  height="1024"
+                  className="mb-10 w-full rounded-2xl border border-white/10 object-cover aspect-[3/2]"
+                />
+              )}
+              <article
+                className="post-body prose prose-invert prose-lg max-w-none prose-headings:font-light prose-a:underline-offset-4 prose-img:rounded-xl"
+                dangerouslySetInnerHTML={{ __html: html }}
+              />
+              {post.sources.length > 0 && (
+                <section className="mt-12 border-t border-white/10 pt-6">
+                  <h2 className="text-xs tracking-[0.35em] uppercase text-white/40 mb-4">
+                    Sources
+                  </h2>
+                  <ol className="space-y-2 text-sm list-decimal pl-5 text-white/55">
+                    {post.sources.map((source) => (
+                      <li key={source.url}>
+                        <a
+                          href={source.url}
+                          target="_blank"
+                          rel="noopener"
+                          className="hover:text-gold underline underline-offset-4 decoration-white/20"
+                        >
+                          {source.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
+            </div>
 
             {toc.length > 1 && (
               <aside className="hidden lg:block">

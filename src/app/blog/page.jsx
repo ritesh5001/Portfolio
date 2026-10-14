@@ -12,6 +12,10 @@ import {
   buildMetadata,
 } from "../../lib/seo";
 
+// Re-check for newly due scheduled posts every 10 minutes
+// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
+export const revalidate = 600;
+
 export const metadata = {
   ...buildMetadata(blogSeo),
   alternates: {
@@ -52,7 +56,7 @@ export default function BlogIndexPage() {
           "@type": "BlogPosting",
           headline: post.title,
           url: absoluteUrl(`/blog/${post.slug}`),
-          datePublished: post.date,
+          datePublished: post.publishedAt,
           dateModified: post.updated,
         })),
       },
@@ -99,7 +103,25 @@ export default function BlogIndexPage() {
           <ol className="mx-auto max-w-4xl divide-y divide-white/[0.08]">
             {posts.map((post) => (
               <li key={post.slug} className="py-8 first:pt-0">
-                <article className="group">
+                <article className="group sm:flex sm:gap-6 sm:items-start">
+                  {post.image && (
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="block shrink-0 mb-4 sm:mb-0 sm:w-48 overflow-hidden rounded-xl border border-white/10"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <img
+                        src={post.image}
+                        alt=""
+                        loading="lazy"
+                        width="384"
+                        height="256"
+                        className="w-full aspect-[3/2] object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </Link>
+                  )}
+                  <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/40">
                     <time dateTime={post.date}>{formatDate(post.date)}</time>
                     <span aria-hidden="true">·</span>
@@ -107,6 +129,11 @@ export default function BlogIndexPage() {
                     {post.draft && (
                       <span className="rounded-full bg-gold/20 px-2 py-0.5 text-gold">
                         Draft — not published
+                      </span>
+                    )}
+                    {post.scheduled && !post.draft && (
+                      <span className="rounded-full bg-white/10 px-2 py-0.5 text-white/70">
+                        Scheduled
                       </span>
                     )}
                   </div>
@@ -133,6 +160,7 @@ export default function BlogIndexPage() {
                       ))}
                     </ul>
                   )}
+                  </div>
                 </article>
               </li>
             ))}

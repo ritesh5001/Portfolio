@@ -2,8 +2,9 @@ import { getAllPosts } from "../../../lib/blog";
 import { contactInfo } from "../../../constants";
 import { SITE_URL, absoluteUrl, blogSeo } from "../../../lib/seo";
 
-// Built once at deploy time, like every other page.
-export const dynamic = "force-static";
+// Re-check for newly due scheduled posts every 10 minutes
+// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
+export const revalidate = 600;
 
 const escape = (value) =>
   String(value)
@@ -13,7 +14,7 @@ const escape = (value) =>
     .replace(/"/g, "&quot;");
 
 export function GET() {
-  const posts = getAllPosts().filter((post) => !post.draft);
+  const posts = getAllPosts().filter((post) => !post.draft && !post.scheduled);
 
   const items = posts
     .map((post) => {
@@ -23,7 +24,7 @@ export function GET() {
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
       <description>${escape(post.description)}</description>
-      <pubDate>${new Date(`${post.date}T00:00:00Z`).toUTCString()}</pubDate>
+      <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
 ${post.tags.map((tag) => `      <category>${escape(tag)}</category>`).join("\n")}
     </item>`;
     })

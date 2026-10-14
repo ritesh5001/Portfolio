@@ -299,7 +299,7 @@ export const buildPostSeo = (post) => {
 
   metadata.openGraph = {
     ...metadata.openGraph,
-    publishedTime: post.date,
+    publishedTime: post.publishedAt,
     modifiedTime: post.updated,
     authors: [`${SITE_URL}/about`],
     tags: post.tags,
@@ -316,8 +316,8 @@ export const buildPostSeo = (post) => {
         description: post.description,
         url,
         mainEntityOfPage: url,
-        image,
-        datePublished: post.date,
+        image: post.image ? [absoluteUrl(post.image), image] : image,
+        datePublished: post.publishedAt,
         dateModified: post.updated,
         inLanguage: "en-IN",
         keywords: [post.keyword, ...post.tags].join(", "),

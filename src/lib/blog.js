@@ -16,6 +16,11 @@ import rehypeStringify from "rehype-stringify";
  *
  * Posts with `draft: true` are visible in `next dev` so they can be previewed,
  * and excluded from production builds (no page, no sitemap entry, no RSS item).
+ *
+ * Scheduling: `date` may include a time, e.g. `2026-10-17T19:42:00+05:30`. In
+ * production a post stays hidden until that moment. Blog routes revalidate
+ * every few minutes (see REVALIDATE_SECONDS), so a scheduled post goes live on
+ * its own without a rebuild.
  */
 const POSTS_DIR = path.join(process.cwd(), "content", "blog");
 const SHOW_DRAFTS = process.env.NODE_ENV !== "production";
@@ -26,6 +31,25 @@ const REQUIRED_FIELDS = ["title", "description", "date", "keyword"];
 // These are warnings, not errors: a long title still works, it just gets cut.
 const TITLE_LIMIT = 60;
 const DESCRIPTION_LIMIT = 160;
+
+// How often blog routes re-check for newly due posts. Imported by each route.
+export const REVALIDATE_SECONDS = 600;
+
+const parseDate = (value) => {
+  if (!value) return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date;
+};
+
+// Calendar date as seen in India, so a post at 00:30 IST isn't shown as the
+// previous day (which is what toISOString's UTC date would do).
+const toIndiaDate = (date) =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
 
 const toIsoDate = (value) => {
   if (!value) return null;
@@ -60,14 +84,17 @@ const readPostFile = (filename) => {
     );
   }
 
-  const date = toIsoDate(data.date);
-  if (!date) throw new Error(`content/blog/${filename} has an invalid date: ${data.date}`);
+  const publishAt = parseDate(data.date);
+  if (!publishAt) throw new Error(`content/blog/${filename} has an invalid date: ${data.date}`);
+  const date = toIndiaDate(publishAt);
 
   return {
     slug,
     title: data.title,
     description: data.description,
     date,
+    // Full timestamp: drives scheduling, sort order and datePublished.
+    publishedAt: publishAt.toISOString(),
     updated: toIsoDate(data.updated) ?? date,
     keyword: data.keyword,
     tags: Array.isArray(data.tags) ? data.tags : [],
@@ -79,15 +106,21 @@ const readPostFile = (filename) => {
     city: data.city ?? null,
     country: data.country ?? (data.city ? "India" : null),
     draft: data.draft === true,
+    // Optional cover image under /public, e.g. /blog-images/<slug>.webp.
+    image: data.image ?? null,
+    imageAlt: data.imageAlt ?? data.title,
+    // Sources for news posts: [{ title, url }]. Rendered at the end of the post.
+    sources: Array.isArray(data.sources) ? data.sources : [],
     readingMinutes: readingMinutes(content),
     content,
   };
 };
 
+// Parsed files are cached for the life of the process; *visibility* is not,
+// because it depends on the current time.
 let cache = null;
 
-/** All posts visible in this environment, newest first. */
-export const getAllPosts = () => {
+const readAll = () => {
   if (cache) return cache;
 
   let files = [];
@@ -102,11 +135,30 @@ export const getAllPosts = () => {
 
   cache = files
     .map(readPostFile)
-    .filter((post) => SHOW_DRAFTS || !post.draft)
-    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+    .sort((a, b) => (a.publishedAt < b.publishedAt ? 1 : a.publishedAt > b.publishedAt ? -1 : 0));
 
   return cache;
 };
+
+/**
+ * All posts visible right now, newest first. Under `next dev` drafts and
+ * scheduled posts are included (flagged) so they can be previewed.
+ */
+export const getAllPosts = () => {
+  const now = Date.now();
+  return readAll()
+    .map((post) => ({ ...post, scheduled: Date.parse(post.publishedAt) > now }))
+    .filter((post) => SHOW_DRAFTS || (!post.draft && !post.scheduled));
+};
+
+/** Every post including drafts and future ones, oldest first. For tooling. */
+export const getScheduleForTooling = () =>
+  [...readAll()].reverse().map(({ slug, title, publishedAt, draft }) => ({
+    slug,
+    title,
+    publishedAt,
+    draft,
+  }));
 
 export const getPost = (slug) => getAllPosts().find((post) => post.slug === slug) ?? null;
 
@@ -124,7 +176,7 @@ export const getRelatedPosts = (post, limit = 3) =>
       post: other,
       shared: other.tags.filter((tag) => post.tags.includes(tag)).length,
     }))
-    .sort((a, b) => b.shared - a.shared || (a.post.date < b.post.date ? 1 : -1))
+    .sort((a, b) => b.shared - a.shared || (a.post.publishedAt < b.post.publishedAt ? 1 : -1))
     .slice(0, limit)
     .map(({ post: other }) => other);
 
