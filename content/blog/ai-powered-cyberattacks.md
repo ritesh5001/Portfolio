@@ -36,6 +36,6 @@ sources:
 
 ## Website security is a maintenance job
 
-Most small-business website hacks I've seen came from neglected updates, not sophisticated attacks. At [NextGen Fusion](https://www.nextgenfusion.in), our web development company in Lucknow, we offer maintenance plans that keep WordPress, WooCommerce and custom sites updated, backed up and monitored.
+Most small-business website hacks come from neglected updates, not sophisticated attacks. At [NextGen Fusion](https://www.nextgenfusion.in), our web development company in Lucknow, we offer maintenance plans that keep WordPress, WooCommerce and custom sites updated, backed up and monitored.
 
 [Get your website secured and maintained](/hire-web-developer-in-lucknow).

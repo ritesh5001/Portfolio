@@ -16,7 +16,7 @@ sources:
 
 **Google has confirmed that Gemini 4 is in training, but it has not given a release date.** Sundar Pichai said on the Q2 earnings call: "We are now training Gemini 4, and we're being very ambitious with it." Everything beyond that, including the November–December window you'll see quoted, is an estimate based on Google's past release pattern.
 
-I build AI features into client products, including a chat platform on Google's Gemini API, so here's how I'm reading it and what I'd do if your product depends on a model.
+I build AI features for clients, and my own chat platform runs on Google's Gemini API, so here's how I'm reading it and what I'd do if your product depends on a model.
 
 ## What's actually confirmed
 

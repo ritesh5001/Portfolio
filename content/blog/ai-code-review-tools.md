@@ -14,7 +14,7 @@ sources:
 
 **AI code review is now good enough to catch real bugs, missing error handling and security slips on every pull request, but it isn't good enough to approve code on its own.** Treat it as a tireless first reviewer that clears the obvious issues, so the human review can focus on what the code is meant to do.
 
-I use AI review on client projects. Here's what I've found it reliably catches, what it misses, and how to set it up.
+Here's what AI review reliably catches, what it misses, and how to set it up.
 
 ## What AI review is good at
 

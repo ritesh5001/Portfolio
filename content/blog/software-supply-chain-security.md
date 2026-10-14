@@ -20,7 +20,7 @@ sources:
 
 Attackers have learned it's easier to compromise one popular package, or one developer's publishing account, than thousands of individual apps. A single malicious update can reach every project that installs it. AI coding tools add a new risk: they sometimes suggest packages that don't exist, and attackers register those names.
 
-## The checklist I use on client projects
+## A practical checklist
 
 **Dependencies**
 - Commit your lockfile (`package-lock.json`, `pnpm-lock.yaml`) and install with `npm ci` in CI, so builds use exactly the versions you tested.

@@ -21,7 +21,7 @@ sources:
 - **Searchable history:** "what did the client say about delivery dates in March?"
 - **Async updates:** team members who missed a meeting can read the summary in two minutes.
 
-I use AI transcription for client requirement calls, and it has cut misunderstandings about scope noticeably.
+For client requirement calls especially, an accurate transcript is one of the simplest ways to avoid misunderstandings about scope.
 
 ## The risks
 

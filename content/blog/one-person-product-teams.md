@@ -40,6 +40,6 @@ The skill that matters most is no longer typing speed. It's **specifying clearly
 
 ## My experience
 
-Much of my client work is exactly this: one engineer, AI-assisted, delivering what clients assume needs a team. Through [NextGen Fusion](https://www.nextgenfusion.in), my web and software development company in Lucknow, I can bring in more people when a project needs them, but a lot of products don't.
+This is how a growing share of client work gets done: a small, experienced, AI-assisted team delivering what clients assume needs a much larger one. Through [NextGen Fusion](https://www.nextgenfusion.in), my web and software development company in Lucknow, I can bring in more people when a project needs them, but a lot of products don't.
 
 [Build your product with a lean team](/services/mern-nextjs-development).
