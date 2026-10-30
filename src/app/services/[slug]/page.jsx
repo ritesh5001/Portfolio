@@ -79,13 +79,16 @@ export default async function ServicePage({ params }) {
     <>
       <JsonLd data={jsonLd} />
       <PageNav />
-      <main className="min-h-screen bg-[#0a0a0a] text-white pt-24">
-        <section className="px-6 md:px-10 lg:px-16 pb-12 border-b border-white/[0.08]">
+      <main
+        id="main-content"
+        className="content-page min-h-screen bg-white text-ink"
+      >
+        <section className="px-6 md:px-10 lg:px-16 pb-12 border-b border-black/[0.08]">
           <div className="mx-auto max-w-4xl">
-            <nav aria-label="Breadcrumb" className="text-xs text-white/35 mb-6">
+            <nav aria-label="Breadcrumb" className="text-xs text-ink/60 mb-6">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="hover:text-ink transition-colors">
                     Home
                   </Link>
                 </li>
@@ -93,36 +96,36 @@ export default async function ServicePage({ params }) {
                 <li>
                   <Link
                     href="/services"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-ink transition-colors"
                   >
                     Services
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
-                <li className="text-white/60">{service.shortName}</li>
+                <li className="text-ink/60">{service.shortName}</li>
               </ol>
             </nav>
 
-            <p className="text-xs tracking-[0.5em] uppercase text-white/40 mb-4">
+            <p className="text-xs tracking-[0.5em] uppercase text-ink/60 mb-4">
               Service · {LOCALITY}
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-light uppercase leading-tight">
               {service.name} in {LOCALITY}
             </h1>
-            <p className="mt-6 text-white/65 text-lg md:text-xl font-light leading-relaxed">
+            <p className="mt-6 text-ink/65 text-lg md:text-xl font-light leading-relaxed">
               {service.intro}
             </p>
           </div>
         </section>
 
-        <section className="px-6 md:px-10 lg:px-16 py-14 border-b border-white/[0.08]">
+        <section className="px-6 md:px-10 lg:px-16 py-14 border-b border-black/[0.08]">
           <div className="mx-auto max-w-4xl space-y-10">
             {service.sections.map((section) => (
               <article key={section.heading} className="space-y-3">
                 <h2 className="text-xl md:text-2xl font-light uppercase tracking-tight">
                   {section.heading}
                 </h2>
-                <p className="text-white/60 leading-relaxed font-light">
+                <p className="text-ink/60 leading-relaxed font-light">
                   {section.body}
                 </p>
               </article>
@@ -136,7 +139,7 @@ export default async function ServicePage({ params }) {
                 {service.stack.map((item) => (
                   <span
                     key={item}
-                    className="text-xs tracking-[0.2em] uppercase bg-white/[0.06] border border-white/10 px-4 py-2 rounded-full text-white/75"
+                    className="text-xs tracking-[0.2em] uppercase bg-black/[0.06] border border-black/10 px-4 py-2 rounded-full text-ink/75"
                   >
                     {item}
                   </span>
@@ -147,7 +150,7 @@ export default async function ServicePage({ params }) {
         </section>
 
         {related.length > 0 && (
-          <section className="px-6 md:px-10 lg:px-16 py-14 border-b border-white/[0.08]">
+          <section className="px-6 md:px-10 lg:px-16 py-14 border-b border-black/[0.08]">
             <div className="mx-auto max-w-4xl">
               <h2 className="text-xl md:text-2xl font-light uppercase tracking-tight">
                 Built with this stack
@@ -157,17 +160,17 @@ export default async function ServicePage({ params }) {
                   <li key={project.slug}>
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-5 py-4 hover:border-white/25 transition-colors"
+                      className="flex items-center justify-between rounded-xl border border-black/[0.08] bg-black/[0.02] px-5 py-4 hover:border-black/25 transition-colors"
                     >
                       <span>
-                        <span className="block text-white font-light">
+                        <span className="block text-ink font-light">
                           {project.name}
                         </span>
-                        <span className="block text-xs text-white/40 mt-0.5">
+                        <span className="block text-xs text-ink/60 mt-0.5">
                           {project.domain}
                         </span>
                       </span>
-                      <span className="text-white/30">→</span>
+                      <span className="text-ink/70">→</span>
                     </Link>
                   </li>
                 ))}
@@ -181,20 +184,20 @@ export default async function ServicePage({ params }) {
             <h2 className="text-xl md:text-2xl font-light">
               Need {service.shortName} work?
             </h2>
-            <p className="mt-2 text-sm text-white/60">
-              Tell me what the site has to do and I will come back with scope and
-              a fixed number.
+            <p className="mt-2 text-sm text-ink/60">
+              Tell me what the site has to do and I will come back with scope
+              and a fixed number.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <a
                 href={`mailto:${contactInfo.email}`}
-                className="rounded-full bg-gold px-6 py-3 text-sm font-medium uppercase tracking-[0.25em] text-black transition-transform duration-300 hover:-translate-y-0.5"
+                className="rounded-full bg-ink px-6 py-3 text-sm font-medium uppercase tracking-[0.25em] text-white transition-transform duration-300 hover:-translate-y-0.5"
               >
                 {contactInfo.email}
               </a>
               <Link
                 href="/hire-web-developer-in-lucknow"
-                className="rounded-full border border-white/20 px-6 py-3 text-sm font-medium uppercase tracking-[0.25em] text-white hover:border-white hover:bg-white/5 transition-colors"
+                className="rounded-full border border-black/20 px-6 py-3 text-sm font-medium uppercase tracking-[0.25em] text-ink hover:border-black hover:bg-black/5 transition-colors"
               >
                 Hire me in {LOCALITY}
               </Link>

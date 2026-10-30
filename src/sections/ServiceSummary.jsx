@@ -1,68 +1,13 @@
-"use client";
-
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(ScrollTrigger);
-const ServiceSummary = () => {
-  useGSAP(() => {
-    gsap.to("#title-service-1", {
-      xPercent: 20,
-      scrollTrigger: {
-        target: "#title-service-1",
-        scrub: true,
-      },
-    });
-    gsap.to("#title-service-2", {
-      xPercent: -30,
-      scrollTrigger: {
-        target: "#title-service-2",
-        scrub: true,
-      },
-    });
-    gsap.to("#title-service-3", {
-      xPercent: 100,
-      scrollTrigger: {
-        target: "#title-service-3",
-        scrub: true,
-      },
-    });
-    gsap.to("#title-service-4", {
-      xPercent: -100,
-      scrollTrigger: {
-        target: "#title-service-4",
-        scrub: true,
-      },
-    });
-  });
+export default function ServiceSummary() {
   return (
-    <section className="mt-20 overflow-hidden font-light leading-snug text-center mb-42 contact-text-responsive">
-      <div id="title-service-1">
-        <p>Full Stack Engineering</p>
-      </div>
-      <div
-        id="title-service-2"
-        className="flex items-center justify-center gap-3 translate-x-16"
-      >
-        <p className="font-normal">Next.js</p>
-        <div className="w-10 h-1 md:w-32 bg-gold" />
-        <p>Node.js</p>
-      </div>
-      <div
-        id="title-service-3"
-        className="flex items-center justify-center gap-3 -translate-x-48"
-      >
-        <p>Prisma</p>
-        <div className="w-10 h-1 md:w-32 bg-gold" />
-        <p className="italic">Socket.IO</p>
-        <div className="w-10 h-1 md:w-32 bg-gold" />
-        <p>AI Integrations</p>
-      </div>
-      <div id="title-service-4" className="translate-x-48">
-        <p>Cloud & CI/CD</p>
-      </div>
-    </section>
+    <div className="stack-strip section-shell" aria-label="Engineering stack">
+      <span>Full Stack Engineering</span>
+      <span>Next.js</span>
+      <span>Node.js</span>
+      <span>Prisma</span>
+      <span>Socket.IO</span>
+      <span>AI Integrations</span>
+      <span>Cloud & CI/CD</span>
+    </div>
   );
-};
-
-export default ServiceSummary;
+}

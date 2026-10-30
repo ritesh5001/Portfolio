@@ -71,43 +71,46 @@ export default function BlogIndexPage() {
     <>
       <JsonLd data={jsonLd} />
       <PageNav />
-      <main className="min-h-screen bg-[#0a0a0a] text-white pt-24">
-        <section className="px-6 md:px-10 lg:px-16 pb-12 border-b border-white/[0.08]">
+      <main
+        id="main-content"
+        className="content-page min-h-screen bg-white text-ink"
+      >
+        <section className="px-6 md:px-10 lg:px-16 pb-12 border-b border-black/[0.08]">
           <div className="mx-auto max-w-4xl">
-            <nav aria-label="Breadcrumb" className="text-xs text-white/35 mb-6">
+            <nav aria-label="Breadcrumb" className="text-xs text-ink/60 mb-6">
               <ol className="flex flex-wrap items-center gap-2">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="hover:text-ink transition-colors">
                     Home
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
-                <li className="text-white/60">Blog</li>
+                <li className="text-ink/60">Blog</li>
               </ol>
             </nav>
-            <p className="text-xs tracking-[0.5em] uppercase text-white/40 mb-4">
+            <p className="text-xs tracking-[0.5em] uppercase text-ink/60 mb-4">
               Notes from the work
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-light uppercase leading-tight">
               Blog
             </h1>
-            <p className="mt-6 text-white/65 text-lg font-light leading-relaxed max-w-2xl">
-              Write-ups from real builds — Next.js, WooCommerce, Shopify, and the
-              problems that come up shipping websites for businesses in Lucknow
-              and across India.
+            <p className="mt-6 text-ink/65 text-lg font-light leading-relaxed max-w-2xl">
+              Write-ups from real builds — Next.js, WooCommerce, Shopify, and
+              the problems that come up shipping websites for businesses in
+              Lucknow and across India.
             </p>
           </div>
         </section>
 
         <section className="px-6 md:px-10 lg:px-16 py-12">
-          <ol className="mx-auto max-w-4xl divide-y divide-white/[0.08]">
+          <ol className="blog-list mx-auto max-w-4xl divide-y divide-black/[0.08]">
             {posts.map((post) => (
               <li key={post.slug} className="py-8 first:pt-0">
                 <article className="group sm:flex sm:gap-6 sm:items-start">
                   {post.image && (
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="block shrink-0 mb-4 sm:mb-0 sm:w-48 overflow-hidden rounded-xl border border-white/10"
+                      className="block shrink-0 mb-4 sm:mb-0 sm:w-48 overflow-hidden rounded-xl border border-black/10"
                       tabIndex={-1}
                       aria-hidden="true"
                     >
@@ -122,44 +125,44 @@ export default function BlogIndexPage() {
                     </Link>
                   )}
                   <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-white/40">
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
-                    <span aria-hidden="true">·</span>
-                    <span>{post.readingMinutes} min read</span>
-                    {post.draft && (
-                      <span className="rounded-full bg-gold/20 px-2 py-0.5 text-gold">
-                        Draft — not published
-                      </span>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ink/60">
+                      <time dateTime={post.date}>{formatDate(post.date)}</time>
+                      <span aria-hidden="true">·</span>
+                      <span>{post.readingMinutes} min read</span>
+                      {post.draft && (
+                        <span className="rounded-full bg-gold/20 px-2 py-0.5 text-ink">
+                          Draft — not published
+                        </span>
+                      )}
+                      {post.scheduled && !post.draft && (
+                        <span className="rounded-full bg-black/10 px-2 py-0.5 text-ink/70">
+                          Scheduled
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="mt-3 text-xl md:text-2xl font-light leading-snug">
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="hover:text-ink transition-colors"
+                      >
+                        {post.title}
+                      </Link>
+                    </h2>
+                    <p className="mt-3 text-ink/70 font-light leading-relaxed">
+                      {post.description}
+                    </p>
+                    {post.tags.length > 0 && (
+                      <ul className="mt-4 flex flex-wrap gap-2">
+                        {post.tags.map((tag) => (
+                          <li
+                            key={tag}
+                            className="text-[10px] tracking-[0.2em] uppercase text-ink/65 bg-black/[0.05] px-3 py-1 rounded-full"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
                     )}
-                    {post.scheduled && !post.draft && (
-                      <span className="rounded-full bg-white/10 px-2 py-0.5 text-white/70">
-                        Scheduled
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="mt-3 text-xl md:text-2xl font-light leading-snug">
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="hover:text-gold transition-colors"
-                    >
-                      {post.title}
-                    </Link>
-                  </h2>
-                  <p className="mt-3 text-white/55 font-light leading-relaxed">
-                    {post.description}
-                  </p>
-                  {post.tags.length > 0 && (
-                    <ul className="mt-4 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <li
-                          key={tag}
-                          className="text-[10px] tracking-[0.2em] uppercase text-white/45 bg-white/[0.05] px-3 py-1 rounded-full"
-                        >
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                   </div>
                 </article>
               </li>

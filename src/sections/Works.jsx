@@ -1,367 +1,190 @@
 "use client";
 
-import { Icon } from "@iconify/react/dist/iconify.js";
-import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { clientProjects, projects } from "../constants";
 import { liveProjects } from "../constants/directory";
-import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { useGSAP } from "@gsap/react";
-import Link from "next/link";
+import SectionHeading from "../components/SectionHeading";
+import Arrow from "../components/Arrow";
 
-gsap.registerPlugin(ScrollTrigger);
+const filters = ["All", "Next.js / Full-Stack", "WooCommerce", "WordPress"];
 
-const Works = () => {
-  const overlayRefs = useRef([]);
-
-  const featuredProjects = clientProjects.filter((p) => p.featured);
-  const otherProjects = clientProjects.filter((p) => !p.featured);
-
-  const text = `Selected products built for scale, reliability,
-    and measurable user impact across real deployments.`;
-
-  useGSAP(() => {
-    gsap.from("#project", {
-      y: 100,
-      opacity: 0,
-      delay: 0.5,
-      duration: 1,
-      stagger: 0.3,
-      ease: "back.out",
-      scrollTrigger: {
-        trigger: "#project",
-      },
-    });
-    gsap.from(".featured-card", {
-      y: 60,
-      duration: 1,
-      stagger: 0.2,
-      ease: "power3.out",
-      scrollTrigger: { trigger: ".featured-card", start: "top 90%", once: true },
-    });
-    gsap.from(".client-card", {
-      y: 40,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "power2.out",
-      scrollTrigger: { trigger: ".client-card", start: "top 95%", once: true },
-    });
-
-    const refreshOnLoad = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refreshOnLoad);
-    return () => window.removeEventListener("load", refreshOnLoad);
-  }, []);
-
-  const handleMouseEnter = (index) => {
-    if (window.innerWidth < 768) return;
-    const el = overlayRefs.current[index];
-    if (!el) return;
-    gsap.killTweensOf(el);
-    gsap.fromTo(
-      el,
-      { clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)" },
-      {
-        clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-        duration: 0.15,
-        ease: "power2.out",
-      }
-    );
-  };
-
-  const handleMouseLeave = (index) => {
-    if (window.innerWidth < 768) return;
-    const el = overlayRefs.current[index];
-    if (!el) return;
-    gsap.killTweensOf(el);
-    gsap.to(el, {
-      clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
-      duration: 0.2,
-      ease: "power2.in",
-    });
-  };
-
+export default function Works() {
+  const [active, setActive] = useState("All");
   return (
-    <section id="work" className="flex flex-col min-h-screen">
-      <AnimatedHeaderSection
-        subTitle={"Production Projects"}
-        title={"Projects"}
-        text={text}
-        textColor={"text-black"}
-        withScrollTrigger={true}
+    <section id="work" className="work-section section-shell section-space">
+      <SectionHeading
+        number="02"
+        title="Projects"
+        subtitle="Production Projects"
+        description="Selected products built for scale, reliability, and measurable user impact across real deployments."
       />
-
-      {/* Personal engineering projects list */}
-      <div className="relative flex flex-col font-light">
+      <div className="project-grid">
         {projects.map((project, index) => (
-          <div
-            key={project.id}
-            id="project"
-            className="relative flex flex-col gap-1 py-5 group md:gap-0"
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={() => handleMouseLeave(index)}
-          >
-            <div
-              ref={(el) => {
-                overlayRefs.current[index] = el;
-              }}
-              className="absolute inset-0 hidden md:block duration-200 bg-black -z-10 clip-path"
-            />
-            <div className="flex justify-between px-1 sm:px-1 md:px-3 lg:px-6 text-black transition-all duration-500 md:group-hover:px-12 md:group-hover:text-white ultra-small-screen">
-              <h3 className="lg:text-[32px] text-[26px] leading-none">
-                {project.name}
-              </h3>
-              <div className="flex items-center gap-4 text-sm uppercase md:text-base">
-                {project.liveUrl && (
+          <article key={project.id} className="project-card">
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={"project-image project-image-" + index}
+              aria-label={"View " + project.name + " live"}
+            >
+              <div className="project-browser-bar">
+                <span />
+                <span />
+                <span />
+                <span className="browser-address">
+                  {new URL(project.liveUrl).hostname}
+                </span>
+                <Arrow />
+              </div>
+              <Image
+                src={project.image}
+                alt={project.imageAlt}
+                width={1200}
+                height={750}
+                sizes="(max-width: 700px) 100vw, 50vw"
+                loading="lazy"
+              />
+              <span className="project-open circle-link">
+                <Arrow />
+              </span>
+            </a>
+            <div className="project-caption">
+              <span className="eyebrow">
+                0{index + 1} / Full-Stack Engineering
+              </span>
+              <div className="project-title-row">
+                <h3>{project.name}</h3>
+                <div className="project-links">
                   <a
                     href={project.liveUrl}
                     target="_blank"
-                    rel="noopener"
-                    className="hover:text-gold transition-colors duration-300"
+                    rel="noopener noreferrer"
                   >
-                    Live
+                    Live <Arrow />
                   </a>
-                )}
-                {project.repoUrl && (
                   <a
                     href={project.repoUrl}
                     target="_blank"
-                    rel="noopener"
-                    className="hover:text-gold transition-colors duration-300"
+                    rel="noopener noreferrer"
                   >
-                    Code
-                  </a>
-                )}
-                <Icon icon="lucide:arrow-up-right" className="md:size-6 size-5" />
-              </div>
-            </div>
-            <div className="w-full h-0.5 bg-black/80" />
-            <div className="flex px-1 sm:px-1 md:px-3 lg:px-6 text-xs leading-loose uppercase transition-all duration-500 md:text-sm gap-x-5 md:group-hover:px-12 ultra-small-screen">
-              {project.frameworks.map((framework) => (
-                <p
-                  key={framework.id}
-                  className="text-black transition-colors duration-500 md:group-hover:text-white"
-                >
-                  {framework.name}
-                </p>
-              ))}
-            </div>
-            <div className="px-1 sm:px-1 md:px-3 lg:px-6 md:group-hover:px-12 transition-all duration-500 ultra-small-screen">
-              <p className="text-sm md:text-base lg:text-lg text-black/70 md:group-hover:text-white/80 max-w-5xl">
-                {project.description}
-              </p>
-            </div>
-            <div className="relative flex items-center justify-center px-1 sm:px-1 md:px-3 lg:px-6 md:hidden h-[400px] ultra-small-screen">
-              <img
-                src={project.bgImage}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                decoding="async"
-                className="object-cover w-full h-full rounded-md brightness-50"
-              />
-              <img
-                src={project.image}
-                alt={project.imageAlt}
-                loading="lazy"
-                decoding="async"
-                className="absolute bg-center px-14 rounded-xl"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Client Work Section */}
-      <div className="bg-[#0f0f0f] mt-12">
-        <div className="px-4 sm:px-6 md:px-10 lg:px-16 pt-16 pb-10 border-b border-white/[0.08]">
-          <p className="text-xs tracking-[0.5em] uppercase text-white/40 mb-3">
-            Freelance &amp; Client Work
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase text-white font-light leading-tight">
-            Client Projects
-          </h2>
-          <p className="mt-4 text-white/50 text-sm md:text-base font-light max-w-2xl leading-relaxed">
-            Production websites and platforms built for real businesses —
-            e-commerce, B2B marketplaces, service platforms, and more.
-          </p>
-        </div>
-
-        {/* Featured Projects */}
-        <div className="px-4 sm:px-6 md:px-10 lg:px-16 pt-12 pb-8">
-          <p className="text-[10px] tracking-[0.5em] uppercase text-white/30 mb-6">
-            Featured
-          </p>
-          <div className="grid gap-5 lg:grid-cols-2">
-            {featuredProjects.map((project) => (
-              <article
-                key={project.id}
-                className="featured-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-white/20 transition-all duration-500"
-              >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="block"
-                  aria-label={`Read the ${project.name} case study`}
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <img
-                      src={project.images[0]}
-                      alt={`${project.name} — ${project.tagline}`}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f] via-[#0f0f0f]/20 to-transparent" />
-                  </div>
-                  <div className="p-6 md:p-8 space-y-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
-                          <span className="text-[9px] tracking-[0.45em] uppercase text-black bg-white px-2.5 py-1 rounded-full font-medium">
-                            Featured
-                          </span>
-                          <span className="text-[9px] tracking-[0.45em] uppercase text-white/40 border border-white/15 px-2.5 py-1 rounded-full">
-                            {project.type}
-                          </span>
-                        </div>
-                        <h3 className="text-2xl md:text-3xl text-white font-light leading-tight">
-                          {project.name}
-                        </h3>
-                        <p className="text-white/50 text-sm mt-1">
-                          {project.tagline}
-                        </p>
-                      </div>
-                      <span className="flex-shrink-0 w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300">
-                        <Icon
-                          icon="lucide:arrow-up-right"
-                          className="size-4 text-white group-hover:text-black transition-colors duration-300"
-                        />
-                      </span>
-                    </div>
-                    <p className="text-white/55 text-sm leading-relaxed font-light line-clamp-2">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {project.tech.slice(0, 4).map((t) => (
-                        <span
-                          key={t}
-                          className="text-[10px] tracking-[0.2em] uppercase text-white/50 bg-white/[0.05] px-3 py-1.5 rounded-full"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-                <div className="flex items-center justify-between px-6 md:px-8 pb-6 -mt-2 border-t border-white/[0.07] pt-3">
-                  <span className="text-xs text-white/35 tracking-wider">
-                    {project.domain}
-                  </span>
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener"
-                    className="text-[10px] tracking-[0.3em] uppercase text-white/50 hover:text-white transition-colors duration-300"
-                  >
-                    Visit Site ↗
+                    Code <Arrow />
                   </a>
                 </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        {/* Other Client Projects Grid */}
-        <div className="px-4 sm:px-6 md:px-10 lg:px-16 pt-4 pb-10">
-          <p className="text-[10px] tracking-[0.5em] uppercase text-white/30 mb-6">
-            Case Studies
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {otherProjects.map((project) => (
-              <article
-                key={project.id}
-                className="client-card group relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.015] hover:border-white/15 transition-all duration-400"
-              >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="block"
-                  aria-label={`Read the ${project.name} case study`}
-                >
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <img
-                      src={project.images[0]}
-                      alt={`${project.name} — ${project.tagline}`}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-600"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 via-transparent to-transparent" />
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[9px] tracking-[0.3em] uppercase text-white/60 bg-black/50 backdrop-blur-sm border border-white/10 px-2 py-1 rounded-full">
-                        {project.type}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-5 space-y-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h3 className="text-base text-white font-light leading-tight">
-                          {project.name}
-                        </h3>
-                        <p className="text-white/40 text-xs mt-0.5 tracking-wide">
-                          {project.domain}
-                        </p>
-                      </div>
-                      <span className="flex-shrink-0 w-7 h-7 rounded-full border border-white/15 flex items-center justify-center group-hover:bg-white transition-all duration-300">
-                        <Icon
-                          icon="lucide:arrow-up-right"
-                          className="size-3.5 text-white group-hover:text-black transition-colors duration-300"
-                        />
-                      </span>
-                    </div>
-                    <p className="text-white/50 text-xs leading-relaxed font-light line-clamp-2">
-                      {project.tagline}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tech.slice(0, 3).map((t) => (
-                        <span
-                          key={t}
-                          className="text-[9px] tracking-[0.15em] uppercase text-white/40 bg-white/[0.04] px-2.5 py-1 rounded-full"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        {/* Link through to the full directory */}
-        <div className="px-4 sm:px-6 md:px-10 lg:px-16 pb-16">
-          <Link
-            href="/work"
-            className="flex items-center justify-between w-full rounded-2xl border border-white/15 bg-white/[0.03] px-6 py-6 md:px-8 text-white hover:bg-white hover:text-black transition-all duration-300 group"
-          >
-            <span>
-              <span className="block text-lg md:text-2xl font-light">
-                See all {liveProjects.length} live sites
-              </span>
-              <span className="block text-xs md:text-sm text-white/50 group-hover:text-black/60 mt-1">
-                E-commerce, service and custom builds delivered to date
-              </span>
-            </span>
-            <Icon
-              icon="lucide:arrow-right"
-              className="size-6 group-hover:translate-x-1 transition-transform duration-300"
-            />
-          </Link>
-        </div>
+              </div>
+              <p>{project.description}</p>
+              <ul className="project-tech">
+                {project.frameworks.map((framework) => (
+                  <li key={framework.id}>{framework.name}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
       </div>
+      <div className="client-section-heading">
+        <div>
+          <p className="eyebrow">Freelance & Client Work</p>
+          <h2>Client Projects</h2>
+        </div>
+        <p>
+          Production websites and platforms built for real businesses —
+          e-commerce, B2B marketplaces, service platforms, and more.
+        </p>
+      </div>
+      <div className="project-filters" aria-label="Filter client projects">
+        {filters.map((filter) => (
+          <button
+            key={filter}
+            type="button"
+            aria-pressed={active === filter}
+            onClick={() => setActive(filter)}
+            className={active === filter ? "is-active" : ""}
+          >
+            {filter === "Next.js / Full-Stack" ? "Full-Stack" : filter}
+            <span>
+              {filter === "All"
+                ? clientProjects.length
+                : clientProjects.filter((project) => project.type === filter)
+                    .length}
+            </span>
+          </button>
+        ))}
+      </div>
+      <div className="client-grid">
+        {clientProjects.map((project) => (
+          <article
+            key={project.id}
+            className={
+              "client-project " + (project.featured ? "client-featured " : "")
+            }
+            hidden={active !== "All" && active !== project.type}
+          >
+            <Link
+              href={"/projects/" + project.slug}
+              className="client-project-image"
+              aria-label={"Read the " + project.name + " case study"}
+            >
+              <Image
+                src={project.images[0]}
+                alt={project.name + " — " + project.tagline}
+                width={1200}
+                height={750}
+                sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                loading="lazy"
+              />
+              <span className="client-type">{project.type}</span>
+            </Link>
+            <div className="client-project-title">
+              <Link href={"/projects/" + project.slug}>
+                <h3>{project.name}</h3>
+              </Link>
+              <Link
+                href={"/projects/" + project.slug}
+                className="circle-link"
+                aria-label={"Read " + project.name + " case study"}
+              >
+                <Arrow />
+              </Link>
+            </div>
+            <p className="client-tagline">{project.tagline}</p>
+            {project.featured && (
+              <>
+                <span className="eyebrow featured-label">Featured</span>
+                <p className="client-description">{project.description}</p>
+              </>
+            )}
+            <ul className="project-tech">
+              {project.tech.slice(0, project.featured ? 4 : 3).map((tech) => (
+                <li key={tech}>{tech}</li>
+              ))}
+            </ul>
+            <div className="client-project-bottom">
+              <span>{project.domain}</span>
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit Site <Arrow />
+                </a>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+      <Link href="/work" className="all-work-link">
+        <div>
+          <span>See all {liveProjects.length} live sites</span>
+          <p>E-commerce, service and custom builds delivered to date</p>
+        </div>
+        <span className="circle-link">
+          <Arrow direction="right" />
+        </span>
+      </Link>
     </section>
   );
-};
-
-export default Works;
+}

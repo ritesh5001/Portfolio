@@ -18,6 +18,7 @@ const ProjectDetail = ({ project, previous, next }) => {
   const imageRef = useRef(null);
 
   useGSAP(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const tl = gsap.timeline();
     tl.from(heroRef.current, {
       opacity: 0,
@@ -28,25 +29,28 @@ const ProjectDetail = ({ project, previous, next }) => {
     tl.from(
       imageRef.current,
       { opacity: 0, scale: 0.96, duration: 1, ease: "power2.out" },
-      "<+0.2"
+      "<+0.2",
     );
     tl.from(
       contentRef.current?.querySelectorAll(".reveal-item"),
       { opacity: 0, y: 40, stagger: 0.1, duration: 0.8, ease: "power2.out" },
-      "<+0.3"
+      "<+0.3",
     );
   }, [project.slug]);
 
   const prevImage = () =>
-    setActiveImage((i) => (i - 1 + project.images.length) % project.images.length);
-  const nextImage = () => setActiveImage((i) => (i + 1) % project.images.length);
+    setActiveImage(
+      (i) => (i - 1 + project.images.length) % project.images.length,
+    );
+  const nextImage = () =>
+    setActiveImage((i) => (i + 1) % project.images.length);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-5 bg-[#0a0a0a]/90 backdrop-blur-md border-b border-white/[0.06]">
+    <div className="case-study min-h-screen bg-white text-ink">
+      <header className="case-study-topbar fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-5 bg-black/90 backdrop-blur-md border-b border-black/[0.06]">
         <Link
           href="/work"
-          className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-white/60 hover:text-white transition-colors duration-300 group"
+          className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-ink/60 hover:text-ink transition-colors duration-300 group"
         >
           <Icon
             icon="lucide:arrow-left"
@@ -54,7 +58,7 @@ const ProjectDetail = ({ project, previous, next }) => {
           />
           All work
         </Link>
-        <span className="text-xs tracking-[0.45em] uppercase text-white/40 hidden sm:block">
+        <span className="text-xs tracking-[0.45em] uppercase text-ink/60 hidden sm:block">
           {project.domain}
         </span>
         {project.liveUrl && (
@@ -62,7 +66,7 @@ const ProjectDetail = ({ project, previous, next }) => {
             href={project.liveUrl}
             target="_blank"
             rel="noopener"
-            className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-white/60 hover:text-white transition-colors duration-300"
+            className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-ink/60 hover:text-ink transition-colors duration-300"
           >
             Visit Site
             <Icon icon="lucide:arrow-up-right" className="size-4" />
@@ -70,26 +74,26 @@ const ProjectDetail = ({ project, previous, next }) => {
         )}
       </header>
 
-      <main className="pt-24">
+      <main id="main-content" className="content-page pt-24">
         {/* Breadcrumb — matches the BreadcrumbList in the page's JSON-LD. */}
         <nav
           aria-label="Breadcrumb"
-          className="px-6 md:px-10 lg:px-16 pt-4 text-xs text-white/35"
+          className="px-6 md:px-10 lg:px-16 pt-4 text-xs text-ink/60"
         >
           <ol className="mx-auto max-w-7xl flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/" className="hover:text-white transition-colors">
+              <Link href="/" className="hover:text-ink transition-colors">
                 Home
               </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link href="/work" className="hover:text-white transition-colors">
+              <Link href="/work" className="hover:text-ink transition-colors">
                 Work
               </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li className="text-white/60">{project.name}</li>
+            <li className="text-ink/60">{project.name}</li>
           </ol>
         </nav>
 
@@ -97,10 +101,10 @@ const ProjectDetail = ({ project, previous, next }) => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-[10px] tracking-[0.5em] uppercase text-white/40 border border-white/15 px-3 py-1.5 rounded-full">
+                <span className="text-[10px] tracking-[0.5em] uppercase text-ink/60 border border-black/15 px-3 py-1.5 rounded-full">
                   {project.type}
                 </span>
-                <span className="text-[10px] tracking-[0.5em] uppercase text-white/40 border border-white/15 px-3 py-1.5 rounded-full">
+                <span className="text-[10px] tracking-[0.5em] uppercase text-ink/60 border border-black/15 px-3 py-1.5 rounded-full">
                   {project.role}
                 </span>
                 {project.featured && (
@@ -112,7 +116,7 @@ const ProjectDetail = ({ project, previous, next }) => {
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light leading-none tracking-tight uppercase">
                 {project.name}
               </h1>
-              <p className="text-white/50 text-base md:text-lg lg:text-xl font-light max-w-2xl">
+              <p className="text-ink/65 text-base md:text-lg lg:text-xl font-light max-w-2xl">
                 {project.tagline}
               </p>
             </div>
@@ -121,7 +125,7 @@ const ProjectDetail = ({ project, previous, next }) => {
 
         <section ref={imageRef} className="px-6 md:px-10 lg:px-16 pb-12">
           <div className="max-w-7xl mx-auto">
-            <div className="relative overflow-hidden rounded-2xl bg-white/[0.03] border border-white/[0.08]">
+            <div className="relative overflow-hidden rounded-2xl bg-black/[0.03] border border-black/[0.08]">
               <div className="relative aspect-[16/9] overflow-hidden">
                 <img
                   src={project.images[activeImage]}
@@ -140,7 +144,7 @@ const ProjectDetail = ({ project, previous, next }) => {
                     type="button"
                     aria-label="Previous screenshot"
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
+                    className="gallery-button absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-black/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
                   >
                     <Icon icon="lucide:chevron-left" className="size-5" />
                   </button>
@@ -148,7 +152,7 @@ const ProjectDetail = ({ project, previous, next }) => {
                     type="button"
                     aria-label="Next screenshot"
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
+                    className="gallery-button absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-black/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
                   >
                     <Icon icon="lucide:chevron-right" className="size-5" />
                   </button>
@@ -158,11 +162,12 @@ const ProjectDetail = ({ project, previous, next }) => {
                         type="button"
                         key={image}
                         aria-label={`Show screenshot ${i + 1}`}
+                        aria-pressed={activeImage === i}
                         onClick={() => setActiveImage(i)}
                         className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                           i === activeImage
-                            ? "bg-white w-6"
-                            : "bg-white/40 hover:bg-white/70"
+                            ? "bg-ink w-6"
+                            : "bg-black/40 hover:bg-black/70"
                         }`}
                       />
                     ))}
@@ -178,11 +183,12 @@ const ProjectDetail = ({ project, previous, next }) => {
                     type="button"
                     key={img}
                     aria-label={`Show screenshot ${i + 1}`}
+                    aria-pressed={activeImage === i}
                     onClick={() => setActiveImage(i)}
                     className={`relative flex-1 aspect-[16/9] rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                       i === activeImage
-                        ? "border-white"
-                        : "border-white/10 hover:border-white/30"
+                        ? "border-black"
+                        : "border-black/10 hover:border-black/30"
                     }`}
                   >
                     <img
@@ -204,24 +210,24 @@ const ProjectDetail = ({ project, previous, next }) => {
         <section ref={contentRef} className="px-6 md:px-10 lg:px-16 pb-24">
           <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-[1fr_380px]">
             <div className="space-y-8">
-              <div className="reveal-item rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:p-8 space-y-4">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-white/40">
+              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-4">
+                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
                   Project Overview
                 </h2>
-                <p className="text-white/80 text-base md:text-lg leading-relaxed font-light">
+                <p className="text-ink/80 text-base md:text-lg leading-relaxed font-light">
                   {project.description}
                 </p>
               </div>
 
-              <div className="reveal-item rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-white/40">
+              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
+                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
                   Tech Stack
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="text-xs tracking-[0.2em] uppercase bg-white/[0.07] border border-white/10 px-4 py-2 rounded-full text-white/80 hover:bg-white/10 transition-colors duration-200"
+                      className="text-xs tracking-[0.2em] uppercase bg-black/[0.07] border border-black/10 px-4 py-2 rounded-full text-ink/80 hover:bg-black/10 transition-colors duration-200"
                     >
                       {t}
                     </span>
@@ -231,45 +237,45 @@ const ProjectDetail = ({ project, previous, next }) => {
             </div>
 
             <div className="space-y-8">
-              <div className="reveal-item rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-white/40">
+              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
+                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
                   Key Deliverables
                 </h2>
                 <ul className="space-y-3">
                   {project.deliverables.map((d) => (
                     <li
                       key={d}
-                      className="flex items-start gap-3 text-sm text-white/75 font-light"
+                      className="flex items-start gap-3 text-sm text-ink/75 font-light"
                     >
-                      <span className="mt-1.5 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
+                      <span className="mt-1.5 w-1 h-1 rounded-full bg-black/40 flex-shrink-0" />
                       {d}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="reveal-item rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-white/40">
+              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
+                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
                   Project Info
                 </h2>
                 <dl className="space-y-4">
                   <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-white/35 mb-1">
+                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
                       Domain
                     </dt>
-                    <dd className="text-sm text-white/75">{project.domain}</dd>
+                    <dd className="text-sm text-ink/75">{project.domain}</dd>
                   </div>
                   <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-white/35 mb-1">
+                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
                       Role
                     </dt>
-                    <dd className="text-sm text-white/75">{project.role}</dd>
+                    <dd className="text-sm text-ink/75">{project.role}</dd>
                   </div>
                   <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-white/35 mb-1">
+                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
                       Category
                     </dt>
-                    <dd className="text-sm text-white/75">{project.type}</dd>
+                    <dd className="text-sm text-ink/75">{project.type}</dd>
                   </div>
                 </dl>
               </div>
@@ -279,7 +285,7 @@ const ProjectDetail = ({ project, previous, next }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener"
-                  className="reveal-item flex items-center justify-between w-full rounded-2xl border border-white/20 bg-white/[0.04] px-6 py-5 hover:bg-white hover:text-black text-white transition-all duration-300 group"
+                  className="reveal-item flex items-center justify-between w-full rounded-2xl border border-black/20 bg-black/[0.04] px-6 py-5 hover:bg-white hover:text-black text-ink transition-all duration-300 group"
                 >
                   <span className="text-sm tracking-[0.3em] uppercase font-light">
                     Visit Live Site
@@ -293,7 +299,7 @@ const ProjectDetail = ({ project, previous, next }) => {
 
               <Link
                 href="/hire-web-developer-in-lucknow"
-                className="reveal-item flex items-center justify-between w-full rounded-2xl border border-gold/40 bg-gold/10 px-6 py-5 text-white hover:bg-gold hover:text-black transition-all duration-300 group"
+                className="reveal-item flex items-center justify-between w-full rounded-2xl border border-gold/40 bg-gold/10 px-6 py-5 text-ink hover:bg-gold hover:text-white transition-all duration-300 group"
               >
                 <span className="text-sm tracking-[0.3em] uppercase font-light">
                   Need something similar?
@@ -309,20 +315,20 @@ const ProjectDetail = ({ project, previous, next }) => {
 
         <nav
           aria-label="More case studies"
-          className="border-t border-white/[0.08] px-6 md:px-10 lg:px-16 py-10"
+          className="border-t border-black/[0.08] px-6 md:px-10 lg:px-16 py-10"
         >
           <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
             {previous ? (
               <Link
                 href={`/projects/${previous.slug}`}
-                className="flex items-center gap-3 text-white/50 hover:text-white transition-colors duration-300 group"
+                className="flex items-center gap-3 text-ink/65 hover:text-ink transition-colors duration-300 group"
               >
                 <Icon
                   icon="lucide:arrow-left"
                   className="size-5 group-hover:-translate-x-1 transition-transform duration-300"
                 />
                 <span className="text-left">
-                  <span className="block text-[10px] tracking-[0.4em] uppercase text-white/30">
+                  <span className="block text-[10px] tracking-[0.4em] uppercase text-ink/70">
                     Previous
                   </span>
                   <span className="block text-sm">{previous.name}</span>
@@ -334,7 +340,7 @@ const ProjectDetail = ({ project, previous, next }) => {
 
             <Link
               href="/work"
-              className="text-xs tracking-[0.4em] uppercase text-white/40 hover:text-white transition-colors duration-300 hidden sm:block"
+              className="text-xs tracking-[0.4em] uppercase text-ink/60 hover:text-ink transition-colors duration-300 hidden sm:block"
             >
               All Projects
             </Link>
@@ -342,10 +348,10 @@ const ProjectDetail = ({ project, previous, next }) => {
             {next ? (
               <Link
                 href={`/projects/${next.slug}`}
-                className="flex items-center gap-3 text-white/50 hover:text-white transition-colors duration-300 group text-right"
+                className="flex items-center gap-3 text-ink/65 hover:text-ink transition-colors duration-300 group text-right"
               >
                 <span>
-                  <span className="block text-[10px] tracking-[0.4em] uppercase text-white/30">
+                  <span className="block text-[10px] tracking-[0.4em] uppercase text-ink/70">
                     Next
                   </span>
                   <span className="block text-sm">{next.name}</span>

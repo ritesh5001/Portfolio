@@ -24,7 +24,6 @@ export const dynamicParams = true;
 // (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
 export const revalidate = 600;
 
-
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
@@ -59,9 +58,12 @@ export default async function BlogPostPage({ params }) {
     <>
       <JsonLd data={jsonLd} />
       <PageNav />
-      <main className="min-h-screen bg-[#0a0a0a] text-white pt-24">
+      <main
+        id="main-content"
+        className="content-page min-h-screen bg-white text-ink"
+      >
         {post.scheduled && !post.draft && (
-          <div className="bg-white/10 text-white text-center text-xs tracking-[0.2em] uppercase py-2">
+          <div className="bg-black/10 text-ink text-center text-xs tracking-[0.2em] uppercase py-2">
             Scheduled preview — goes live{" "}
             {new Date(post.publishedAt).toLocaleString("en-IN", {
               timeZone: "Asia/Kolkata",
@@ -72,24 +74,18 @@ export default async function BlogPostPage({ params }) {
           </div>
         )}
         {post.draft && (
-          <div className="bg-gold text-black text-center text-xs tracking-[0.2em] uppercase py-2">
+          <div className="bg-ink text-white text-center text-xs tracking-[0.2em] uppercase py-2">
             Draft preview — set <code>draft: false</code> to publish
           </div>
         )}
 
-        <header className="px-6 md:px-10 lg:px-16 pt-8 pb-10 border-b border-white/[0.08]">
+        <header className="px-6 md:px-10 lg:px-16 pt-8 pb-10 border-b border-black/[0.08]">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-3xl">
-              <nav
-                aria-label="Breadcrumb"
-                className="text-xs text-white/35 mb-6"
-              >
+              <nav aria-label="Breadcrumb" className="text-xs text-ink/60 mb-6">
                 <ol className="flex flex-wrap items-center gap-2">
                   <li>
-                    <Link
-                      href="/"
-                      className="hover:text-white transition-colors"
-                    >
+                    <Link href="/" className="hover:text-ink transition-colors">
                       Home
                     </Link>
                   </li>
@@ -97,7 +93,7 @@ export default async function BlogPostPage({ params }) {
                   <li>
                     <Link
                       href="/blog"
-                      className="hover:text-white transition-colors"
+                      className="hover:text-ink transition-colors"
                     >
                       Blog
                     </Link>
@@ -110,7 +106,7 @@ export default async function BlogPostPage({ params }) {
                   {post.tags.map((tag) => (
                     <li
                       key={tag}
-                      className="text-[10px] tracking-[0.25em] uppercase text-gold border border-gold/30 px-3 py-1 rounded-full"
+                      className="text-[10px] tracking-[0.25em] uppercase text-ink border border-gold/30 px-3 py-1 rounded-full"
                     >
                       {tag}
                     </li>
@@ -121,15 +117,15 @@ export default async function BlogPostPage({ params }) {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-light leading-tight tracking-tight">
                 {post.title}
               </h1>
-              <p className="mt-5 text-white/60 text-lg font-light leading-relaxed">
+              <p className="mt-5 text-ink/60 text-lg font-light leading-relaxed">
                 {post.description}
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/45">
+              <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink/65">
                 <Link
                   href="/about"
                   rel="author"
-                  className="text-white/75 hover:text-gold transition-colors"
+                  className="text-ink/75 hover:text-ink transition-colors"
                 >
                   {contactInfo.name}
                 </Link>
@@ -162,26 +158,26 @@ export default async function BlogPostPage({ params }) {
                   alt={post.imageAlt}
                   width="1280"
                   height="720"
-                  className="mb-10 w-full rounded-2xl border border-white/10 object-cover aspect-video"
+                  className="mb-10 w-full rounded-2xl border border-black/10 object-cover aspect-video"
                 />
               )}
               <article
-                className="post-body prose prose-invert prose-lg max-w-none prose-headings:font-light prose-a:underline-offset-4 prose-img:rounded-xl"
+                className="post-body prose prose-lg max-w-none prose-headings:font-light prose-a:underline-offset-4 prose-img:rounded-xl"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
               {post.sources.length > 0 && (
-                <section className="mt-12 border-t border-white/10 pt-6">
-                  <h2 className="text-xs tracking-[0.35em] uppercase text-white/40 mb-4">
+                <section className="mt-12 border-t border-black/10 pt-6">
+                  <h2 className="text-xs tracking-[0.35em] uppercase text-ink/60 mb-4">
                     Sources
                   </h2>
-                  <ol className="space-y-2 text-sm list-decimal pl-5 text-white/55">
+                  <ol className="space-y-2 text-sm list-decimal pl-5 text-ink/70">
                     {post.sources.map((source) => (
                       <li key={source.url}>
                         <a
                           href={source.url}
                           target="_blank"
                           rel="noopener"
-                          className="hover:text-gold underline underline-offset-4 decoration-white/20"
+                          className="hover:text-ink underline underline-offset-4 decoration-black/20"
                         >
                           {source.title}
                         </a>
@@ -196,9 +192,9 @@ export default async function BlogPostPage({ params }) {
               <aside className="hidden lg:block">
                 <nav
                   aria-label="On this page"
-                  className="sticky top-28 border-l border-white/10 pl-5"
+                  className="sticky top-28 border-l border-black/10 pl-5"
                 >
-                  <p className="text-[10px] tracking-[0.35em] uppercase text-white/35 mb-4">
+                  <p className="text-[10px] tracking-[0.35em] uppercase text-ink/60 mb-4">
                     On this page
                   </p>
                   <ol className="space-y-2.5 text-sm">
@@ -209,7 +205,7 @@ export default async function BlogPostPage({ params }) {
                       >
                         <a
                           href={`#${heading.id}`}
-                          className="text-white/50 hover:text-white transition-colors leading-snug block"
+                          className="text-ink/65 hover:text-ink transition-colors leading-snug block"
                         >
                           {heading.text}
                         </a>
@@ -226,13 +222,13 @@ export default async function BlogPostPage({ params }) {
             that bring in work. */}
         <section className="px-6 md:px-10 lg:px-16 pb-14">
           <div className="mx-auto max-w-6xl">
-            <div className="max-w-3xl rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:p-8 flex flex-col sm:flex-row gap-6">
+            <div className="max-w-3xl rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 flex flex-col sm:flex-row gap-6">
               <img
                 src={contactInfo.profileImage}
                 alt={contactInfo.name}
                 width="96"
                 height="96"
-                className="size-20 rounded-full object-cover object-top border border-white/10 shrink-0"
+                className="size-20 rounded-full object-cover object-top border border-black/10 shrink-0"
               />
               <div>
                 <p className="text-lg font-light">
@@ -240,12 +236,12 @@ export default async function BlogPostPage({ params }) {
                   <Link
                     href="/about"
                     rel="author"
-                    className="text-gold hover:text-white transition-colors"
+                    className="text-ink hover:text-ink transition-colors"
                   >
                     {contactInfo.name}
                   </Link>
                 </p>
-                <p className="mt-2 text-sm text-white/55 leading-relaxed font-light">
+                <p className="mt-2 text-sm text-ink/70 leading-relaxed font-light">
                   Freelance full-stack and WordPress developer in {LOCALITY}. I
                   build WooCommerce and Shopify stores, and custom Next.js
                   platforms, for businesses across India.
@@ -254,20 +250,20 @@ export default async function BlogPostPage({ params }) {
                   {service && (
                     <Link
                       href={`/services/${service.slug}`}
-                      className="rounded-full bg-gold px-5 py-2 text-xs uppercase tracking-[0.2em] text-black"
+                      className="rounded-full bg-ink px-5 py-2 text-xs uppercase tracking-[0.2em] text-white"
                     >
                       {service.shortName} services
                     </Link>
                   )}
                   <Link
                     href="/hire-web-developer-in-lucknow"
-                    className="rounded-full border border-white/20 px-5 py-2 text-xs uppercase tracking-[0.2em] text-white hover:border-white hover:bg-white/5 transition-colors"
+                    className="rounded-full border border-black/20 px-5 py-2 text-xs uppercase tracking-[0.2em] text-ink hover:border-black hover:bg-black/5 transition-colors"
                   >
                     Hire me
                   </Link>
                   <Link
                     href="/work"
-                    className="rounded-full border border-white/20 px-5 py-2 text-xs uppercase tracking-[0.2em] text-white hover:border-white hover:bg-white/5 transition-colors"
+                    className="rounded-full border border-black/20 px-5 py-2 text-xs uppercase tracking-[0.2em] text-ink hover:border-black hover:bg-black/5 transition-colors"
                   >
                     See my work
                   </Link>
@@ -281,7 +277,7 @@ export default async function BlogPostPage({ params }) {
           <section className="px-6 md:px-10 lg:px-16 pb-20">
             <div className="mx-auto max-w-6xl">
               <div className="max-w-3xl">
-                <h2 className="text-xs tracking-[0.35em] uppercase text-white/40 mb-5">
+                <h2 className="text-xs tracking-[0.35em] uppercase text-ink/60 mb-5">
                   Keep reading
                 </h2>
                 <ul className="grid gap-3">
@@ -289,12 +285,12 @@ export default async function BlogPostPage({ params }) {
                     <li key={other.slug}>
                       <Link
                         href={`/blog/${other.slug}`}
-                        className="block rounded-xl border border-white/[0.08] bg-white/[0.02] px-5 py-4 hover:border-white/25 transition-colors"
+                        className="block rounded-xl border border-black/[0.08] bg-black/[0.02] px-5 py-4 hover:border-black/25 transition-colors"
                       >
-                        <span className="block text-white font-light">
+                        <span className="block text-ink font-light">
                           {other.title}
                         </span>
-                        <span className="block text-xs text-white/40 mt-1">
+                        <span className="block text-xs text-ink/60 mt-1">
                           {other.readingMinutes} min read
                         </span>
                       </Link>

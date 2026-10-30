@@ -3,6 +3,7 @@ import { clientProjects } from "../../../constants";
 import { buildProjectSeo } from "../../../lib/seo";
 import JsonLd from "../../../components/JsonLd";
 import ProjectDetail from "../../../components/ProjectDetail";
+import PageNav from "../../../components/PageNav";
 import SiteFooter from "../../../components/SiteFooter";
 
 // Pre-renders a real HTML file for every case study at build time. This is what
@@ -33,6 +34,7 @@ export default async function ProjectCaseStudyPage({ params }) {
   return (
     <>
       <JsonLd data={jsonLd} />
+      <PageNav />
       <ProjectDetail project={project} previous={previous} next={next} />
       <SiteFooter />
     </>
