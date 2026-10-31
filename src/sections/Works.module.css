@@ -1,0 +1,195 @@
+/* Mobile treatment inspired by NextGen Fusion's grouped service cards.
+   Keep the portfolio's monochrome palette and its existing desktop layout. */
+@media (max-width: 760px) {
+  .mobileCards :global(.project-grid),
+  .mobileCards :global(.client-grid) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .mobileCards :global(.project-card),
+  .mobileCards :global(.client-project) {
+    padding: 12px;
+    border: 1px solid #e8e8e4;
+    border-radius: 36px;
+    background: linear-gradient(150deg, #fff, #f6f6f3);
+    box-shadow: 0 12px 32px #1b1b1b06;
+  }
+
+  .mobileCards :global(.project-image),
+  .mobileCards :global(.client-project-image) {
+    border-radius: 24px;
+    isolation: isolate;
+  }
+
+  .mobileCards :global(.project-image) {
+    aspect-ratio: 1.4;
+    padding: 20px 18px 0;
+  }
+
+  .mobileCards :global(.project-browser-bar) {
+    padding: 10px 8px;
+  }
+
+  .mobileCards :global(.project-image > img) {
+    height: calc(100% - 28px);
+  }
+
+  .mobileCards :global(.project-open) {
+    width: 44px;
+    height: 44px;
+    right: 12px;
+    bottom: 12px;
+    box-shadow: 0 3px 16px #00000012;
+  }
+
+  .mobileCards :global(.project-caption) {
+    padding: 20px 10px 10px;
+  }
+
+  .mobileCards :global(.project-caption > .eyebrow) {
+    font-size: 9px;
+    letter-spacing: 0.065em;
+  }
+
+  .mobileCards :global(.project-title-row) {
+    gap: 14px;
+    margin-top: 10px;
+    align-items: stretch;
+  }
+
+  .mobileCards :global(.project-title-row h3) {
+    font-size: clamp(21px, 5.8vw, 27px);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileCards :global(.project-links) {
+    border-block: 1px solid var(--rule);
+    padding-block: 5px;
+    gap: 0;
+    font-size: 10px;
+  }
+
+  .mobileCards :global(.project-links a) {
+    min-height: 44px;
+    flex: 1;
+    justify-content: space-between;
+    padding-inline: 8px;
+  }
+
+  .mobileCards :global(.project-links a + a) {
+    border-left: 1px solid var(--rule);
+    padding-left: 20px;
+  }
+
+  .mobileCards :global(.project-links .arrow-icon) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .mobileCards :global(.project-caption > p),
+  .mobileCards :global(.client-tagline),
+  .mobileCards :global(.client-description) {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .mobileCards :global(.project-tech) {
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    margin-top: 18px;
+    gap: 7px;
+    font-size: 9px;
+    letter-spacing: 0.025em;
+  }
+
+  .mobileCards :global(.project-tech li) {
+    padding: 6px 9px;
+    border: 1px solid #e4e4df;
+    border-radius: 8px;
+    background: #ffffffa6;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileCards :global(.project-tech li + li::before) {
+    content: none;
+  }
+
+  .mobileCards :global(.client-project) {
+    padding-bottom: 18px;
+  }
+
+  .mobileCards :global(.client-project > :not(.client-project-image)) {
+    margin-inline: 10px;
+  }
+
+  .mobileCards :global(.client-project-image) {
+    aspect-ratio: 1.55;
+  }
+
+  .mobileCards :global(.client-type) {
+    font-size: 8px;
+    top: 12px;
+    right: 12px;
+    padding: 6px 9px;
+    max-width: calc(100% - 24px);
+  }
+
+  .mobileCards :global(.client-project-title) {
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .mobileCards :global(.client-project-title h3) {
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .mobileCards :global(.client-project-title > a:first-child) {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .mobileCards :global(.client-project-title .circle-link) {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    border-color: #deded8;
+    background: #fff;
+  }
+
+  .mobileCards :global(.client-tagline) {
+    margin-top: 4px;
+  }
+
+  .mobileCards :global(.featured-label) {
+    font-size: 9px;
+    margin-top: 16px;
+  }
+
+  .mobileCards :global(.client-description-details summary) {
+    min-height: 44px;
+    font-size: 11px;
+  }
+
+  .mobileCards :global(.client-project-bottom) {
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    font-size: 10px;
+    gap: 4px 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileCards :global(.client-project-bottom a) {
+    min-height: 44px;
+    gap: 10px;
+  }
+
+  .mobileCards :global(.project-filters button) {
+    min-height: 44px;
+  }
+}

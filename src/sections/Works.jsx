@@ -8,6 +8,7 @@ import { clientProjects, projects } from "../constants";
 import { liveProjects } from "../constants/directory";
 import SectionHeading from "../components/SectionHeading";
 import Arrow from "../components/Arrow";
+import styles from "./Works.module.css";
 
 const filters = ["All", "Next.js / Full-Stack", "WooCommerce", "WordPress"];
 // The personal Tat Vivah capture is an old 503 screen; reuse its saved case-study image.
@@ -23,7 +24,10 @@ const projectCards = projects.map((project) => ({
 export default function Works() {
   const { active, select, gridRef } = useAnimatedFilter();
   return (
-    <section id="work" className="work-section section-shell section-space">
+    <section
+      id="work"
+      className={`${styles.mobileCards} work-section section-shell section-space`}
+    >
       <SectionHeading
         number="02"
         title="Projects"
