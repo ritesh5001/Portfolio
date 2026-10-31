@@ -403,6 +403,24 @@ html[data-motion="full"] .motion-toggle-icon i {
   animation: motion-bars 1.6s ease-in-out infinite;
   animation-delay: var(--bar-delay, 0ms);
 }
+/* Decorative loops only run while their content and browser tab are visible. */
+html[data-motion="full"][data-motion-suspended="true"]
+  :is(
+    .stack-track,
+    .availability > span,
+    .hero-scroll .arrow-icon,
+    .motion-toggle-icon i
+  ),
+html[data-motion="full"]
+  [data-loop-visible="false"]
+  :is(
+    .stack-track,
+    .availability > span,
+    .hero-scroll .arrow-icon,
+    .motion-toggle-icon i
+  ) {
+  animation-play-state: paused !important;
+}
 .motion-toggle-icon i:nth-child(2) {
   --bar-delay: -300ms;
 }

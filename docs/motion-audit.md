@@ -55,3 +55,12 @@ Run `node scripts/generate-image-placeholders.mjs` after replacing screenshots. 
 - The personal Tat Vivah preview referenced an existing 503 capture. Its card now reuses the saved storefront screenshot from the case study; the original asset is retained.
 
 Swipe handling uses Pointer Events and was exercised with horizontal browser pointer gestures; physical touch hardware was not available for validation.
+
+## Continuation review
+
+- Extended shared reveals to the refreshed archive ledger, introduction, filter tools, results/empty states, and case-study labels, facts, and project information.
+- Decorative loops pause outside the viewport and while the document is hidden. Their observers, attributes, and visibility listener are released with the existing route cleanup.
+- Equivalent filter selections return early. Search changes that retain the same cards and positions also skip FLIP animations; changing `maribiz` to `MARIBIZ` was checked without a layout tween.
+- Navigation dismisses on an outside click, focus leaving the header, Escape, or selecting a header link. Outside-click and focus dismissal were checked, including at a 390 px viewport.
+- Browser checks confirmed the offscreen strip is paused, resumes in view, and pauses after leaving; reduced mode removes loop markers and CSS animations. Newly covered archive/case-study elements report their reveal state correctly.
+- Production build: 228 pages generated. Representative homepage, archive, live/archived case-study, and article routes returned HTTP 200 with one H1, canonical links, and JSON-LD. No content, keyword constants, project data, or SEO definitions changed during this follow-up.

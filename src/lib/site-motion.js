@@ -19,6 +19,18 @@ const REVEAL_SELECTOR = [
   ".client-section-heading > *",
   ".client-project",
   ".directory-grid > li",
+  ".project-section-heading > *",
+  ".archive-ledger > div",
+  ".archive-story",
+  ".archive-tools",
+  ".archive-category-filters",
+  ".archive-results-bar",
+  ".archive-empty",
+  ".case-hero-label",
+  ".case-hero-description",
+  ".case-hero-facts > div",
+  ".case-project-info",
+  ".case-hire-link",
   ".skills-list > details",
   ".all-work-link",
   ".contact-summary > p",
@@ -49,6 +61,8 @@ const FILTER_ITEM = ".client-project, .directory-grid > li";
 const MAGNETIC_SELECTOR =
   ".solid-button, .nav-contact, .hero-scroll, .contact-title .circle-link";
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const LOOP_SELECTOR =
+  ".stack-strip, .availability, .hero-scroll, .motion-toggle";
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 export function installSiteMotion({ reduced, animateInitial = true }) {
@@ -59,7 +73,9 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   const elementAnimations = new WeakMap();
   const registered = new WeakSet();
   const revealed = new WeakSet();
+  const loopTargets = new Set();
   let observer;
+  let loopObserver;
   let mutationObserver;
   let resizeObserver;
   let frame = 0;
@@ -89,7 +105,9 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
       return;
     cancel(element);
     element.dataset.motionState = "revealed";
-    const isHeadline = element.matches(".hero-line, .content-page h1");
+    const isHeadline = element.matches(
+      ".hero-line, .content-page h1, [data-motion-reveal='headline']",
+    );
     const isImage = element.matches(
       ".hero-portrait, [data-motion-reveal='image']",
     );
@@ -146,6 +164,14 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
       ...document.querySelectorAll(".post-body > h2[id], .post-body > h3[id]"),
     ];
     tocLinks = [...document.querySelectorAll('[aria-label="On this page"] a')];
+    if (loopObserver) {
+      for (const element of document.querySelectorAll(LOOP_SELECTOR)) {
+        if (loopTargets.has(element)) continue;
+        loopTargets.add(element);
+        element.dataset.loopVisible = "false";
+        loopObserver.observe(element);
+      }
+    }
     if (observer) {
       const candidates = [...document.querySelectorAll(REVEAL_SELECTOR)];
       const selected = new Set(candidates);
@@ -281,7 +307,18 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
     }
   }
 
+  function onVisibilityChange() {
+    root.dataset.motionSuspended = document.hidden ? "true" : "false";
+    if (document.hidden) clearMagnetic();
+  }
+
   if (!reduced && "IntersectionObserver" in window) {
+    loopObserver = new IntersectionObserver((entries) => {
+      for (const entry of entries)
+        entry.target.dataset.loopVisible = entry.isIntersecting
+          ? "true"
+          : "false";
+    });
     observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -300,6 +337,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   }
 
   refreshTargets();
+  onVisibilityChange();
   if ("ResizeObserver" in window) {
     resizeObserver = new ResizeObserver(requestScroll);
     resizeObserver.observe(document.body);
@@ -345,6 +383,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   window.addEventListener("scroll", requestScroll, { passive: true });
   window.addEventListener("resize", requestScroll, { passive: true });
   document.addEventListener("focusin", onFocus);
+  document.addEventListener("visibilitychange", onVisibilityChange);
   if (!reduced) {
     document.addEventListener("pointermove", onPointer, { passive: true });
     document.addEventListener("pointerleave", clearMagnetic);
@@ -353,6 +392,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
 
   return () => {
     observer?.disconnect();
+    loopObserver?.disconnect();
     resizeObserver?.disconnect();
     mutationObserver.disconnect();
     cancelAnimationFrame(frame);
@@ -361,6 +401,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
     window.removeEventListener("scroll", requestScroll);
     window.removeEventListener("resize", requestScroll);
     document.removeEventListener("focusin", onFocus);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
     document.removeEventListener("pointermove", onPointer);
     document.removeEventListener("pointerleave", clearMagnetic);
     document.removeEventListener("toggle", onToggle, true);
@@ -369,6 +410,8 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
     portrait?.style.removeProperty("--portrait-shift");
     if (header) delete header.dataset.scrolled;
     if (homeNav) delete homeNav.dataset.scrollspy;
+    delete root.dataset.motionSuspended;
+    for (const element of loopTargets) delete element.dataset.loopVisible;
     for (const link of [...homeLinks, ...tocLinks]) delete link.dataset.current;
     for (const element of document.querySelectorAll("[data-motion-state]"))
       delete element.dataset.motionState;

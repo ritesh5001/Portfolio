@@ -10,6 +10,7 @@ export default function Navbar({ showBlog = false }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const menuButton = useRef(null);
+  const headerRef = useRef(null);
   const isHome = pathname === "/";
   const links = [
     { label: "Home", href: "/", active: isHome },
@@ -41,17 +42,27 @@ export default function Navbar({ showBlog = false }) {
         menuButton.current?.focus();
       }
     };
+    const dismissOutside = (event) => {
+      if (!headerRef.current?.contains(event.target)) setIsOpen(false);
+    };
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    document.addEventListener("pointerdown", dismissOutside);
+    document.addEventListener("focusin", dismissOutside);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("pointerdown", dismissOutside);
+      document.removeEventListener("focusin", dismissOutside);
+    };
   }, [isOpen]);
 
   return (
-    <header className="site-header">
+    <header ref={headerRef} className="site-header">
       <div className="nav-inner">
         <Link
           href="/"
           className="wordmark"
           aria-label={contactInfo.name + " — Home"}
+          onClick={() => setIsOpen(false)}
         >
           RITESH GIRI<span className="wordmark-dot">®</span>
         </Link>
@@ -62,6 +73,7 @@ export default function Navbar({ showBlog = false }) {
               href={link.href}
               className={"nav-pill " + (link.active ? "is-active" : "")}
               aria-current={link.active ? "page" : undefined}
+              onClick={() => setIsOpen(false)}
             >
               {link.label}
             </Link>
@@ -74,12 +86,14 @@ export default function Navbar({ showBlog = false }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
+            onClick={() => setIsOpen(false)}
           >
             in
           </a>
           <a
             className="nav-contact"
             href={isHome ? "/#contact" : "/hire-web-developer-in-lucknow"}
+            onClick={() => setIsOpen(false)}
           >
             Let’s talk <Arrow />
           </a>

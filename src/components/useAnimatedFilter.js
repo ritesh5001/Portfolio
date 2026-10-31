@@ -5,6 +5,24 @@ import { useMotionPreference } from "./SiteMotion";
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
+function sameSelection(previous, next) {
+  if (Object.is(previous, next)) return true;
+  if (
+    !previous ||
+    !next ||
+    typeof previous !== "object" ||
+    typeof next !== "object"
+  )
+    return false;
+  const keys = Object.keys(previous);
+  return (
+    keys.length === Object.keys(next).length &&
+    keys.every(
+      (key) => Object.hasOwn(next, key) && Object.is(previous[key], next[key]),
+    )
+  );
+}
+
 /** FLIP the existing cards; retain their real DOM, links, and crawler content. */
 export default function useAnimatedFilter(initial = "All") {
   const [active, setActive] = useState(initial);
@@ -14,7 +32,7 @@ export default function useAnimatedFilter(initial = "All") {
   const { ready, reduced } = useMotionPreference();
 
   const select = (next) => {
-    if (next === active) return;
+    if (sameSelection(active, next)) return;
     const grid = gridRef.current;
     if (grid && ready && !reduced) {
       const rects = new Map();
@@ -58,8 +76,27 @@ export default function useAnimatedFilter(initial = "All") {
     const items = [...grid.children].filter(
       (item) => item.getClientRects().length,
     );
+    const afterRects = new Map(
+      items.map((item) => [item, item.getBoundingClientRect()]),
+    );
+    const unchanged =
+      items.length === before.rects.size &&
+      Math.abs(before.height - height) < 1 &&
+      items.every((item) => {
+        const previous = before.rects.get(item);
+        const after = afterRects.get(item);
+        return (
+          previous &&
+          Math.abs(previous.left - after.left) < 1 &&
+          Math.abs(previous.top - after.top) < 1
+        );
+      });
+    if (unchanged) {
+      delete grid.dataset.filterChanging;
+      return;
+    }
     items.forEach((item, index) => {
-      const after = item.getBoundingClientRect();
+      const after = afterRects.get(item);
       if (after.bottom < -80 || after.top > window.innerHeight + 80) return;
       item.dataset.motionState = "revealed";
       const previous = before.rects.get(item);
