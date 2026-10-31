@@ -1,7 +1,13 @@
 /* Motion enhances an already visible, server-rendered page. */
+/* One motion language for the whole site:
+   - three speeds: fast for UI feedback, base for content, slow for statements
+   - two curves: ease-out for things arriving, ease-in-out for things changing */
 :root {
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --motion-fast: 220ms;
+  --motion-base: 450ms;
+  --motion-slow: 750ms;
 }
 .scroll-progress {
   position: fixed;
@@ -753,4 +759,279 @@ html[data-motion="full"]
 }
 html[data-motion="reduced"] .project-card {
   transform: none !important;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Motion system v2                                                          */
+/* ------------------------------------------------------------------------ */
+
+/* Hero entrance. Pure CSS so it starts on the first painted frame: there is
+   no hydration wait and nothing is shown, hidden, then replayed. The headline
+   and portrait (the LCP candidates) are never hidden; only the small supporting
+   text rises in, and the headline gets a one-time light sweep across its
+   gradient. With JS disabled this still runs and ends fully visible. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion-pref="reduced"]):not([data-motion="reduced"])
+    :is(.hero-topline, .hero-location, .hero-aside, .hero-bottomline) {
+    animation: hero-rise var(--motion-slow) var(--ease-out) backwards;
+  }
+  html:not([data-motion-pref="reduced"]):not([data-motion="reduced"]) {
+    & .hero-topline {
+      animation-delay: 80ms;
+    }
+    & .hero-location {
+      animation-delay: 260ms;
+    }
+    & .hero-aside-left {
+      animation-delay: 380ms;
+    }
+    & .hero-aside-right {
+      animation-delay: 460ms;
+    }
+    & .hero-bottomline {
+      animation-delay: 560ms;
+    }
+    /* backwards (not both): once finished, the hover sheen takes over again. */
+    & .hero-line {
+      animation: hero-sheen 1600ms var(--ease-in-out) 150ms backwards;
+    }
+    & .hero-line + .hero-line {
+      animation-delay: 260ms;
+    }
+  }
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+@keyframes hero-sheen {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Page transitions (React <ViewTransition>, see app/template.jsx). The old
+   page leaves quickly and the new one settles in a beat later. Browsers
+   without the View Transitions API simply swap pages as before. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(.page-exit) {
+  animation: vt-fade-out var(--motion-fast) var(--ease-in-out) both;
+}
+::view-transition-new(.page-enter) {
+  animation: vt-rise-in var(--motion-base) var(--ease-out) 90ms both;
+}
+/* The header is the same on every page, so it is held perfectly still
+   instead of fading out and back in with the content around it. */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* Shared elements: a project card's screenshot travels into the case-study
+   gallery, a blog thumbnail into the post cover. */
+::view-transition-group(.morph) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease-out);
+  z-index: 50;
+}
+::view-transition-image-pair(.morph) {
+  animation-name: vt-morph-soften;
+}
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+@keyframes vt-morph-soften {
+  35% {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-image-pair(*) {
+    animation: none !important;
+  }
+}
+html[data-motion="reduced"]::view-transition-group(*),
+html[data-motion="reduced"]::view-transition-old(*),
+html[data-motion="reduced"]::view-transition-new(*),
+html[data-motion="reduced"]::view-transition-image-pair(*) {
+  animation: none !important;
+}
+
+/* Sliding nav indicator. Without JS (no data-indicator) the links keep their
+   own .is-active styling from globals.css. */
+.desktop-nav {
+  position: relative;
+}
+.nav-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 100px;
+  background: #1b1b1b;
+  opacity: 0;
+  pointer-events: none;
+}
+.nav-indicator[data-ready] {
+  transition:
+    transform var(--motion-base) var(--ease-out),
+    width var(--motion-base) var(--ease-out),
+    opacity var(--motion-fast);
+}
+.desktop-nav[data-indicator] .nav-pill {
+  position: relative;
+  z-index: 1;
+}
+.desktop-nav[data-indicator] .nav-pill,
+.desktop-nav[data-indicator] .nav-pill:is(:hover, .is-active, [data-current]) {
+  background: transparent;
+  color: #1b1b1b;
+  border-color: #e0e0de;
+}
+.desktop-nav[data-indicator] .nav-pill[data-indicated] {
+  color: #fff;
+  border-color: transparent;
+}
+
+/* "View project" label that trails the pointer over project screenshots.
+   Created by the motion engine for fine pointers only; aria-hidden. */
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 300;
+  padding: 10px 15px;
+  border-radius: 100px;
+  background: #1b1b1b;
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 180ms var(--ease-out),
+    scale 320ms var(--ease-out);
+  will-change: transform;
+}
+.cursor-label[data-visible="true"] {
+  opacity: 1;
+  scale: 1;
+}
+
+/* Copy button on blog code blocks (added by the motion engine). */
+.post-body figure[data-rehype-pretty-code-figure] {
+  position: relative;
+}
+.code-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 11px;
+  border: 1px solid #dededb;
+  border-radius: 100px;
+  background: #fff;
+  color: #1b1b1b;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--motion-fast),
+    background-color var(--motion-fast);
+}
+.code-copy:hover {
+  background: #f3f3f1;
+}
+figure:hover > .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .code-copy {
+    opacity: 1;
+  }
+}
+
+/* Scroll-linked touches, driven by the browser's scroll timeline (no JS, no
+   scroll listeners). Only where supported, only with motion on. */
+@property --hero-drift {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 761px) {
+    /* The two headline lines part slightly as the hero scrolls away. */
+    html[data-motion="full"] .hero-title {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 90vh;
+    }
+    html[data-motion="full"] .hero-line-first {
+      translate: calc(var(--hero-drift) * -1) 0;
+    }
+    html[data-motion="full"] .hero-line:not(.hero-line-first) {
+      translate: var(--hero-drift) 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    /* The footer signature is drawn in outline, then fills as it arrives. */
+    html[data-motion="full"] .site-footer .footer-signature {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 1px #1b1b1b;
+      background: linear-gradient(90deg, #1b1b1b 50%, transparent 50%) 100% 0 /
+        200% 100% no-repeat;
+      background-clip: text;
+      animation: signature-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 10% entry 100%;
+    }
+  }
+}
+@keyframes hero-drift {
+  to {
+    --hero-drift: 44px;
+  }
+}
+@keyframes signature-fill {
+  to {
+    background-position: 0 0;
+  }
 }

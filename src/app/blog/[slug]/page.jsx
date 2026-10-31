@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { blogPlaceholders } from "../../../generated/blogPlaceholders";
 import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
@@ -155,17 +156,24 @@ export default async function BlogPostPage({ params }) {
           <div className="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1fr_240px]">
             <div className="max-w-3xl min-w-0">
               {post.image && (
-                <Image
-                  data-motion-reveal="image"
-                  src={post.image}
-                  placeholder={blogPlaceholders[post.image] ? "blur" : "empty"}
-                  blurDataURL={blogPlaceholders[post.image]}
-                  sizes="(max-width: 1024px) 100vw, 768px"
-                  alt={post.imageAlt}
-                  width="1280"
-                  height="720"
-                  className="mb-10 w-full rounded-2xl border border-black/10 object-cover aspect-video"
-                />
+                <ViewTransition
+                  name={`post-${post.slug}`}
+                  share="morph"
+                  default="none"
+                >
+                  <Image
+                    src={post.image}
+                    placeholder={
+                      blogPlaceholders[post.image] ? "blur" : "empty"
+                    }
+                    blurDataURL={blogPlaceholders[post.image]}
+                    sizes="(max-width: 1024px) 100vw, 768px"
+                    alt={post.imageAlt}
+                    width="1280"
+                    height="720"
+                    className="mb-10 w-full rounded-2xl border border-black/10 object-cover aspect-video"
+                  />
+                </ViewTransition>
               )}
               <article
                 className="post-body prose prose-lg max-w-none prose-headings:font-light prose-a:underline-offset-4 prose-img:rounded-xl"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, ViewTransition } from "react";
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { projectPlaceholders } from "../generated/projectPlaceholders";
@@ -79,63 +79,73 @@ export default function ProjectGallery({ project }) {
         </span>
       </div>
       <div className="case-gallery-canvas">
-        <div
-          className={
-            "gallery-stage " + (project.images.length > 1 ? "can-swipe" : "")
-          }
-          role="region"
-          aria-label={
-            project.name +
-            " screenshots" +
-            (project.images.length > 1
-              ? ". Swipe or use left and right arrow keys to browse."
-              : "")
-          }
-          tabIndex={project.images.length > 1 ? 0 : undefined}
-          onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-          onPointerCancel={() => {
-            gesture.current = null;
-          }}
-          onKeyDown={(event) => {
-            if (project.images.length < 2) return;
-            if (event.key === "ArrowLeft") {
-              event.preventDefault();
-              prevImage();
-            }
-            if (event.key === "ArrowRight") {
-              event.preventDefault();
-              nextImage();
-            }
-          }}
+        {/* Same name as the project's card on the home page, /work and the
+            related links, so the screenshot carries across the navigation. */}
+        <ViewTransition
+          name={"project-" + project.slug}
+          share="morph"
+          default="none"
         >
-          {project.images.map((src, index) => (
-            <span
-              key={src}
-              className={
-                "gallery-layer " + (index === activeImage ? "is-active" : "")
+          <div
+            className={
+              "gallery-stage " + (project.images.length > 1 ? "can-swipe" : "")
+            }
+            role="region"
+            aria-label={
+              project.name +
+              " screenshots" +
+              (project.images.length > 1
+                ? ". Swipe or use left and right arrow keys to browse."
+                : "")
+            }
+            tabIndex={project.images.length > 1 ? 0 : undefined}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+            onPointerCancel={() => {
+              gesture.current = null;
+            }}
+            onKeyDown={(event) => {
+              if (project.images.length < 2) return;
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                prevImage();
               }
-              aria-hidden={index !== activeImage}
-            >
-              <Image
-                data-gallery-image={index === activeImage ? "true" : undefined}
-                src={src}
-                alt={
-                  index === activeImage
-                    ? `${project.name} — ${project.tagline}, screen ${index + 1} of ${project.images.length}`
-                    : ""
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                nextImage();
+              }
+            }}
+          >
+            {project.images.map((src, index) => (
+              <span
+                key={src}
+                className={
+                  "gallery-layer " + (index === activeImage ? "is-active" : "")
                 }
-                fill
-                sizes="(max-width: 760px) 90vw, (max-width: 1400px) 85vw, 1160px"
-                loading={index === 0 ? "eager" : "lazy"}
-                placeholder={projectPlaceholders[src] ? "blur" : "empty"}
-                blurDataURL={projectPlaceholders[src]}
-                draggable={false}
-                className="object-contain object-top"
-              />
-            </span>
-          ))}
-        </div>
+                aria-hidden={index !== activeImage}
+              >
+                <Image
+                  data-gallery-image={
+                    index === activeImage ? "true" : undefined
+                  }
+                  src={src}
+                  alt={
+                    index === activeImage
+                      ? `${project.name} — ${project.tagline}, screen ${index + 1} of ${project.images.length}`
+                      : ""
+                  }
+                  fill
+                  sizes="(max-width: 760px) 90vw, (max-width: 1400px) 85vw, 1160px"
+                  loading={index === 0 ? "eager" : "lazy"}
+                  placeholder={projectPlaceholders[src] ? "blur" : "empty"}
+                  blurDataURL={projectPlaceholders[src]}
+                  draggable={false}
+                  className="object-contain object-top"
+                />
+              </span>
+            ))}
+          </div>
+        </ViewTransition>
       </div>
       <div className="case-gallery-bottom">
         <p>

@@ -6,7 +6,6 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { usePathname } from "next/navigation";
@@ -25,7 +24,6 @@ export default function SiteMotion({ children }) {
   const [preference, setPreference] = useState("system");
   const [systemReduced, setSystemReduced] = useState(false);
   const [ready, setReady] = useState(false);
-  const lastRun = useRef(null);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -47,6 +45,8 @@ export default function SiteMotion({ children }) {
   const toggle = useCallback(() => {
     const next = reduced ? "full" : "reduced";
     setPreference(next);
+    // Keep the pre-paint flag (set by the inline script in layout.jsx) in sync.
+    document.documentElement.dataset.motionPref = next;
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {
@@ -57,12 +57,9 @@ export default function SiteMotion({ children }) {
   useEffect(() => {
     if (!ready) return;
     document.documentElement.dataset.motion = reduced ? "reduced" : "full";
-    const animateInitial =
-      !lastRun.current ||
-      lastRun.current.pathname !== pathname ||
-      lastRun.current.reduced === reduced;
-    lastRun.current = { pathname, reduced };
-    const cleanup = installSiteMotion({ reduced, animateInitial });
+    // Never replay what is already on screen: the first paint (or the page
+    // transition, on client navigation) is the entrance.
+    const cleanup = installSiteMotion({ reduced, animateInitial: false });
     return () => {
       cleanup();
       delete document.documentElement.dataset.motion;

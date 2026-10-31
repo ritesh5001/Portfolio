@@ -60,8 +60,18 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-IN" data-scroll-behavior="smooth">
+    // suppressHydrationWarning: the inline script below sets data-motion-pref
+    // on <html> before React hydrates.
+    <html lang="en-IN" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        {/* Runs before first paint so a visitor who turned motion off never
+            sees the CSS-only hero entrance, even for the first frames. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var m=localStorage.getItem('portfolio-motion');if(m==='reduced'||m==='full')document.documentElement.dataset.motionPref=m}catch(e){}",
+          }}
+        />
         {/* Only the two faces used above the fold are preloaded; the rest load
             on demand via @font-face in globals.css. */}
         <link

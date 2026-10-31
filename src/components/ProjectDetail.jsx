@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { projectPlaceholders } from "../generated/projectPlaceholders";
 import ProjectGallery from "./ProjectGallery";
 
@@ -181,17 +182,23 @@ export default function ProjectDetail({ project, previous, next }) {
                 data-motion-reveal="image"
               >
                 <div className="case-related-visual">
-                  <Image
-                    src={item.images[0]}
-                    fill
-                    sizes="(max-width: 760px) 90vw, 560px"
-                    alt={`${item.name} — ${item.tagline}`}
-                    placeholder={
-                      projectPlaceholders[item.images[0]] ? "blur" : "empty"
-                    }
-                    blurDataURL={projectPlaceholders[item.images[0]]}
-                    className="object-cover object-top"
-                  />
+                  <ViewTransition
+                    name={`project-${item.slug}`}
+                    share="morph"
+                    default="none"
+                  >
+                    <Image
+                      src={item.images[0]}
+                      fill
+                      sizes="(max-width: 760px) 90vw, 560px"
+                      alt={`${item.name} — ${item.tagline}`}
+                      placeholder={
+                        projectPlaceholders[item.images[0]] ? "blur" : "empty"
+                      }
+                      blurDataURL={projectPlaceholders[item.images[0]]}
+                      className="object-cover object-top"
+                    />
+                  </ViewTransition>
                   <span className="case-related-arrow" aria-hidden="true">
                     ↗
                   </span>

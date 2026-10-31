@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, ViewTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { contactInfo, socials } from "../constants";
@@ -56,101 +56,107 @@ export default function Navbar({ showBlog = false }) {
   }, [isOpen]);
 
   return (
-    <header ref={headerRef} className="site-header">
-      <div className="nav-inner">
-        <Link
-          href="/"
-          className="wordmark"
-          aria-label={contactInfo.name + " — Home"}
-          onClick={() => setIsOpen(false)}
-        >
-          RITESH GIRI<span className="wordmark-dot">®</span>
-        </Link>
-        <nav className="desktop-nav" aria-label="Main">
-          {links.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={"nav-pill " + (link.active ? "is-active" : "")}
-              aria-current={link.active ? "page" : undefined}
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <div className="nav-actions">
-          <a
-            className="nav-social"
-            href={socials[0].href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
+    // Named so it is captured on its own during page transitions and can be
+    // held still (motion.css) while the content underneath changes.
+    <ViewTransition name="site-header" share="site-header" default="none">
+      <header ref={headerRef} className="site-header">
+        <div className="nav-inner">
+          <Link
+            href="/"
+            className="wordmark"
+            aria-label={contactInfo.name + " — Home"}
             onClick={() => setIsOpen(false)}
           >
-            in
-          </a>
-          <a
-            className="nav-contact"
-            href={isHome ? "/#contact" : "/hire-web-developer-in-lucknow"}
-            onClick={() => setIsOpen(false)}
-          >
-            Let’s talk <Arrow />
-          </a>
-          <button
-            ref={menuButton}
-            type="button"
-            className={"menu-toggle " + (isOpen ? "is-open" : "")}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-controls="expanded-navigation"
-            aria-expanded={isOpen}
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span />
-            <span />
-          </button>
-        </div>
-      </div>
-      {isOpen && (
-        <nav
-          id="expanded-navigation"
-          className="expanded-nav"
-          aria-label="More navigation"
-        >
-          <div className="expanded-main-links">
+            RITESH GIRI<span className="wordmark-dot">®</span>
+          </Link>
+          <nav className="desktop-nav" aria-label="Main">
+            {/* Positioned by the motion engine; invisible without it. */}
+            <span className="nav-indicator" aria-hidden="true" />
             {links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
+                className={"nav-pill " + (link.active ? "is-active" : "")}
+                aria-current={link.active ? "page" : undefined}
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
-                <Arrow />
               </Link>
             ))}
-          </div>
-          <div className="expanded-extra-links">
-            <Link href="/#services" onClick={() => setIsOpen(false)}>
-              Technical Skills <Arrow />
-            </Link>
-            <Link
-              href="/hire-web-developer-in-lucknow"
+          </nav>
+          <div className="nav-actions">
+            <a
+              className="nav-social"
+              href={socials[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
               onClick={() => setIsOpen(false)}
             >
-              Hire me in Lucknow <Arrow />
-            </Link>
-            <Link href="/work" onClick={() => setIsOpen(false)}>
-              All client work <Arrow />
-            </Link>
-            <Link href="/about" onClick={() => setIsOpen(false)}>
-              About Ritesh <Arrow />
-            </Link>
-            <a href={"mailto:" + contactInfo.email}>
-              {contactInfo.email} <Arrow />
+              in
             </a>
+            <a
+              className="nav-contact"
+              href={isHome ? "/#contact" : "/hire-web-developer-in-lucknow"}
+              onClick={() => setIsOpen(false)}
+            >
+              Let’s talk <Arrow />
+            </a>
+            <button
+              ref={menuButton}
+              type="button"
+              className={"menu-toggle " + (isOpen ? "is-open" : "")}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-controls="expanded-navigation"
+              aria-expanded={isOpen}
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <span />
+              <span />
+            </button>
           </div>
-        </nav>
-      )}
-    </header>
+        </div>
+        {isOpen && (
+          <nav
+            id="expanded-navigation"
+            className="expanded-nav"
+            aria-label="More navigation"
+          >
+            <div className="expanded-main-links">
+              {links.map((link) => (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.label}
+                  <Arrow />
+                </Link>
+              ))}
+            </div>
+            <div className="expanded-extra-links">
+              <Link href="/#services" onClick={() => setIsOpen(false)}>
+                Technical Skills <Arrow />
+              </Link>
+              <Link
+                href="/hire-web-developer-in-lucknow"
+                onClick={() => setIsOpen(false)}
+              >
+                Hire me in Lucknow <Arrow />
+              </Link>
+              <Link href="/work" onClick={() => setIsOpen(false)}>
+                All client work <Arrow />
+              </Link>
+              <Link href="/about" onClick={() => setIsOpen(false)}>
+                About Ritesh <Arrow />
+              </Link>
+              <a href={"mailto:" + contactInfo.email}>
+                {contactInfo.email} <Arrow />
+              </a>
+            </div>
+          </nav>
+        )}
+      </header>
+    </ViewTransition>
   );
 }

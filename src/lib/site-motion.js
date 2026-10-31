@@ -1,12 +1,10 @@
 // Native animations keep this enhancement small and independent of page content.
+//
+// The hero is deliberately absent: its entrance is pure CSS (motion.css) so it
+// starts on the first painted frame instead of waiting for hydration, and its
+// headline and portrait (the LCP candidates) never animate in at all.
 const REVEAL_SELECTOR = [
   "[data-motion-reveal]",
-  ".hero-topline",
-  ".hero-line",
-  ".hero-location",
-  ".hero-portrait",
-  ".hero-aside",
-  ".hero-bottomline",
   ".section-heading > div",
   ".section-description",
   ".about-name",
@@ -63,9 +61,20 @@ const MAGNETIC_SELECTOR =
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 const LOOP_SELECTOR =
   ".stack-strip, .availability, .hero-scroll, .motion-toggle";
+// Card screenshots are unmasked from the bottom edge as their card rises in.
+const MASK_SELECTOR =
+  ".client-project-image, .project-image, .archive-feature-screen, .case-related-visual";
+// Project cards that get the "View project" cursor label on fine pointers.
+const CURSOR_SELECTOR =
+  ".client-project-image, .project-image, .archive-feature, .case-related";
+const CODE_FIGURE = ".post-body figure[data-rehype-pretty-code-figure]";
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
-export function installSiteMotion({ reduced, animateInitial = true }) {
+// Elements already on screen when motion installs were painted visible by the
+// server render. Replaying them would dim content the visitor has already seen
+// (a visible flash on slower phones), so they are marked revealed and left
+// alone; only content scrolled into view later animates.
+export function installSiteMotion({ reduced, animateInitial = false }) {
   const root = document.documentElement;
   let progress;
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -90,6 +99,12 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   let header;
   let portrait;
   let homeNav;
+  let nav;
+  let indicator;
+  let hoveredLink = null;
+  let cursorLabel = null;
+  let cursorFrame = 0;
+  const cursor = { x: 0, y: 0, tx: 0, ty: 0, card: null };
 
   function cancel(element) {
     const animation = elementAnimations.get(element);
@@ -135,6 +150,10 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
     );
     animations.add(animation);
     elementAnimations.set(element, animation);
+    const mask = element.matches(MASK_SELECTOR)
+      ? element
+      : element.querySelector(MASK_SELECTOR);
+    if (mask && !compact) unmask(mask, animation.effect.getTiming().delay);
     const release = () => {
       animations.delete(animation);
       if (elementAnimations.get(element) === animation)
@@ -146,6 +165,134 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
       // Release the transform so CSS hover and layout can take over again.
       animation.cancel();
     };
+  }
+
+  function unmask(mask, delay) {
+    const timing = { duration: 900, delay, easing: EASE, fill: "both" };
+    const reveal = mask.animate(
+      [{ clipPath: "inset(100% 0 0 0)" }, { clipPath: "inset(0 0 0 0)" }],
+      timing,
+    );
+    const image = mask.querySelector("img");
+    const settle = image?.animate(
+      [{ transform: "scale(1.12)" }, { transform: "scale(1)" }],
+      { ...timing, duration: 1200 },
+    );
+    for (const animation of [reveal, settle]) {
+      if (!animation) continue;
+      animations.add(animation);
+      // Cancel once done so hover transforms on the image work again.
+      animation.onfinish = () => {
+        animations.delete(animation);
+        animation.cancel();
+      };
+      animation.oncancel = () => animations.delete(animation);
+    }
+  }
+
+  // The dark pill behind the current nav link slides between links instead
+  // of each link switching its own background on and off.
+  function placeIndicator() {
+    if (!indicator || !nav) return;
+    const target =
+      hoveredLink ??
+      nav.querySelector('.nav-pill[data-current="true"]') ??
+      (nav.dataset.scrollspy ? null : nav.querySelector(".nav-pill.is-active"));
+    for (const link of nav.querySelectorAll(".nav-pill")) {
+      if (link === target) link.dataset.indicated = "true";
+      else delete link.dataset.indicated;
+    }
+    if (!target || !target.offsetWidth) {
+      indicator.style.opacity = "0";
+      return;
+    }
+    indicator.style.opacity = "1";
+    indicator.style.width = target.offsetWidth + "px";
+    indicator.style.height = target.offsetHeight + "px";
+    indicator.style.transform =
+      "translate(" + target.offsetLeft + "px, " + target.offsetTop + "px)";
+  }
+
+  function onNavOver(event) {
+    const link = event.target.closest?.(".nav-pill");
+    if (!finePointer.matches || link === hoveredLink) return;
+    hoveredLink = link;
+    placeIndicator();
+  }
+
+  function onNavLeave() {
+    hoveredLink = null;
+    placeIndicator();
+  }
+
+  function moveCursorLabel() {
+    cursorFrame = 0;
+    if (!cursorLabel) return;
+    cursor.x += (cursor.tx - cursor.x) * 0.22;
+    cursor.y += (cursor.ty - cursor.y) * 0.22;
+    cursorLabel.style.transform =
+      "translate(" + cursor.x + "px, " + cursor.y + "px)";
+    if (
+      cursor.card &&
+      (Math.abs(cursor.tx - cursor.x) > 0.3 ||
+        Math.abs(cursor.ty - cursor.y) > 0.3)
+    )
+      cursorFrame = requestAnimationFrame(moveCursorLabel);
+  }
+
+  function updateCursorLabel(event) {
+    if (!cursorLabel) return;
+    const card = finePointer.matches
+      ? event.target.closest?.(CURSOR_SELECTOR)
+      : null;
+    const link = card?.closest("a[href]");
+    if (card !== cursor.card) {
+      cursor.card = card;
+      if (card) {
+        // Start at the pointer so the label never streaks in from a corner.
+        cursor.x = event.clientX + 18;
+        cursor.y = event.clientY + 18;
+        cursorLabel.textContent =
+          link && link.origin !== location.origin
+            ? "Visit site ↗"
+            : "View project";
+      }
+      cursorLabel.dataset.visible = card ? "true" : "false";
+    }
+    cursor.tx = event.clientX + 18;
+    cursor.ty = event.clientY + 18;
+    if (card && !cursorFrame)
+      cursorFrame = requestAnimationFrame(moveCursorLabel);
+  }
+
+  function hideCursorLabel() {
+    if (!cursorLabel) return;
+    cursor.card = null;
+    cursorLabel.dataset.visible = "false";
+  }
+
+  function enhanceCodeBlocks() {
+    if (!navigator.clipboard) return;
+    for (const figure of document.querySelectorAll(CODE_FIGURE)) {
+      if (figure.querySelector(".code-copy")) continue;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "code-copy";
+      button.textContent = "Copy";
+      button.addEventListener("click", async () => {
+        const code = figure.querySelector("pre")?.innerText ?? "";
+        try {
+          await navigator.clipboard.writeText(code.trimEnd());
+          button.textContent = "Copied";
+        } catch {
+          button.textContent = "Press Ctrl+C";
+        }
+        setTimeout(() => {
+          button.textContent = "Copy";
+        }, 1600);
+      });
+      figure.append(button);
+    }
   }
 
   function refreshTargets() {
@@ -160,6 +307,22 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
       : null;
     homeLinks = homeNav ? [...homeNav.querySelectorAll("a")] : [];
     if (homeNav) homeNav.dataset.scrollspy = "true";
+    nav = document.querySelector(".desktop-nav");
+    const nextIndicator = reduced ? null : nav?.querySelector(".nav-indicator");
+    if (nextIndicator !== indicator) {
+      indicator = nextIndicator;
+      if (indicator) {
+        nav.dataset.indicator = "true";
+        nav.addEventListener("pointerover", onNavOver);
+        nav.addEventListener("pointerleave", onNavLeave);
+        placeIndicator();
+        // First placement is instant; only later moves slide.
+        requestAnimationFrame(() => {
+          if (indicator) indicator.dataset.ready = "true";
+        });
+      }
+    }
+    enhanceCodeBlocks();
     tocHeadings = [
       ...document.querySelectorAll(".post-body > h2[id], .post-body > h3[id]"),
     ];
@@ -237,6 +400,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
         ),
       );
     }
+    placeIndicator();
     if (tocLinks.length) {
       let active = tocHeadings[0];
       for (const heading of tocHeadings) {
@@ -283,6 +447,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
 
   function onPointer(event) {
     pointer = { target: event.target, x: event.clientX, y: event.clientY };
+    updateCursorLabel(event);
     if (!pointerFrame) pointerFrame = requestAnimationFrame(updatePointer);
   }
 
@@ -310,6 +475,14 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   function onVisibilityChange() {
     root.dataset.motionSuspended = document.hidden ? "true" : "false";
     if (document.hidden) clearMagnetic();
+  }
+
+  if (!reduced && finePointer.matches) {
+    cursorLabel = document.createElement("div");
+    cursorLabel.className = "cursor-label";
+    cursorLabel.setAttribute("aria-hidden", "true");
+    cursorLabel.dataset.visible = "false";
+    document.body.append(cursorLabel);
   }
 
   if (!reduced && "IntersectionObserver" in window) {
@@ -387,6 +560,8 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
   if (!reduced) {
     document.addEventListener("pointermove", onPointer, { passive: true });
     document.addEventListener("pointerleave", clearMagnetic);
+    document.addEventListener("pointerleave", hideCursorLabel);
+    window.addEventListener("scroll", hideCursorLabel, { passive: true });
     document.addEventListener("toggle", onToggle, true);
   }
 
@@ -398,18 +573,33 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
     cancelAnimationFrame(frame);
     cancelAnimationFrame(refreshFrame);
     cancelAnimationFrame(pointerFrame);
+    cancelAnimationFrame(cursorFrame);
     window.removeEventListener("scroll", requestScroll);
     window.removeEventListener("resize", requestScroll);
     document.removeEventListener("focusin", onFocus);
     document.removeEventListener("visibilitychange", onVisibilityChange);
     document.removeEventListener("pointermove", onPointer);
     document.removeEventListener("pointerleave", clearMagnetic);
+    document.removeEventListener("pointerleave", hideCursorLabel);
+    window.removeEventListener("scroll", hideCursorLabel);
     document.removeEventListener("toggle", onToggle, true);
     for (const animation of animations) animation.cancel();
     clearMagnetic();
     portrait?.style.removeProperty("--portrait-shift");
     if (header) delete header.dataset.scrolled;
     if (homeNav) delete homeNav.dataset.scrollspy;
+    cursorLabel?.remove();
+    if (nav) {
+      nav.removeEventListener("pointerover", onNavOver);
+      nav.removeEventListener("pointerleave", onNavLeave);
+      delete nav.dataset.indicator;
+      for (const link of nav.querySelectorAll(".nav-pill"))
+        delete link.dataset.indicated;
+    }
+    if (indicator) {
+      delete indicator.dataset.ready;
+      indicator.removeAttribute("style");
+    }
     delete root.dataset.motionSuspended;
     for (const element of loopTargets) delete element.dataset.loopVisible;
     for (const link of [...homeLinks, ...tocLinks]) delete link.dataset.current;

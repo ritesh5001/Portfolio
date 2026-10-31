@@ -2,6 +2,7 @@
 
 import useAnimatedFilter from "../components/useAnimatedFilter";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import Image from "next/image";
 import { projectPlaceholders } from "../generated/projectPlaceholders";
 import { clientProjects, projects } from "../constants";
@@ -145,18 +146,24 @@ export default function Works() {
               className="client-project-image"
               aria-label={"Read the " + project.name + " case study"}
             >
-              <Image
-                src={project.images[0]}
-                placeholder={
-                  projectPlaceholders[project.images[0]] ? "blur" : "empty"
-                }
-                blurDataURL={projectPlaceholders[project.images[0]]}
-                alt={project.name + " — " + project.tagline}
-                width={1200}
-                height={750}
-                sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                loading="lazy"
-              />
+              <ViewTransition
+                name={"project-" + project.slug}
+                share="morph"
+                default="none"
+              >
+                <Image
+                  src={project.images[0]}
+                  placeholder={
+                    projectPlaceholders[project.images[0]] ? "blur" : "empty"
+                  }
+                  blurDataURL={projectPlaceholders[project.images[0]]}
+                  alt={project.name + " — " + project.tagline}
+                  width={1200}
+                  height={750}
+                  sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                  loading="lazy"
+                />
+              </ViewTransition>
               <span className="client-type">{project.type}</span>
             </Link>
             <div className="client-project-title">

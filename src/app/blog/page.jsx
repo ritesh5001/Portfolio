@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { blogPlaceholders } from "../../generated/blogPlaceholders";
 import { notFound } from "next/navigation";
 import JsonLd from "../../components/JsonLd";
@@ -117,19 +118,25 @@ export default function BlogIndexPage() {
                       tabIndex={-1}
                       aria-hidden="true"
                     >
-                      <Image
-                        src={post.image}
-                        placeholder={
-                          blogPlaceholders[post.image] ? "blur" : "empty"
-                        }
-                        blurDataURL={blogPlaceholders[post.image]}
-                        sizes="(max-width: 760px) 100vw, 290px"
-                        alt=""
-                        loading="lazy"
-                        width="384"
-                        height="216"
-                        className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                      <ViewTransition
+                        name={`post-${post.slug}`}
+                        share="morph"
+                        default="none"
+                      >
+                        <Image
+                          src={post.image}
+                          placeholder={
+                            blogPlaceholders[post.image] ? "blur" : "empty"
+                          }
+                          blurDataURL={blogPlaceholders[post.image]}
+                          sizes="(max-width: 760px) 100vw, 290px"
+                          alt=""
+                          loading="lazy"
+                          width="384"
+                          height="216"
+                          className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </ViewTransition>
                     </Link>
                   )}
                   <div className="min-w-0">

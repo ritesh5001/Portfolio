@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { projectPlaceholders } from "../../generated/projectPlaceholders";
 import JsonLd from "../../components/JsonLd";
 import SiteFooter from "../../components/SiteFooter";
@@ -213,19 +214,25 @@ export default function WorkPage() {
                       Selected project / 0{index + 1}
                     </span>
                     <div className="archive-feature-screen">
-                      <Image
-                        src={project.images[0]}
-                        alt={`${project.name} — ${project.tagline}`}
-                        fill
-                        sizes="(max-width: 760px) 90vw, 550px"
-                        placeholder={
-                          projectPlaceholders[project.images[0]]
-                            ? "blur"
-                            : "empty"
-                        }
-                        blurDataURL={projectPlaceholders[project.images[0]]}
-                        className="object-cover object-top"
-                      />
+                      <ViewTransition
+                        name={`project-${project.slug}`}
+                        share="morph"
+                        default="none"
+                      >
+                        <Image
+                          src={project.images[0]}
+                          alt={`${project.name} — ${project.tagline}`}
+                          fill
+                          sizes="(max-width: 760px) 90vw, 550px"
+                          placeholder={
+                            projectPlaceholders[project.images[0]]
+                              ? "blur"
+                              : "empty"
+                          }
+                          blurDataURL={projectPlaceholders[project.images[0]]}
+                          className="object-cover object-top"
+                        />
+                      </ViewTransition>
                     </div>
                     <span className="archive-feature-open" aria-hidden="true">
                       ↗
