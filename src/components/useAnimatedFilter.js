@@ -81,9 +81,15 @@ export default function useAnimatedFilter(initial = "All") {
         previous ? 0 : (index % 3) * 30,
       );
     });
+    // Large archives can shrink by many screens. Keep their controls and empty
+    // state in place instead of animating through thousands of pixels.
+    const fromHeight =
+      Math.abs(before.height - height) < window.innerHeight
+        ? before.height
+        : height;
     const resize = animate(
       grid,
-      [{ height: before.height + "px" }, { height: height + "px" }],
+      [{ height: fromHeight + "px" }, { height: height + "px" }],
       340,
     );
     resize.onfinish = () => {
