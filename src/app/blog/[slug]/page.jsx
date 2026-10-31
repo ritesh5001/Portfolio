@@ -22,9 +22,9 @@ export function generateStaticParams() {
 // Scheduled posts aren't in generateStaticParams yet; when one comes due,
 // its page is rendered on first request and then cached.
 export const dynamicParams = true;
-// Re-check for newly due scheduled posts every 10 minutes
-// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
-export const revalidate = 600;
+// Refresh every minute. Pages aren't prebuilt for scheduled posts; when one
+// comes due it renders on request and is cached briefly.
+export const revalidate = 60;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

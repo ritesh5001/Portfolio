@@ -18,9 +18,9 @@ import rehypeStringify from "rehype-stringify";
  * and excluded from production builds (no page, no sitemap entry, no RSS item).
  *
  * Scheduling: `date` may include a time, e.g. `2026-10-17T19:42:00+05:30`. In
- * production a post stays hidden until that moment. Blog routes revalidate
- * every few minutes (see REVALIDATE_SECONDS), so a scheduled post goes live on
- * its own without a rebuild.
+ * production a post stays hidden until that moment. The blog index, sitemap
+ * and RSS render per request and post pages refresh every minute, so a
+ * scheduled post goes live on its own without a rebuild.
  */
 const POSTS_DIR = path.join(process.cwd(), "content", "blog");
 const SHOW_DRAFTS = process.env.NODE_ENV !== "production";
@@ -33,7 +33,7 @@ const TITLE_LIMIT = 60;
 const DESCRIPTION_LIMIT = 160;
 
 // How often blog routes re-check for newly due posts. Imported by each route.
-export const REVALIDATE_SECONDS = 600;
+export const REVALIDATE_SECONDS = 60;
 
 const parseDate = (value) => {
   if (!value) return null;

@@ -2,9 +2,10 @@ import { getAllPosts } from "../../../lib/blog";
 import { contactInfo } from "../../../constants";
 import { SITE_URL, absoluteUrl, blogSeo } from "../../../lib/seo";
 
-// Re-check for newly due scheduled posts every 10 minutes
-// (literal required by Next.js; keep in sync with REVALIDATE_SECONDS).
-export const revalidate = 600;
+// Rendered on every request, so a scheduled post appears the moment it is
+// due. A cached copy (even with revalidation) serves the first visitor after
+// publish time the stale version, which on a low-traffic site can be you.
+export const dynamic = "force-dynamic";
 
 const escape = (value) =>
   String(value)
