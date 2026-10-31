@@ -78,7 +78,7 @@ export default function ServicesIndexPage() {
               <li key={service.slug}>
                 <Link
                   href={`/services/${service.slug}`}
-                  className="block h-full rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 hover:border-black/25 transition-colors space-y-3"
+                  className="interactive-card block h-full rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 hover:border-black/25 transition-colors space-y-3"
                 >
                   <h2 className="text-lg text-ink font-light">
                     {service.shortName}

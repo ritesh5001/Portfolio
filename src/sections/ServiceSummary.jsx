@@ -1,13 +1,28 @@
+const stack = [
+  "Full Stack Engineering",
+  "Next.js",
+  "Node.js",
+  "Prisma",
+  "Socket.IO",
+  "AI Integrations",
+  "Cloud & CI/CD",
+];
+
 export default function ServiceSummary() {
   return (
     <div className="stack-strip section-shell" aria-label="Engineering stack">
-      <span>Full Stack Engineering</span>
-      <span>Next.js</span>
-      <span>Node.js</span>
-      <span>Prisma</span>
-      <span>Socket.IO</span>
-      <span>AI Integrations</span>
-      <span>Cloud & CI/CD</span>
+      <div className="stack-track">
+        <div className="stack-group">
+          {stack.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+        <div className="stack-group stack-duplicate" aria-hidden="true">
+          {stack.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

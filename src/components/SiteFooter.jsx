@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MotionToggle } from "./SiteMotion";
 import { contactInfo, socials } from "../constants";
 import { LOCALITY, REGION } from "../lib/seo";
 import { getPost, hasPosts } from "../lib/blog";
@@ -134,7 +135,10 @@ const SiteFooter = () => {
           © {new Date().getFullYear()} {contactInfo.name}. Freelance full-stack
           developer in {LOCALITY}, {REGION}, India.
         </p>
-        <a href="#main-content">Back to top ↑</a>
+        <div className="footer-controls">
+          <MotionToggle />
+          <a href="#main-content">Back to top ↑</a>
+        </div>
       </div>
     </footer>
   );

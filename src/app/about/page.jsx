@@ -73,6 +73,7 @@ export default function AboutPage() {
 
             <div className="grid gap-8 md:grid-cols-[240px_1fr] items-start">
               <img
+                data-motion-reveal="image"
                 src={contactInfo.profileImage}
                 alt={`${contactInfo.name}, full-stack developer based in ${LOCALITY}, India`}
                 width="480"

@@ -1,4 +1,6 @@
 import "./globals.css";
+import "./motion.css";
+import SiteMotion from "../components/SiteMotion";
 import { SITE_URL, homeSeo, OG_IMAGE } from "../lib/seo";
 
 export const metadata = {
@@ -80,7 +82,7 @@ export default function RootLayout({ children }) {
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        {children}
+        <SiteMotion>{children}</SiteMotion>
       </body>
     </html>
   );

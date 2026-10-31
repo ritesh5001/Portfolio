@@ -11,9 +11,15 @@ export default function Hero() {
       </div>
       <h1 className="hero-title">
         <span className="sr-only">{contactInfo.name} — </span>
-        <span className="hero-line hero-line-first">Freelance</span>{" "}
-        <span className="hero-line">Full-Stack Developer</span>{" "}
-        <span className="hero-location">in Lucknow, India</span>
+        <span className="hero-line hero-line-first" data-motion-delay="60">
+          Freelance
+        </span>{" "}
+        <span className="hero-line" data-motion-delay="150">
+          Full-Stack Developer
+        </span>{" "}
+        <span className="hero-location" data-motion-delay="240">
+          in Lucknow, India
+        </span>
       </h1>
       <div className="hero-stage">
         <div className="hero-aside hero-aside-left">
@@ -30,7 +36,7 @@ export default function Hero() {
             <Arrow direction="down" />
           </a>
         </div>
-        <figure className="hero-portrait">
+        <figure className="hero-portrait" data-motion-delay="220">
           <Image
             src="/images/ritesh-editorial.png"
             alt="Ritesh Kumar Giri, freelance full-stack developer in Lucknow, India"

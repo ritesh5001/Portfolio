@@ -1,43 +1,16 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 /**
  * Presentational half of a case study. The page shell is a server component so
  * all of this copy is already in the HTML; this component only adds the gallery
- * interaction and entry animation on top.
+ * interaction; the shared motion layer handles entrance and scroll effects.
  */
 const ProjectDetail = ({ project, previous, next }) => {
   const [activeImage, setActiveImage] = useState(0);
-  const heroRef = useRef(null);
-  const contentRef = useRef(null);
-  const imageRef = useRef(null);
-
-  useGSAP(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const tl = gsap.timeline();
-    tl.from(heroRef.current, {
-      opacity: 0,
-      y: 60,
-      duration: 1,
-      ease: "power3.out",
-    });
-    tl.from(
-      imageRef.current,
-      { opacity: 0, scale: 0.96, duration: 1, ease: "power2.out" },
-      "<+0.2",
-    );
-    tl.from(
-      contentRef.current?.querySelectorAll(".reveal-item"),
-      { opacity: 0, y: 40, stagger: 0.1, duration: 0.8, ease: "power2.out" },
-      "<+0.3",
-    );
-  }, [project.slug]);
-
   const prevImage = () =>
     setActiveImage(
       (i) => (i - 1 + project.images.length) % project.images.length,
@@ -97,7 +70,10 @@ const ProjectDetail = ({ project, previous, next }) => {
           </ol>
         </nav>
 
-        <section ref={heroRef} className="px-6 md:px-10 lg:px-16 pt-6 pb-12">
+        <section
+          data-motion-reveal="rise"
+          className="px-6 md:px-10 lg:px-16 pt-6 pb-12"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3 flex-wrap">
@@ -123,11 +99,15 @@ const ProjectDetail = ({ project, previous, next }) => {
           </div>
         </section>
 
-        <section ref={imageRef} className="px-6 md:px-10 lg:px-16 pb-12">
+        <section
+          data-motion-reveal="image"
+          className="px-6 md:px-10 lg:px-16 pb-12"
+        >
           <div className="max-w-7xl mx-auto">
             <div className="relative overflow-hidden rounded-2xl bg-black/[0.03] border border-black/[0.08]">
               <div className="relative aspect-[16/9] overflow-hidden">
                 <img
+                  data-gallery-image
                   src={project.images[activeImage]}
                   alt={`${project.name} — ${project.tagline}, screen ${
                     activeImage + 1
@@ -207,7 +187,7 @@ const ProjectDetail = ({ project, previous, next }) => {
           </div>
         </section>
 
-        <section ref={contentRef} className="px-6 md:px-10 lg:px-16 pb-24">
+        <section className="px-6 md:px-10 lg:px-16 pb-24">
           <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-[1fr_380px]">
             <div className="space-y-8">
               <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-4">

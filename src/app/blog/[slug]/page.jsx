@@ -154,6 +154,7 @@ export default async function BlogPostPage({ params }) {
             <div className="max-w-3xl min-w-0">
               {post.image && (
                 <img
+                  data-motion-reveal="image"
                   src={post.image}
                   alt={post.imageAlt}
                   width="1280"
