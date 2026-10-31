@@ -1,6 +1,8 @@
 import Link from "next/link";
 import SectionHeading from "../components/SectionHeading";
 import Arrow from "../components/Arrow";
+import CountUp from "../components/CountUp";
+import { directoryProjects, liveProjects } from "../constants/directory";
 import {
   achievements,
   certifications,
@@ -51,11 +53,17 @@ export default function About() {
       <div className="stats-grid">
         {highlights.map((item) => (
           <div key={item.label}>
-            <span className="stat-value">{item.value}</span>
+            <CountUp value={item.value} />
             <span className="eyebrow">{item.label}</span>
           </div>
         ))}
       </div>
+      <p className="stats-context">
+        50+ refers to WordPress websites maintained. The full directory tracks{" "}
+        {liveProjects.length} currently live sites and{" "}
+        {directoryProjects.length - liveProjects.length} archived projects (
+        {directoryProjects.length} entries).
+      </p>
       <div className="about-focus">
         <div>
           <h3 className="eyebrow">Current Focus</h3>
@@ -98,7 +106,7 @@ export default function About() {
       <div className="background-grid">
         <details>
           <summary>
-            Education <span>+</span>
+            Education <span className="accordion-symbol" aria-hidden="true" />
           </summary>
           <div>
             <p>{educationData.degree}</p>
@@ -116,7 +124,7 @@ export default function About() {
           <details key={group.title}>
             <summary>
               {group.title}
-              <span>+</span>
+              <span className="accordion-symbol" aria-hidden="true" />
             </summary>
             <ul>
               {group.items.map((item) => (

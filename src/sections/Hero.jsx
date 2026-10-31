@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { projectPlaceholders } from "../generated/projectPlaceholders";
 import { contactInfo } from "../constants";
 import Arrow from "../components/Arrow";
 
@@ -39,6 +40,8 @@ export default function Hero() {
         <figure className="hero-portrait" data-motion-delay="220">
           <Image
             src="/images/ritesh-editorial.png"
+            placeholder="blur"
+            blurDataURL={projectPlaceholders["/images/ritesh-editorial.png"]}
             alt="Ritesh Kumar Giri, freelance full-stack developer in Lucknow, India"
             width={1024}
             height={1536}

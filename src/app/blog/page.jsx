@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { blogPlaceholders } from "../../generated/blogPlaceholders";
 import { notFound } from "next/navigation";
 import JsonLd from "../../components/JsonLd";
 import PageNav from "../../components/PageNav";
@@ -114,8 +116,13 @@ export default function BlogIndexPage() {
                       tabIndex={-1}
                       aria-hidden="true"
                     >
-                      <img
+                      <Image
                         src={post.image}
+                        placeholder={
+                          blogPlaceholders[post.image] ? "blur" : "empty"
+                        }
+                        blurDataURL={blogPlaceholders[post.image]}
+                        sizes="(max-width: 760px) 100vw, 290px"
                         alt=""
                         loading="lazy"
                         width="384"

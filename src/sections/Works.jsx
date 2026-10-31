@@ -1,17 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import useAnimatedFilter from "../components/useAnimatedFilter";
 import Link from "next/link";
 import Image from "next/image";
+import { projectPlaceholders } from "../generated/projectPlaceholders";
 import { clientProjects, projects } from "../constants";
 import { liveProjects } from "../constants/directory";
 import SectionHeading from "../components/SectionHeading";
 import Arrow from "../components/Arrow";
 
 const filters = ["All", "Next.js / Full-Stack", "WooCommerce", "WordPress"];
+// The personal Tat Vivah capture is an old 503 screen; reuse its saved case-study image.
+const previewOverrides = {
+  "/assets/projects/personal/tatvivah.webp":
+    "/assets/projects/tatvivahtrends/1.webp",
+};
+const projectCards = projects.map((project) => ({
+  ...project,
+  image: previewOverrides[project.image] ?? project.image,
+}));
 
 export default function Works() {
-  const [active, setActive] = useState("All");
+  const { active, select, gridRef } = useAnimatedFilter();
   return (
     <section id="work" className="work-section section-shell section-space">
       <SectionHeading
@@ -21,7 +31,7 @@ export default function Works() {
         description="Selected products built for scale, reliability, and measurable user impact across real deployments."
       />
       <div className="project-grid">
-        {projects.map((project, index) => (
+        {projectCards.map((project, index) => (
           <article key={project.id} className="project-card">
             <a
               href={project.liveUrl}
@@ -41,6 +51,10 @@ export default function Works() {
               </div>
               <Image
                 src={project.image}
+                placeholder={
+                  projectPlaceholders[project.image] ? "blur" : "empty"
+                }
+                blurDataURL={projectPlaceholders[project.image]}
                 alt={project.imageAlt}
                 width={1200}
                 height={750}
@@ -100,7 +114,7 @@ export default function Works() {
             key={filter}
             type="button"
             aria-pressed={active === filter}
-            onClick={() => setActive(filter)}
+            onClick={() => select(filter)}
             className={active === filter ? "is-active" : ""}
           >
             {filter === "Next.js / Full-Stack" ? "Full-Stack" : filter}
@@ -113,7 +127,7 @@ export default function Works() {
           </button>
         ))}
       </div>
-      <div className="client-grid">
+      <div ref={gridRef} data-filter-grid className="client-grid">
         {clientProjects.map((project) => (
           <article
             key={project.id}
@@ -129,6 +143,10 @@ export default function Works() {
             >
               <Image
                 src={project.images[0]}
+                placeholder={
+                  projectPlaceholders[project.images[0]] ? "blur" : "empty"
+                }
+                blurDataURL={projectPlaceholders[project.images[0]]}
                 alt={project.name + " — " + project.tagline}
                 width={1200}
                 height={750}
@@ -153,7 +171,13 @@ export default function Works() {
             {project.featured && (
               <>
                 <span className="eyebrow featured-label">Featured</span>
-                <p className="client-description">{project.description}</p>
+                <details className="client-description-details">
+                  <summary>
+                    Project details{" "}
+                    <span className="accordion-symbol" aria-hidden="true" />
+                  </summary>
+                  <p className="client-description">{project.description}</p>
+                </details>
               </>
             )}
             <ul className="project-tech">

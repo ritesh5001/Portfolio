@@ -1,354 +1,49 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import Image from "next/image";
+import { projectPlaceholders } from "../generated/projectPlaceholders";
+import ProjectGallery from "./ProjectGallery";
 
-/**
- * Presentational half of a case study. The page shell is a server component so
- * all of this copy is already in the HTML; this component only adds the gallery
- * interaction; the shared motion layer handles entrance and scroll effects.
- */
-const ProjectDetail = ({ project, previous, next }) => {
-  const [activeImage, setActiveImage] = useState(0);
-  const prevImage = () =>
-    setActiveImage(
-      (i) => (i - 1 + project.images.length) % project.images.length,
-    );
-  const nextImage = () =>
-    setActiveImage((i) => (i + 1) % project.images.length);
+const Arrow = () => <span aria-hidden="true">↗</span>;
 
+export default function ProjectDetail({ project, previous, next }) {
+  const adjacent = [{ project: previous, label: "Previous project" }, { project: next, label: "Next project" }].filter((item) => item.project);
   return (
-    <div className="case-study min-h-screen bg-white text-ink">
-      <header className="case-study-topbar fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-5 bg-black/90 backdrop-blur-md border-b border-black/[0.06]">
-        <Link
-          href="/work"
-          className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-ink/60 hover:text-ink transition-colors duration-300 group"
-        >
-          <Icon
-            icon="lucide:arrow-left"
-            className="size-4 group-hover:-translate-x-1 transition-transform duration-300"
-          />
-          All work
-        </Link>
-        <span className="text-xs tracking-[0.45em] uppercase text-ink/60 hidden sm:block">
-          {project.domain}
-        </span>
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noopener"
-            className="flex items-center gap-2 text-xs tracking-[0.35em] uppercase text-ink/60 hover:text-ink transition-colors duration-300"
-          >
-            Visit Site
-            <Icon icon="lucide:arrow-up-right" className="size-4" />
-          </a>
-        )}
-      </header>
-
-      <main id="main-content" className="content-page pt-24">
-        {/* Breadcrumb — matches the BreadcrumbList in the page's JSON-LD. */}
-        <nav
-          aria-label="Breadcrumb"
-          className="px-6 md:px-10 lg:px-16 pt-4 text-xs text-ink/60"
-        >
-          <ol className="mx-auto max-w-7xl flex flex-wrap items-center gap-2">
-            <li>
-              <Link href="/" className="hover:text-ink transition-colors">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li>
-              <Link href="/work" className="hover:text-ink transition-colors">
-                Work
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li className="text-ink/60">{project.name}</li>
-          </ol>
-        </nav>
-
-        <section
-          data-motion-reveal="rise"
-          className="px-6 md:px-10 lg:px-16 pt-6 pb-12"
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-[10px] tracking-[0.5em] uppercase text-ink/60 border border-black/15 px-3 py-1.5 rounded-full">
-                  {project.type}
-                </span>
-                <span className="text-[10px] tracking-[0.5em] uppercase text-ink/60 border border-black/15 px-3 py-1.5 rounded-full">
-                  {project.role}
-                </span>
-                {project.featured && (
-                  <span className="text-[10px] tracking-[0.5em] uppercase text-black bg-white px-3 py-1.5 rounded-full font-medium">
-                    Featured
-                  </span>
-                )}
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light leading-none tracking-tight uppercase">
-                {project.name}
-              </h1>
-              <p className="text-ink/65 text-base md:text-lg lg:text-xl font-light max-w-2xl">
-                {project.tagline}
-              </p>
-            </div>
-          </div>
+    <div className="case-study project-editorial">
+      <main id="main-content" className="content-page">
+        <section className="case-hero section-shell">
+          <nav aria-label="Breadcrumb" className="project-breadcrumb"><Link href="/">Home</Link><span aria-hidden="true">/</span><Link href="/work">Work</Link><span aria-hidden="true">/</span><span>{project.name}</span></nav>
+          <div className="case-hero-label"><p className="project-eyebrow">Client work / {project.featured ? "Featured case study" : "Case study"}</p><span className="case-project-status"><i className={project.liveUrl ? "project-status-dot" : "project-status-dot is-archived"} />{project.liveUrl ? "Live project" : "Archived project"}</span></div>
+          <h1 data-motion-reveal="headline">{project.name}</h1>
+          <div className="case-hero-description"><p>{project.tagline}</p><div>{project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener" className="project-pill-link">Visit Live Site <Arrow /></a>}<a href="#project-overview" className="project-text-link">Explore the project <span aria-hidden="true">↓</span></a></div></div>
+          <dl className="case-hero-facts"><div><dt>Expertise</dt><dd>{project.type}</dd></div><div><dt>My role</dt><dd>{project.role}</dd></div><div><dt>Website</dt><dd>{project.domain}</dd></div></dl>
         </section>
 
-        <section
-          data-motion-reveal="image"
-          className="px-6 md:px-10 lg:px-16 pb-12"
-        >
-          <div className="max-w-7xl mx-auto">
-            <div className="relative overflow-hidden rounded-2xl bg-black/[0.03] border border-black/[0.08]">
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <img
-                  data-gallery-image
-                  src={project.images[activeImage]}
-                  alt={`${project.name} — ${project.tagline}, screen ${
-                    activeImage + 1
-                  } of ${project.images.length}`}
-                  className="w-full h-full object-cover object-top transition-opacity duration-500"
-                  key={activeImage}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/40 via-transparent to-transparent" />
-              </div>
+        <section className="case-visual section-shell" aria-label="Project gallery" data-motion-reveal="image"><ProjectGallery project={project} /></section>
 
-              {project.images.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    aria-label="Previous screenshot"
-                    onClick={prevImage}
-                    className="gallery-button absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-black/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                  >
-                    <Icon icon="lucide:chevron-left" className="size-5" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Next screenshot"
-                    onClick={nextImage}
-                    className="gallery-button absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-sm border border-black/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
-                  >
-                    <Icon icon="lucide:chevron-right" className="size-5" />
-                  </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {project.images.map((image, i) => (
-                      <button
-                        type="button"
-                        key={image}
-                        aria-label={`Show screenshot ${i + 1}`}
-                        aria-pressed={activeImage === i}
-                        onClick={() => setActiveImage(i)}
-                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                          i === activeImage
-                            ? "bg-ink w-6"
-                            : "bg-black/40 hover:bg-black/70"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
+        <section id="project-overview" className="case-story section-shell">
+          <aside className="case-story-aside">
+            <div className="case-project-info">
+              <p className="project-eyebrow">The project at a glance</p>
+              <h2>Project Info</h2>
+              <dl><div><dt>Domain</dt><dd>{project.domain}</dd></div><div><dt>Role</dt><dd>{project.role}</dd></div><div><dt>Category</dt><dd>{project.type}</dd></div></dl>
+              {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener" className="project-text-link">Visit Site <Arrow /></a>}
+              {!project.liveUrl && <p className="case-archive-note">Archived work. The original domain is no longer linked.</p>}
             </div>
-
-            {project.images.length > 1 && (
-              <div className="flex gap-3 mt-3">
-                {project.images.map((img, i) => (
-                  <button
-                    type="button"
-                    key={img}
-                    aria-label={`Show screenshot ${i + 1}`}
-                    aria-pressed={activeImage === i}
-                    onClick={() => setActiveImage(i)}
-                    className={`relative flex-1 aspect-[16/9] rounded-xl overflow-hidden border-2 transition-all duration-300 ${
-                      i === activeImage
-                        ? "border-black"
-                        : "border-black/10 hover:border-black/30"
-                    }`}
-                  >
-                    <img
-                      src={img}
-                      alt=""
-                      aria-hidden="true"
-                      className="w-full h-full object-cover object-top"
-                    />
-                    {i !== activeImage && (
-                      <span className="absolute inset-0 bg-black/50" />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
+            <Link href="/hire-web-developer-in-lucknow" className="case-hire-link"><span>Have a project in mind?<strong>Need something similar?</strong></span><Arrow /></Link>
+          </aside>
+          <div className="case-story-main">
+            <section className="case-story-section" data-motion-reveal="rise"><span className="case-section-number">01 / The brief</span><h2>Project Overview</h2><p className="case-overview-copy">{project.description}</p></section>
+            <section className="case-story-section" data-motion-reveal="rise"><span className="case-section-number">02 / What went into it</span><h2>Key Deliverables</h2><ol className="case-deliverables">{project.deliverables.map((deliverable, index) => <li key={deliverable}><span>{String(index + 1).padStart(2, "0")}</span><p>{deliverable}</p><Arrow /></li>)}</ol></section>
+            <section className="case-story-section" data-motion-reveal="rise"><span className="case-section-number">03 / Under the hood</span><h2>Tech Stack</h2><div className="case-tech-stack">{project.tech.map((tech, index) => <span key={tech}><i>{String(index + 1).padStart(2, "0")}</i>{tech}</span>)}</div></section>
           </div>
         </section>
-
-        <section className="px-6 md:px-10 lg:px-16 pb-24">
-          <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-[1fr_380px]">
-            <div className="space-y-8">
-              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-4">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
-                  Project Overview
-                </h2>
-                <p className="text-ink/80 text-base md:text-lg leading-relaxed font-light">
-                  {project.description}
-                </p>
-              </div>
-
-              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
-                  Tech Stack
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs tracking-[0.2em] uppercase bg-black/[0.07] border border-black/10 px-4 py-2 rounded-full text-ink/80 hover:bg-black/10 transition-colors duration-200"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-8">
-              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
-                  Key Deliverables
-                </h2>
-                <ul className="space-y-3">
-                  {project.deliverables.map((d) => (
-                    <li
-                      key={d}
-                      className="flex items-start gap-3 text-sm text-ink/75 font-light"
-                    >
-                      <span className="mt-1.5 w-1 h-1 rounded-full bg-black/40 flex-shrink-0" />
-                      {d}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="reveal-item rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:p-8 space-y-5">
-                <h2 className="text-[10px] tracking-[0.5em] uppercase text-ink/60">
-                  Project Info
-                </h2>
-                <dl className="space-y-4">
-                  <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
-                      Domain
-                    </dt>
-                    <dd className="text-sm text-ink/75">{project.domain}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
-                      Role
-                    </dt>
-                    <dd className="text-sm text-ink/75">{project.role}</dd>
-                  </div>
-                  <div>
-                    <dt className="text-[10px] tracking-[0.4em] uppercase text-ink/60 mb-1">
-                      Category
-                    </dt>
-                    <dd className="text-sm text-ink/75">{project.type}</dd>
-                  </div>
-                </dl>
-              </div>
-
-              {project.liveUrl && (
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener"
-                  className="reveal-item flex items-center justify-between w-full rounded-2xl border border-black/20 bg-black/[0.04] px-6 py-5 hover:bg-white hover:text-black text-ink transition-all duration-300 group"
-                >
-                  <span className="text-sm tracking-[0.3em] uppercase font-light">
-                    Visit Live Site
-                  </span>
-                  <Icon
-                    icon="lucide:arrow-up-right"
-                    className="size-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300"
-                  />
-                </a>
-              )}
-
-              <Link
-                href="/hire-web-developer-in-lucknow"
-                className="reveal-item flex items-center justify-between w-full rounded-2xl border border-gold/40 bg-gold/10 px-6 py-5 text-ink hover:bg-gold hover:text-white transition-all duration-300 group"
-              >
-                <span className="text-sm tracking-[0.3em] uppercase font-light">
-                  Need something similar?
-                </span>
-                <Icon
-                  icon="lucide:arrow-right"
-                  className="size-5 group-hover:translate-x-1 transition-transform duration-300"
-                />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <nav
-          aria-label="More case studies"
-          className="border-t border-black/[0.08] px-6 md:px-10 lg:px-16 py-10"
-        >
-          <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
-            {previous ? (
-              <Link
-                href={`/projects/${previous.slug}`}
-                className="flex items-center gap-3 text-ink/65 hover:text-ink transition-colors duration-300 group"
-              >
-                <Icon
-                  icon="lucide:arrow-left"
-                  className="size-5 group-hover:-translate-x-1 transition-transform duration-300"
-                />
-                <span className="text-left">
-                  <span className="block text-[10px] tracking-[0.4em] uppercase text-ink/70">
-                    Previous
-                  </span>
-                  <span className="block text-sm">{previous.name}</span>
-                </span>
-              </Link>
-            ) : (
-              <span />
-            )}
-
-            <Link
-              href="/work"
-              className="text-xs tracking-[0.4em] uppercase text-ink/60 hover:text-ink transition-colors duration-300 hidden sm:block"
-            >
-              All Projects
-            </Link>
-
-            {next ? (
-              <Link
-                href={`/projects/${next.slug}`}
-                className="flex items-center gap-3 text-ink/65 hover:text-ink transition-colors duration-300 group text-right"
-              >
-                <span>
-                  <span className="block text-[10px] tracking-[0.4em] uppercase text-ink/70">
-                    Next
-                  </span>
-                  <span className="block text-sm">{next.name}</span>
-                </span>
-                <Icon
-                  icon="lucide:arrow-right"
-                  className="size-5 group-hover:translate-x-1 transition-transform duration-300"
-                />
-              </Link>
-            ) : (
-              <span />
-            )}
+        <nav className="case-more section-shell" aria-label="More case studies">
+          <div className="project-section-heading"><p className="project-eyebrow">Keep exploring</p><h2>More good work.</h2><Link href="/work" className="project-text-link">All Projects <Arrow /></Link></div>
+          <div className={"case-more-grid " + (adjacent.length === 1 ? "has-one" : "")}>
+            {adjacent.map(({ project: item, label }) => <Link key={item.slug} href={`/projects/${item.slug}`} className="case-related" data-motion-reveal="image"><div className="case-related-visual"><Image src={item.images[0]} fill sizes="(max-width: 760px) 90vw, 560px" alt={`${item.name} — ${item.tagline}`} placeholder={projectPlaceholders[item.images[0]] ? "blur" : "empty"} blurDataURL={projectPlaceholders[item.images[0]]} className="object-cover object-top" /><span className="case-related-arrow" aria-hidden="true">↗</span></div><div className="case-related-caption"><div><p className="project-eyebrow">{label}</p><h3>{item.name}</h3></div><span>{item.type}</span></div></Link>)}
           </div>
         </nav>
       </main>
     </div>
   );
-};
-
-export default ProjectDetail;
+}

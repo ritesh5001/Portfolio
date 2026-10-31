@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./motion.css";
+import "./project-pages.css";
 import SiteMotion from "../components/SiteMotion";
 import { SITE_URL, homeSeo, OG_IMAGE } from "../lib/seo";
 

@@ -1,127 +1,75 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import useAnimatedFilter from "./useAnimatedFilter";
 import Link from "next/link";
+import Image from "next/image";
+import { directoryPlaceholders } from "../generated/directoryPlaceholders";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { directoryCategories, directoryProjects } from "../constants/directory";
+import { directoryCategories, directoryProjects, liveProjects } from "../constants/directory";
 
-/**
- * Client-side filtering only hides cards that are already in the HTML, so every
- * project stays crawlable regardless of the selected category.
- */
-const WorkDirectory = ({ hasShot }) => {
-  const [active, setActive] = useState("All");
-
+// Filter the existing HTML rather than removing work from the crawlable archive.
+export default function WorkDirectory({ hasShot }) {
+  const { active, select, gridRef } = useAnimatedFilter({ category: "All", status: "all", query: "" });
   const counts = useMemo(() => {
     const map = { All: directoryProjects.length };
-    for (const project of directoryProjects) {
-      map[project.category] = (map[project.category] ?? 0) + 1;
-    }
+    directoryProjects.forEach((project) => { map[project.category] = (map[project.category] ?? 0) + 1; });
     return map;
   }, []);
-
-  const categories = directoryCategories.filter((category) => counts[category]);
+  const matches = (project) => {
+    const query = active.query.trim().toLowerCase();
+    return (active.category === "All" || project.category === active.category)
+      && (active.status === "all" || (active.status === "archived" ? project.offline : !project.offline))
+      && (!query || `${project.name} ${project.domain} ${project.category}`.toLowerCase().includes(query));
+  };
+  const visibleCount = directoryProjects.filter(matches).length;
+  const isFiltered = active.category !== "All" || active.status !== "all" || !!active.query;
 
   return (
     <>
-      <div className="flex flex-wrap gap-2 mb-10">
-        {categories.map((category) => {
-          const isActive = category === active;
-          return (
-            <button
-              type="button"
-              key={category}
-              onClick={() => setActive(category)}
-              aria-pressed={isActive}
-              className={`directory-filter text-[11px] tracking-[0.25em] uppercase px-4 py-2 rounded-full border transition-all duration-300 ${
-                isActive
-                  ? "bg-ink text-white border-ink"
-                  : "border-black/15 text-ink/70 hover:text-ink hover:border-black/40"
-              }`}
-            >
-              {category}
-              <span className={isActive ? "text-black/50" : "text-ink/70"}>
-                {" "}
-                {counts[category]}
-              </span>
-            </button>
-          );
-        })}
+      <div className="archive-tools">
+        <div className="archive-status-filters" role="group" aria-label="Project status">
+          {[["all", "All work", directoryProjects.length], ["live", "Live", liveProjects.length], ["archived", "Archived", directoryProjects.length - liveProjects.length]].map(([value, label, count]) => (
+            <button key={value} type="button" aria-pressed={active.status === value} onClick={() => select({ ...active, status: value })}>{label} <span>{count}</span></button>
+          ))}
+        </div>
+        <label className="archive-search">
+          <Icon icon="lucide:search" aria-hidden="true" />
+          <span className="sr-only">Search projects</span>
+          <input type="search" value={active.query} onChange={(event) => select({ ...active, query: event.target.value })} placeholder="Search a project or industry…" />
+        </label>
       </div>
-
-      <ul className="directory-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {directoryProjects.map((project) => {
-          const visible = active === "All" || project.category === active;
-          const shot = hasShot[project.slug]
-            ? `/assets/directory/${project.slug}.webp`
-            : null;
-
+      <div className="archive-category-filters" role="group" aria-label="Project category">
+        {directoryCategories.filter((category) => counts[category]).map((category) => (
+          <button type="button" key={category} onClick={() => select({ ...active, category })} aria-pressed={category === active.category} className="directory-filter">
+            {category}<span>{counts[category]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="archive-results-bar">
+        <p role="status" aria-live="polite" aria-atomic="true">Showing <strong>{String(visibleCount).padStart(2, "0")}</strong> of {directoryProjects.length} projects</p>
+        {isFiltered ? <button type="button" onClick={() => select({ category: "All", status: "all", query: "" })}>Clear filters <span aria-hidden="true">×</span></button> : <span>Independent work. Real websites.</span>}
+      </div>
+      <ul ref={gridRef} data-filter-grid className="directory-grid">
+        {directoryProjects.map((project, index) => {
+          const shot = hasShot[project.slug] ? `/assets/directory/${project.slug}.webp` : null;
+          const href = project.caseStudy ? `/projects/${project.caseStudy}` : project.offline ? null : project.url;
+          const Preview = href ? (project.caseStudy ? Link : "a") : "div";
           return (
-            <li key={project.slug} className={visible ? "" : "hidden"}>
-              <article className="directory-card group h-full overflow-hidden rounded-xl border border-black/[0.07] bg-black/[0.015] hover:border-black/20 transition-all duration-300">
-                <div className="relative aspect-[16/10] overflow-hidden bg-black/[0.03]">
-                  {shot ? (
-                    <img
-                      src={shot}
-                      alt={`${project.name} website homepage — ${project.category} site built by Ritesh Kumar Giri${project.offline ? " (archived screenshot)" : ""}`}
-                      loading="lazy"
-                      decoding="async"
-                      width="1200"
-                      height="750"
-                      className={`w-full h-full object-cover object-top transition-transform duration-500 ${
-                        project.offline
-                          ? "grayscale opacity-60"
-                          : "group-hover:scale-105"
-                      }`}
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-ink/70 text-xs tracking-[0.3em] uppercase px-4 text-center">
-                      {project.domain}
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent" />
-                  <span className="absolute top-3 right-3 text-[9px] tracking-[0.25em] uppercase text-ink/60 bg-white/95 backdrop-blur-sm border border-black/10 px-2 py-1 rounded-full">
-                    {project.category}
-                  </span>
-                </div>
-
-                <div className="p-5 space-y-3">
-                  <div>
-                    <h3 className="text-base text-ink font-light leading-tight">
-                      {project.name}
-                    </h3>
-                    <p className="text-ink/60 text-xs mt-0.5 tracking-wide">
-                      {project.domain}
-                    </p>
+            <li key={project.slug} className={matches(project) ? "" : "hidden"}>
+              <article className="directory-card">
+                <Preview className="directory-preview" {...(href ? { href, ...(project.caseStudy ? {} : { target: "_blank", rel: "noopener" }) } : {})}>
+                  <div className="directory-preview-top"><span>{String(index + 1).padStart(2, "0")} / {project.category}</span><span className={project.offline ? "directory-status is-archived" : "directory-status"}><i />{project.offline ? "Archived" : "Live"}</span></div>
+                  <div className="directory-screen">
+                    {shot ? <Image src={shot} placeholder={directoryPlaceholders[shot] ? "blur" : "empty"} blurDataURL={directoryPlaceholders[shot]} sizes="(max-width: 640px) 90vw, (max-width: 1100px) 45vw, 400px" alt={`${project.name} website homepage — ${project.category} site built by Ritesh Kumar Giri${project.offline ? " (archived screenshot)" : ""}`} fill loading="lazy" className="object-cover object-top" /> : <div className="directory-fallback"><span aria-hidden="true">{project.name.charAt(0)}</span><p>{project.domain}</p></div>}
                   </div>
-
-                  <div className="flex items-center gap-4 pt-1">
-                    {project.caseStudy && (
-                      <Link
-                        href={`/projects/${project.caseStudy}`}
-                        className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-ink hover:text-ink transition-colors"
-                      >
-                        Case study
-                        <Icon icon="lucide:arrow-right" className="size-3" />
-                      </Link>
-                    )}
-                    {project.offline ? (
-                      // No link: the domain no longer serves this site.
-                      <span className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-ink/70">
-                        <Icon icon="lucide:circle-off" className="size-3" />
-                        Offline
-                      </span>
-                    ) : (
-                      <a
-                        href={project.url}
-                        target="_blank"
-                        rel="noopener"
-                        className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.25em] uppercase text-ink/65 hover:text-ink transition-colors"
-                      >
-                        Live site
-                        <Icon icon="lucide:arrow-up-right" className="size-3" />
-                      </a>
-                    )}
+                  {href && <span className="directory-preview-arrow" aria-hidden="true">↗</span>}
+                </Preview>
+                <div className="directory-card-info">
+                  <div><h3>{project.name}</h3><p>{project.domain}</p></div>
+                  <div className="directory-card-links">
+                    {project.caseStudy && <Link href={`/projects/${project.caseStudy}`}>Case study <Icon icon="lucide:arrow-right" /></Link>}
+                    {project.offline ? <span className="directory-offline">Offline <Icon icon="lucide:circle-off" /></span> : <a href={project.url} target="_blank" rel="noopener">Live site <Icon icon="lucide:arrow-up-right" /></a>}
                   </div>
                 </div>
               </article>
@@ -129,8 +77,7 @@ const WorkDirectory = ({ hasShot }) => {
           );
         })}
       </ul>
+      {visibleCount === 0 && <div className="archive-empty"><span aria-hidden="true">↳</span><h3>No matching projects.</h3><p>Try a different name, category or status.</p><button type="button" onClick={() => select({ category: "All", status: "all", query: "" })} className="project-text-link">View all projects <span aria-hidden="true">↗</span></button></div>}
     </>
   );
-};
-
-export default WorkDirectory;
+}

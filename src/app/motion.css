@@ -19,8 +19,8 @@
 }
 .site-header {
   transition:
-    box-shadow 350ms,
-    background-color 350ms;
+    box-shadow 230ms,
+    background-color 230ms;
 }
 .site-header[data-scrolled="true"] {
   background-color: rgb(255 255 255 / 0.98);
@@ -64,17 +64,17 @@
 .nav-contact,
 .nav-social {
   transition:
-    transform 450ms var(--ease-out),
-    translate 350ms var(--ease-out),
+    transform 230ms var(--ease-out),
+    translate 230ms var(--ease-out),
     background-color 250ms,
     color 250ms,
     border-color 250ms,
-    box-shadow 350ms;
+    box-shadow 230ms;
 }
 .arrow-icon,
 .project-links svg,
 .directory-card a svg {
-  transition: transform 350ms var(--ease-out);
+  transition: transform 230ms var(--ease-out);
 }
 .solid-button,
 .nav-contact,
@@ -95,7 +95,7 @@
   background-size: 0 1px;
   background-repeat: no-repeat;
   transition:
-    background-size 450ms var(--ease-out),
+    background-size 230ms var(--ease-out),
     color 250ms;
 }
 .project-card,
@@ -103,42 +103,42 @@
 .directory-card,
 .interactive-card {
   transition:
-    transform 450ms var(--ease-out),
-    box-shadow 450ms var(--ease-out),
-    border-color 350ms;
+    transform 230ms var(--ease-out),
+    box-shadow 230ms var(--ease-out),
+    border-color 230ms;
 }
 .project-image > img,
 .client-project-image img,
 .directory-card img,
 .blog-list img {
   transition:
-    transform 700ms var(--ease-out),
-    filter 500ms;
+    transform 250ms var(--ease-out),
+    filter 250ms;
 }
 .project-open {
   transition:
-    transform 450ms var(--ease-out),
+    transform 230ms var(--ease-out),
     background 250ms,
     color 250ms;
 }
 .client-project-title h3 {
-  transition: translate 350ms var(--ease-out);
+  transition: translate 230ms var(--ease-out);
 }
 .skill-row {
   transition:
-    background-color 350ms,
-    color 350ms,
-    border-color 350ms;
+    background-color 230ms,
+    color 230ms,
+    border-color 230ms;
 }
 .skill-number,
 .skill-toggle {
   transition:
-    background-color 350ms,
-    color 350ms,
-    border-color 350ms;
+    background-color 230ms,
+    color 230ms,
+    border-color 230ms;
 }
 .background-grid summary span {
-  transition: transform 350ms var(--ease-out);
+  transition: transform 230ms var(--ease-out);
 }
 .project-filters button,
 .directory-filter {
@@ -265,10 +265,14 @@
 /* Native accordions retain their semantics, including in older browsers. */
 @supports (interpolate-size: allow-keywords) and
   selector(details::details-content) {
-  :is(.skill-row, .background-grid details) {
+  :is(.skill-row, .background-grid details, .client-description-details) {
     interpolate-size: allow-keywords;
   }
-  :is(.skill-row, .background-grid details)::details-content {
+  :is(
+    .skill-row,
+    .background-grid details,
+    .client-description-details
+  )::details-content {
     block-size: 0;
     opacity: 0;
     overflow: clip;
@@ -277,7 +281,11 @@
       opacity 250ms,
       content-visibility 450ms allow-discrete;
   }
-  :is(.skill-row, .background-grid details)[open]::details-content {
+  :is(
+      .skill-row,
+      .background-grid details,
+      .client-description-details
+    )[open]::details-content {
     block-size: auto;
     opacity: 1;
   }
@@ -302,9 +310,6 @@ html[data-motion="full"] .expanded-nav a {
 }
 .expanded-nav a:nth-child(5) {
   --link-delay: 140ms;
-}
-html[data-motion="full"] [data-gallery-image] {
-  animation: gallery-arrive 500ms var(--ease-out) both;
 }
 html[data-motion="full"] .availability > span {
   animation: availability-breathe 3s ease-in-out infinite;
@@ -425,16 +430,6 @@ html[data-motion="full"] .motion-toggle-icon i {
     transform: none;
   }
 }
-@keyframes gallery-arrive {
-  from {
-    opacity: 0.35;
-    transform: scale(1.025);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 @keyframes availability-breathe {
   0%,
   100% {
@@ -526,4 +521,218 @@ html:not([data-motion="full"]) .stack-group > span {
   .stack-group {
     padding-right: 24px;
   }
+}
+
+/* Refinements from the section-by-section interaction audit. */
+[data-filter-grid] {
+  align-content: start;
+  align-items: start;
+}
+[data-filter-changing] {
+  overflow: clip;
+}
+.stat-value {
+  font-variant-numeric: tabular-nums;
+}
+.stats-context {
+  max-width: 750px;
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.directory-counts {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+  margin-bottom: 19px;
+}
+.directory-counts > span {
+  color: #aaa;
+  margin-inline: 10px;
+}
+.client-description-details {
+  margin-top: 8px;
+}
+.client-description-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  gap: 15px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 10px;
+  color: var(--muted);
+}
+.client-description-details[open] .client-description {
+  padding-bottom: 4px;
+}
+.accordion-symbol {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.accordion-symbol::before,
+.accordion-symbol::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 3px;
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  transition:
+    transform 230ms var(--ease-out),
+    opacity 230ms;
+}
+.accordion-symbol::after {
+  transform: rotate(90deg);
+}
+details[open] > summary > .accordion-symbol::after {
+  transform: rotate(180deg);
+  opacity: 0;
+}
+.background-grid summary .accordion-symbol,
+.background-grid details[open] summary .accordion-symbol {
+  transform: none;
+}
+.service-details-arrow {
+  display: inline-block;
+  margin-left: 5px;
+  transition: transform 220ms var(--ease-out);
+}
+.interactive-card:focus-visible .service-details-arrow {
+  transform: translateX(4px);
+}
+.contact-addresses > a > span:last-child {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-size: 0 1px;
+  background-repeat: no-repeat;
+  padding-bottom: 4px;
+  transition: background-size 230ms var(--ease-out);
+}
+.contact-addresses > a:focus-visible > span:last-child {
+  background-size: 100% 1px;
+}
+.site-footer > div:first-child > div a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-size: 0 1px;
+  background-repeat: no-repeat;
+  transition: background-size 230ms;
+}
+.gallery-stage {
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+.gallery-stage.can-swipe {
+  cursor: grab;
+}
+.gallery-stage.can-swipe:active {
+  cursor: grabbing;
+}
+.gallery-stage:focus-visible {
+  outline-offset: -4px;
+}
+.gallery-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+.gallery-layer.is-active {
+  opacity: 1;
+}
+.gallery-thumbnail {
+  transition:
+    border-color 220ms,
+    box-shadow 220ms,
+    opacity 220ms;
+}
+.gallery-thumbnail[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 3px #1b1b1b;
+}
+.gallery-thumbnail::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #1b1b1b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 230ms var(--ease-out);
+}
+.gallery-thumbnail[aria-pressed="true"]::after {
+  transform: scaleX(1);
+}
+.gallery-dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: transparent !important;
+}
+.gallery-dot::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  width: 6px;
+  height: 6px;
+  background: white;
+  box-shadow: 0 0 0 1px #1b1b1b66;
+  border-radius: 100px;
+  transition:
+    width 220ms,
+    left 220ms;
+}
+.gallery-dot[aria-pressed="true"]::after {
+  width: 20px;
+  left: 2px;
+}
+html[data-motion="full"]
+  :is(.project-filters button, .directory-filter)[aria-pressed="true"] {
+  animation: filter-select 220ms var(--ease-out);
+}
+@keyframes filter-select {
+  from {
+    transform: scale(0.96);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  html[data-motion="full"] .project-card:hover {
+    transform: translateY(-4px);
+  }
+  .interactive-card:hover .service-details-arrow {
+    transform: translateX(4px);
+  }
+  .contact-addresses > a:hover > span:last-child {
+    background-size: 100% 1px;
+  }
+  .contact-addresses > a:hover .arrow-icon {
+    transform: translate(2px, -2px);
+  }
+  .site-footer > div:first-child > div a:hover {
+    background-size: 100% 1px;
+    text-decoration: none;
+  }
+  .background-grid summary:hover .accordion-symbol,
+  .background-grid details[open] summary:hover .accordion-symbol {
+    transform: none;
+  }
+}
+html[data-motion="reduced"] .project-card {
+  transform: none !important;
 }

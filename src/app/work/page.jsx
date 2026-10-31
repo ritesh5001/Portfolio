@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
+import Image from "next/image";
+import { projectPlaceholders } from "../../generated/projectPlaceholders";
 import JsonLd from "../../components/JsonLd";
 import SiteFooter from "../../components/SiteFooter";
 import WorkDirectory from "../../components/WorkDirectory";
@@ -88,28 +90,31 @@ export default function WorkPage() {
       <PageNav />
       <main
         id="main-content"
-        className="content-page min-h-screen bg-white text-ink"
+        className="content-page work-archive min-h-screen bg-white text-ink"
       >
-        <section className="px-6 md:px-10 lg:px-16 pb-10 border-b border-black/[0.08]">
-          <div className="mx-auto max-w-7xl">
-            <nav aria-label="Breadcrumb" className="text-xs text-ink/60 mb-6">
-              <ol className="flex flex-wrap items-center gap-2">
-                <li>
-                  <Link href="/" className="hover:text-ink transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li aria-hidden="true">/</li>
-                <li className="text-ink/60">Work</li>
-              </ol>
-            </nav>
-
-            <p className="text-xs tracking-[0.5em] uppercase text-ink/60 mb-4">
-              Client Work
-            </p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light uppercase leading-tight max-w-4xl">
-              {liveProjects.length} live websites, built and shipped
-            </h1>
+        <section className="archive-intro section-shell">
+          <nav aria-label="Breadcrumb" className="project-breadcrumb">
+            <Link href="/">Home</Link><span aria-hidden="true">/</span><span>Work</span>
+          </nav>
+          <div className="archive-hero" data-motion-reveal="rise">
+            <div>
+              <p className="project-eyebrow"><span className="project-status-dot" /> Client Work / Selected & shipped</p>
+              <h1><span>{liveProjects.length} live websites,</span><br />built and <em>shipped.</em></h1>
+            </div>
+            <div className="archive-hero-aside">
+              <span className="archive-hero-arrow" aria-hidden="true">↙</span>
+              <p>Storefronts, marketplaces and custom builds. Explore the work, then see how it came together.</p>
+              <a href="#project-directory" className="project-text-link">Explore all projects <span aria-hidden="true">↘</span></a>
+            </div>
+          </div>
+          <dl className="archive-ledger">
+            {[[directoryProjects.length, "Total projects"], [liveProjects.length, "Live websites"], [clientProjects.length, "Case studies"], [directoryProjects.length - liveProjects.length, "Archived projects"]].map(([value, label]) => (
+              <div key={label}><dt>{label}</dt><dd>{String(value).padStart(2, "0")}<span aria-hidden="true">↗</span></dd></div>
+            ))}
+          </dl>
+          <details className="archive-story">
+            <summary>Behind the work <span className="accordion-symbol" aria-hidden="true" /></summary>
+            <div className="archive-story-copy">
             <p className="mt-6 text-ink/60 text-base md:text-lg font-light leading-relaxed max-w-3xl">
               Everything below was built and shipped to production. The work
               splits three ways: storefronts on WooCommerce and Shopify where
@@ -143,13 +148,46 @@ export default function WorkPage() {
               </Link>
               .
             </p>
+            </div>
+          </details>
+        </section>
+
+        <section className="archive-selected section-shell" aria-labelledby="selected-work-heading">
+          <div className="project-section-heading">
+            <p className="project-eyebrow">01 / In focus</p>
+            <h2 id="selected-work-heading">A closer look.</h2>
+            <span className="project-section-note">The brief. The build. The details.</span>
+          </div>
+          <div className="archive-feature-grid">
+            {clientProjects.filter((project) => project.featured).slice(0, 2).map((project, index) => (
+              <Link key={project.slug} href={`/projects/${project.slug}`} className={`archive-feature archive-feature-${index + 1}`} data-motion-reveal="image">
+                <div className="archive-feature-art">
+                  <span className="archive-feature-index">Selected project / 0{index + 1}</span>
+                  <div className="archive-feature-screen">
+                    <Image src={project.images[0]} alt={`${project.name} — ${project.tagline}`} fill sizes="(max-width: 760px) 90vw, 550px" placeholder={projectPlaceholders[project.images[0]] ? "blur" : "empty"} blurDataURL={projectPlaceholders[project.images[0]]} className="object-cover object-top" />
+                  </div>
+                  <span className="archive-feature-open" aria-hidden="true">↗</span>
+                </div>
+                <div className="archive-feature-caption">
+                  <div><p className="project-eyebrow">{project.type}</p><h3>{project.name}</h3><p>{project.tagline}</p></div>
+                  <span className="project-text-link">View case study <span aria-hidden="true">↗</span></span>
+                </div>
+              </Link>
+            ))}
           </div>
         </section>
 
-        <section className="px-6 md:px-10 lg:px-16 py-12">
-          <div className="mx-auto max-w-7xl">
-            <WorkDirectory hasShot={hasShot} />
+        <section id="project-directory" className="archive-directory section-shell" aria-labelledby="archive-heading">
+          <div className="project-section-heading">
+            <p className="project-eyebrow">02 / The full collection</p>
+            <h2 id="archive-heading">Explore the archive.</h2>
+            <span className="project-section-note">Find your kind of project.</span>
           </div>
+          <WorkDirectory hasShot={hasShot} />
+        </section>
+        <section className="archive-invitation section-shell" data-motion-reveal="rise">
+          <p className="project-eyebrow">Your project could be next</p>
+          <Link href="/hire-web-developer-in-lucknow">Let’s build something<br /><em>worth exploring.</em><span aria-hidden="true">↗</span></Link>
         </section>
       </main>
       <SiteFooter />

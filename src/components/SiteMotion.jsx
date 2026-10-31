@@ -15,6 +15,10 @@ import { installSiteMotion } from "../lib/site-motion";
 const MotionContext = createContext(null);
 const STORAGE_KEY = "portfolio-motion";
 
+export function useMotionPreference() {
+  return useContext(MotionContext) ?? { ready: false, reduced: true };
+}
+
 /** Keep server-rendered content intact; enhance it after hydration. */
 export default function SiteMotion({ children }) {
   const pathname = usePathname();

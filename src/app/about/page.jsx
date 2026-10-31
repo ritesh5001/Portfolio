@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { projectPlaceholders } from "../../generated/projectPlaceholders";
 import JsonLd from "../../components/JsonLd";
 import PageNav from "../../components/PageNav";
 import SiteFooter from "../../components/SiteFooter";
@@ -72,9 +74,12 @@ export default function AboutPage() {
             </nav>
 
             <div className="grid gap-8 md:grid-cols-[240px_1fr] items-start">
-              <img
+              <Image
                 data-motion-reveal="image"
                 src={contactInfo.profileImage}
+                placeholder="blur"
+                blurDataURL={projectPlaceholders[contactInfo.profileImage]}
+                sizes="(max-width: 768px) 100vw, 240px"
                 alt={`${contactInfo.name}, full-stack developer based in ${LOCALITY}, India`}
                 width="480"
                 height="600"

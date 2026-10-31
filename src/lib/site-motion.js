@@ -109,7 +109,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
         { opacity: 1, transform: "translateY(0) scale(1)" },
       ],
       {
-        duration: compact ? 380 : isHeadline || isImage ? 850 : 650,
+        duration: compact ? 320 : isHeadline || isImage ? 650 : 550,
         delay: delay ?? stagger,
         easing: EASE,
         fill: "both",
@@ -288,6 +288,10 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
           if (!entry.isIntersecting || revealed.has(entry.target)) continue;
           revealed.add(entry.target);
           observer.unobserve(entry.target);
+          if (entry.target.closest("[data-filter-changing]")) {
+            entry.target.dataset.motionState = "revealed";
+            continue;
+          }
           play(entry.target);
         }
       },
@@ -310,6 +314,7 @@ export function installSiteMotion({ reduced, animateInitial = true }) {
         !record.target.matches(FILTER_ITEM)
       )
         continue;
+      if (record.target.closest("[data-filter-grid]")) continue;
       const element = record.target;
       const rect = element.getBoundingClientRect();
       cancel(element);

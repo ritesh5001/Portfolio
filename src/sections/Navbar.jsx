@@ -20,7 +20,7 @@ export default function Navbar({ showBlog = false }) {
     },
     {
       label: "Services",
-      href: isHome ? "/#services" : "/services",
+      href: "/services",
       active: pathname.startsWith("/services"),
     },
     {
@@ -116,6 +116,9 @@ export default function Navbar({ showBlog = false }) {
             ))}
           </div>
           <div className="expanded-extra-links">
+            <Link href="/#services" onClick={() => setIsOpen(false)}>
+              Technical Skills <Arrow />
+            </Link>
             <Link
               href="/hire-web-developer-in-lucknow"
               onClick={() => setIsOpen(false)}

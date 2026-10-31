@@ -87,7 +87,10 @@ export default function ServicesIndexPage() {
                     {service.description}
                   </p>
                   <span className="inline-block text-[10px] tracking-[0.3em] uppercase text-ink">
-                    Details →
+                    Details{" "}
+                    <span className="service-details-arrow" aria-hidden="true">
+                      →
+                    </span>
                   </span>
                 </Link>
               </li>

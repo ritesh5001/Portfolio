@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { blogPlaceholders } from "../../../generated/blogPlaceholders";
 import { notFound } from "next/navigation";
 import JsonLd from "../../../components/JsonLd";
 import PageNav from "../../../components/PageNav";
@@ -153,9 +155,12 @@ export default async function BlogPostPage({ params }) {
           <div className="mx-auto max-w-6xl grid gap-12 lg:grid-cols-[1fr_240px]">
             <div className="max-w-3xl min-w-0">
               {post.image && (
-                <img
+                <Image
                   data-motion-reveal="image"
                   src={post.image}
+                  placeholder={blogPlaceholders[post.image] ? "blur" : "empty"}
+                  blurDataURL={blogPlaceholders[post.image]}
+                  sizes="(max-width: 1024px) 100vw, 768px"
                   alt={post.imageAlt}
                   width="1280"
                   height="720"
