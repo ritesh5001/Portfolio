@@ -7,10 +7,9 @@ export const servicePages = [
     name: "WordPress & WooCommerce Development",
     shortName: "WordPress & WooCommerce",
     areaServed: "Lucknow",
-    title:
-      "WordPress & WooCommerce Developer in Lucknow — Ritesh Kumar Giri",
+    title: "WordPress & WooCommerce Developer in Lucknow — Ritesh Kumar Giri",
     description:
-      "Freelance WordPress and WooCommerce developer in Lucknow. Product catalogues, payment gateways, filtering and checkout work across 50+ live stores in India.",
+      "Freelance WordPress and WooCommerce developer in Lucknow. Product catalogues, payment gateways, filtering and checkout work across 65+ live client sites and stores in India.",
     intro:
       "Most of the stores I have shipped run on WooCommerce. It is the right answer when a business wants to own its catalogue, its customer data and its checkout without paying a platform fee on every order — and when the product model is ordinary enough that a platform will not fight you.",
     sections: [

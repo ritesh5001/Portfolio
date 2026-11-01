@@ -12,8 +12,10 @@ import {
   leadership,
 } from "../constants";
 
+// Rounded down to the nearest 5 so it never overstates the directory count.
+const liveRounded = Math.floor(liveProjects.length / 5) * 5 + "+";
 const highlights = [
-  { value: "50+", label: "live websites" },
+  { value: liveRounded, label: "live client websites" },
   { value: "10+", label: "MERN applications" },
   { value: "4", label: "flagship projects" },
 ];
@@ -24,8 +26,8 @@ export default function About() {
       <SectionHeading
         number="01"
         title="About"
-        subtitle="Professional Experience, Education & Achievements"
-        description="Software engineer focused on high-impact product delivery, modern architecture, and measurable business outcomes."
+        subtitle="Who you'd be working with"
+        description="Freelance developer for businesses that need a website or web app built properly, launched, and looked after."
       />
       <div className="about-intro">
         <div className="about-name">
@@ -41,12 +43,14 @@ export default function About() {
         </div>
         <div>
           <h3 className="about-statement">
-            Building reliable products with strong engineering fundamentals.
+            Websites and web apps that work for your business, built by one
+            developer from design to launch.
           </h3>
           <p className="body-copy">
-            I build full-stack systems that connect strong UX with robust
-            backend engineering. My focus areas include scalable architecture,
-            real-time communication, and AI-powered product experiences.
+            I take a project from first call to live site: UI, backend,
+            payments, hosting and the fixes after launch. Day to day I also
+            build MaribiZ, a B2B maritime SaaS, so client work gets the same
+            engineering standards as a production product.
           </p>
         </div>
       </div>
@@ -59,52 +63,57 @@ export default function About() {
         ))}
       </div>
       <p className="stats-context">
-        50+ refers to WordPress websites maintained. The full directory tracks{" "}
-        {liveProjects.length} currently live sites and{" "}
-        {directoryProjects.length - liveProjects.length} archived projects (
-        {directoryProjects.length} entries).
+        Counted from the project directory: {liveProjects.length} sites live
+        today, plus {directoryProjects.length - liveProjects.length} earlier
+        projects that are no longer online.
       </p>
       <div className="about-focus">
         <div>
-          <h3 className="eyebrow">Current Focus</h3>
+          <h3 className="eyebrow">What I build</h3>
           <ul>
-            <li>Product-minded full-stack development</li>
-            <li>Enterprise workflows and clean system design</li>
-            <li>AI features, real-time chat, and scalable APIs</li>
+            <li>WordPress, WooCommerce and Shopify stores</li>
+            <li>Custom Next.js and MERN web apps</li>
+            <li>AI features, real-time chat, and APIs</li>
           </ul>
         </div>
         <div>
           <h3 className="eyebrow">Based In</h3>
           <p>{contactInfo.location}</p>
-          <p>Open to full-time, freelance, and contract product work.</p>
+          <p>
+            Taking on freelance projects for businesses in Lucknow and across
+            India.
+          </p>
         </div>
       </div>
       <div className="experience-layout">
         <h3 className="eyebrow">Experience</h3>
         <div className="experience-list">
-          {experienceData.map((experience) => (
-            <article key={experience.company} className="experience-row">
-              <div className="experience-top">
-                <div>
-                  <h4>{experience.role}</h4>
-                  <p>
-                    {experience.company} | {experience.location} (
-                    {experience.mode})
-                  </p>
+          {/* Freelance work first: the homepage speaks to clients. */}
+          {[...experienceData]
+            .sort((a, b) => (b.mode === "Freelance") - (a.mode === "Freelance"))
+            .map((experience) => (
+              <article key={experience.company} className="experience-row">
+                <div className="experience-top">
+                  <div>
+                    <h4>{experience.role}</h4>
+                    <p>
+                      {experience.company} | {experience.location} (
+                      {experience.mode})
+                    </p>
+                  </div>
+                  <span className="eyebrow">{experience.duration}</span>
                 </div>
-                <span className="eyebrow">{experience.duration}</span>
-              </div>
-              <ul>
-                {experience.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
+                <ul>
+                  {experience.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
         </div>
       </div>
       <div className="background-grid">
-        <details>
+        <details open>
           <summary>
             Education <span className="accordion-symbol" aria-hidden="true" />
           </summary>
@@ -121,7 +130,7 @@ export default function About() {
           { title: "Achievements", items: achievements },
           { title: "Leadership", items: leadership },
         ].map((group) => (
-          <details key={group.title}>
+          <details key={group.title} open={group.title === "Certifications"}>
             <summary>
               {group.title}
               <span className="accordion-symbol" aria-hidden="true" />

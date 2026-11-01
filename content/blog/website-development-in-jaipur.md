@@ -42,7 +42,7 @@ If export is part of the business, the website needs:
 
 ## Heritage hotels and tourism
 
-Hotels, havelis and tour operators lose a large cut of every booking to online travel agents. A direct-booking website with room pages, real photos, an availability and booking engine, and an incentive to book direct wins back the guests who already found you. For tour operators, I can build AI itinerary tools of the kind I built for [Explore Fusion](https://explorefusion.online), which plans trips using the Groq AI SDK.
+Hotels, havelis and tour operators lose a large cut of every booking to online travel agents. A direct-booking website with room pages, real photos, an availability and booking engine, and an incentive to book direct wins back the guests who already found you. For tour operators, I can build AI itinerary tools of the kind I built for Explore Fusion, which plans trips using the Groq AI SDK.
 
 ## Working together
 

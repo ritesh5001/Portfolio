@@ -48,7 +48,7 @@
   }
 
   .mobileCards :global(.project-caption > .eyebrow) {
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.065em;
   }
 
@@ -68,7 +68,7 @@
     border-block: 1px solid var(--rule);
     padding-block: 5px;
     gap: 0;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .mobileCards :global(.project-links a) {
@@ -100,7 +100,7 @@
     padding-top: 16px;
     margin-top: 18px;
     gap: 7px;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.025em;
   }
 
@@ -130,7 +130,7 @@
   }
 
   .mobileCards :global(.client-type) {
-    font-size: 8px;
+    font-size: 11px;
     top: 12px;
     right: 12px;
     padding: 6px 9px;
@@ -166,20 +166,20 @@
   }
 
   .mobileCards :global(.featured-label) {
-    font-size: 9px;
+    font-size: 11px;
     margin-top: 16px;
   }
 
   .mobileCards :global(.client-description-details summary) {
     min-height: 44px;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .mobileCards :global(.client-project-bottom) {
     align-items: center;
     flex-wrap: wrap;
     padding-top: 8px;
-    font-size: 10px;
+    font-size: 13px;
     gap: 4px 12px;
     overflow-wrap: anywhere;
   }
@@ -191,5 +191,21 @@
 
   .mobileCards :global(.project-filters button) {
     min-height: 44px;
+  }
+
+  /* Client cards swipe sideways instead of stacking into a long scroll. */
+  .mobileCards :global(.client-grid) {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 86%;
+    gap: 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 6px;
+  }
+  .mobileCards :global(.client-grid > .client-project) {
+    scroll-snap-align: start;
   }
 }

@@ -1,9 +1,12 @@
 export const contactInfo = {
   name: "Ritesh Kumar Giri",
-  title: "Software Engineer",
+  title: "Freelance Full-Stack Developer",
   location: "Lucknow, India",
   phone: "+91-7007436164",
   email: "rgiri5001@gmail.com",
+  whatsapp:
+    "https://wa.me/917007436164?text=" +
+    encodeURIComponent("Hi Ritesh, I'd like a quote for a website."),
   profileImage: "/images/pfp.webp",
   // Social crawlers (LinkedIn, WhatsApp) do not reliably render WebP og:image.
   profileImageOg: "/images/pfp.jpg",
@@ -31,6 +34,8 @@ export const servicesData = [
       { title: "HTML5 / CSS3" },
       { title: "Tailwind CSS" },
       { title: "Framer Motion" },
+      { title: "React Native (Expo)" },
+      { title: "Zustand" },
     ],
   },
   {
@@ -43,6 +48,9 @@ export const servicesData = [
       { title: "REST APIs" },
       { title: "Socket.IO" },
       { title: "Microservices" },
+      { title: "GraphQL" },
+      { title: "WebSockets" },
+      { title: "BullMQ" },
     ],
   },
   {
@@ -62,16 +70,24 @@ export const servicesData = [
       { title: "LangChain" },
       { title: "Google Gemini API" },
       { title: "Groq SDK" },
+      { title: "RAG Architecture" },
+      { title: "LLM Integration" },
+      { title: "Prompt Engineering" },
     ],
   },
   {
     title: "DevOps & Tools",
-    description: "Delivery, orchestration, and collaborative engineering workflows.",
+    description:
+      "Delivery, orchestration, and collaborative engineering workflows.",
     items: [
       { title: "Git / GitHub" },
       { title: "Docker" },
       { title: "Kubernetes" },
       { title: "CI/CD (GitHub Actions)" },
+      { title: "AWS" },
+      { title: "Vercel" },
+      { title: "Nginx" },
+      { title: "Linux" },
       { title: "Postman" },
       { title: "VS Code" },
     ],
@@ -86,21 +102,21 @@ export const experienceData = [
     role: "Software Engineer",
     duration: "Mar 2026 - Present",
     highlights: [
-      "Developing and maintaining a full-stack B2B maritime marketplace for complete RFQ lifecycles and vendor management.",
-      "Collaborating in a hybrid team to build scalable enterprise solutions with Next.js, Node.js, Express, and PostgreSQL.",
+      "Shipped core features of a B2B maritime marketplace: end-to-end RFQ lifecycles, vendor onboarding and RBAC for 3 user roles.",
+      "Built and documented 91+ RESTful API endpoints with Next.js 14, Node.js, Express.js and PostgreSQL in an agile team.",
+      "Engineered real-time communication (Socket.IO) and automated email workflows (Resend API), cutting manual quote approvals.",
     ],
   },
   {
     company: "NextGen Fusion",
     location: "Remote",
     mode: "Freelance",
-    role: "Web Developer",
+    role: "Full Stack Developer",
     duration: "Jan 2025 - Present",
     highlights: [
-      "Develop and maintain 50+ live WordPress websites and 10+ MERN stack applications with scalable backend architecture.",
-      "Orchestrate CI/CD pipelines across Vercel, Netlify, Render, AWS, and Hostinger for automated delivery.",
-      "Deploy containerized production workloads using Docker and Kubernetes for consistency and reliability.",
-      "Deliver end-to-end solutions including UI/UX, secure backend APIs, and complete hosting setup.",
+      "Delivered 65+ live client websites and web applications (React, Next.js, Node.js, WordPress) on time, with 5-star rated delivery.",
+      "Automated CI/CD with GitHub Actions, Vercel and AWS; shipped Docker and Kubernetes deployments with zero downtime.",
+      "Owned end-to-end delivery: system design, API engineering, database architecture, UI/UX implementation and cloud setup.",
     ],
   },
 ];
@@ -109,21 +125,22 @@ export const educationData = {
   institute: "Babu Banarasi Das Northern India Institute of Technology",
   degree: "Bachelor of Technology in Computer Science & Engineering",
   location: "Lucknow, India",
-  duration: "2022 - Present",
+  duration: "2022 - 2026",
 };
 
 export const certifications = [
-  "Job Ready Cohort (Sheryians Coding School): Intensive full-stack training covering DSA, system design, and DevOps (Docker, CI/CD).",
+  "Job Ready Cohort (Sheryians Coding School): full-stack development, DSA, system design, Docker, Kubernetes and CI/CD.",
   "Data Science - AI & DSA (ShapeMySkills): Completed a 90-hour program focused on AI algorithms, machine learning, and Python.",
 ];
 
 export const achievements = [
   "1st Prize Winner, Utkarsh 2022 Photography Competition.",
-  "Cleared Indian Air Force Exam.",
+  "Cleared the Indian Air Force written exam.",
 ];
 
 export const leadership = [
   "Coordinator, Discipline Team at BBDNIIT.",
+  "Active open-source contributor on GitHub.",
 ];
 
 export const projects = [
@@ -131,9 +148,10 @@ export const projects = [
     id: 1,
     name: "MariBiz - Global Marine Services & RFQ Marketplace",
     description:
-      "Built a full-stack maritime marketplace with RFQ posting, quote submission, role-based approvals, Socket.IO chat, analytics, and automated transactional emails.",
+      "Architected a B2B maritime SaaS with RFQ management, multi-vendor workflows and approval pipelines, RBAC for 3 user roles, real-time Socket.IO messaging and an analytics dashboard.",
     liveUrl: "https://maribiz.ai",
     repoUrl: "https://github.com/ritesh5001",
+    caseStudy: "maribiz",
     image: "/assets/projects/personal/maribiz.webp",
     imageAlt:
       "MariBiz marketplace homepage showing the quick RFQ form and vendor counts",
@@ -151,12 +169,12 @@ export const projects = [
     id: 2,
     name: "Tat Vivah - Multi-Vendor Wedding E-Commerce",
     description:
-      "Engineered a scalable multi-vendor commerce platform with JWT RBAC, real-time inventory, atomic checkout, Redis caching, and layered monolith architecture.",
+      "Built a multi-vendor e-commerce platform with RBAC, atomic checkout, real-time inventory, Razorpay with webhook verification, and a React Native shopping app.",
     liveUrl: "https://tatvivahtrends.com",
     repoUrl: "https://github.com/ritesh5001",
+    caseStudy: "tatvivahtrends",
     image: "/assets/projects/personal/tatvivah.webp",
-    imageAlt:
-      "Tat Vivah storefront showing the ethnic wedding wear catalogue",
+    imageAlt: "Tat Vivah storefront showing the ethnic wedding wear catalogue",
     bgImage: "/assets/backgrounds/curtains.webp",
     frameworks: [
       { id: 1, name: "TypeScript" },
@@ -168,41 +186,39 @@ export const projects = [
   },
   {
     id: 3,
-    name: "Explore Fusion - AI-Powered Travel Microservices App",
+    name: "MariMail - Marine Intelligence & Email Automation SaaS",
     description:
-      "Architected a microservices-based travel ecosystem with API gateway, Groq AI trip planning, travel buddy matching, social feed, and real-time Socket.IO messaging.",
-    liveUrl: "https://explorefusion.online",
+      "Built a full-stack SaaS for marine intelligence and ETA-triggered email automation, with worker services for auth, workspaces, CSV imports and background jobs.",
+    liveUrl: "https://mail.maribiz.ai",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/personal/explorefusion.webp",
+    image: "/assets/projects/personal/marimail.webp",
     imageAlt:
-      "Explore Fusion travel app landing page with AI trip planning",
-    bgImage: "/assets/backgrounds/map.webp",
+      "MariMail homepage: know which vessels need your services before they arrive at port",
     frameworks: [
-      { id: 1, name: "React" },
+      { id: 1, name: "Next.js" },
       { id: 2, name: "Node.js" },
-      { id: 3, name: "Socket.IO" },
-      { id: 4, name: "Microservices" },
-      { id: 5, name: "Groq SDK" },
-      { id: 6, name: "JWT" },
+      { id: 3, name: "PostgreSQL" },
+      { id: 4, name: "Prisma" },
+      { id: 5, name: "Redis" },
+      { id: 6, name: "BullMQ" },
     ],
   },
   {
     id: 4,
-    name: "JARVIS AI - Full-Stack AI Chat Platform",
+    name: "NextMentor - E-Learning & Affiliate Platform",
     description:
-      "Developed an AI chat platform with secure JWT auth, long-term conversational memory via Pinecone, and context-aware responses using Google Gemini API.",
-    liveUrl: "https://jarvisai.riteshgiri.dev",
+      "Built an e-learning and affiliate platform with Razorpay checkout, HLS video behind signed tokens, a commission engine on an append-only wallet ledger, and 130+ automated checks.",
+    liveUrl: "https://nextmentor.in",
     repoUrl: "https://github.com/ritesh5001",
-    image: "/assets/projects/personal/jarvisai.webp",
-    imageAlt:
-      "JARVIS AI chat interface with conversation sidebar",
-    bgImage: "/assets/backgrounds/poster.webp",
+    image: "/assets/projects/personal/nextmentor.webp",
+    imageAlt: "NextMentor homepage: learn the skill, freelance with confidence",
     frameworks: [
-      { id: 1, name: "React" },
-      { id: 2, name: "Node.js" },
-      { id: 3, name: "Express" },
-      { id: 4, name: "Pinecone" },
-      { id: 5, name: "Gemini API" },
+      { id: 1, name: "Next.js 16" },
+      { id: 2, name: "TypeScript" },
+      { id: 3, name: "Hono" },
+      { id: 4, name: "Drizzle" },
+      { id: 5, name: "PostgreSQL" },
+      { id: 6, name: "Razorpay" },
     ],
   },
 ];
@@ -227,7 +243,14 @@ export const clientProjects = [
       "Razorpay Payment Gateway Integration",
       "Wedding Fashion E-Commerce",
     ],
-    tech: ["Next.js", "TypeScript", "Node.js", "Razorpay", "PostgreSQL", "Prisma"],
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Razorpay",
+      "PostgreSQL",
+      "Prisma",
+    ],
     ogImage: "/assets/projects/tatvivahtrends/og.jpg",
     images: [
       "/assets/projects/tatvivahtrends/1.webp",
@@ -254,7 +277,14 @@ export const clientProjects = [
       "Port & Service Discovery Platform",
       "Maritime Industry Solutions",
     ],
-    tech: ["Next.js", "Node.js", "Express", "PostgreSQL", "Socket.IO", "Prisma"],
+    tech: [
+      "Next.js",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Socket.IO",
+      "Prisma",
+    ],
     ogImage: "/assets/projects/maribiz/og.jpg",
     images: [
       "/assets/projects/maribiz/1.webp",
@@ -533,3 +563,7 @@ export const socials = [
     href: "mailto:rgiri5001@gmail.com",
   },
 ];
+
+// Real client quotes only: { quote, name, business, project? (case-study slug) }.
+// The homepage testimonial section stays hidden while this is empty.
+export const testimonials = [];

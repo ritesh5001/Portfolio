@@ -128,7 +128,7 @@ const SiteFooter = () => {
       </div>
 
       <div className="footer-signature" aria-hidden="true">
-        Ritesh Giri®
+        Ritesh Giri
       </div>
       <div className="footer-bottom">
         <p className="mx-auto max-w-7xl text-xs text-ink/60">

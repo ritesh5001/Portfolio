@@ -37,7 +37,7 @@ A clever prompt helps in a chat window. In a production AI feature, like a suppo
 - **Version your context** like code, and test changes against a fixed set of real questions.
 - **Measure cost per answer.** Context is what you pay for.
 
-I learned this building [JARVIS AI](https://jarvisai.riteshgiri.dev), a chat platform with long-term memory on Gemini and Pinecone: answer quality changed far more with what we retrieved and remembered than with how the prompt was worded.
+I learned this building JARVIS AI, a chat platform with long-term memory on Gemini and Pinecone: answer quality changed far more with what we retrieved and remembered than with how the prompt was worded.
 
 ## AI features built properly
 

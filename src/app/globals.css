@@ -44,7 +44,7 @@
 :root {
   --page-width: 1280px;
   --rule: #dededb;
-  --muted: #686868;
+  --muted: #545454;
 }
 html {
   scroll-behavior: smooth;
@@ -115,7 +115,7 @@ img {
   border-top: 1px solid var(--rule);
 }
 .eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.09em;
@@ -145,7 +145,7 @@ a:hover > .circle-link {
   display: inline-flex;
   align-items: center;
   gap: 20px;
-  font-size: 12px;
+  font-size: 14px;
   padding-bottom: 8px;
   border-bottom: 1px solid #9b9b9b;
 }
@@ -163,7 +163,7 @@ a:hover > .circle-link {
   border: 1px solid #1b1b1b;
   border-radius: 100px;
   padding: 15px 23px;
-  font-size: 12px;
+  font-size: 14px;
   transition:
     background 0.2s,
     color 0.2s;
@@ -213,7 +213,7 @@ a:hover > .circle-link {
   gap: 5px;
 }
 .nav-pill {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   padding: 10px 17px;
   border: 1px solid #e0e0de;
@@ -253,7 +253,7 @@ a:hover > .circle-link {
   padding: 9px 15px;
   border: 1px solid var(--rule);
   border-radius: 100px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 .nav-contact .arrow-icon {
@@ -346,7 +346,7 @@ a:hover > .circle-link {
 }
 .hero-location {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 0.12em;
   margin-top: 24px;
 }
@@ -386,15 +386,15 @@ a:hover > .circle-link {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
 }
 .hero-portrait figcaption span {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 14px;
 }
 .hero-aside {
   padding-top: 40px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
 }
 .availability {
@@ -410,7 +410,7 @@ a:hover > .circle-link {
   background: #4c6250;
 }
 .hero-aside-left .availability {
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 8px;
 }
@@ -430,7 +430,7 @@ a:hover > .circle-link {
   text-align: right;
 }
 .hero-aside-right > p {
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   line-height: 1.6;
 }
@@ -438,7 +438,7 @@ a:hover > .circle-link {
   display: grid;
   gap: 13px;
   margin-top: 45px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 .hero-bottomline {
@@ -507,7 +507,7 @@ a:hover > .circle-link {
 }
 .section-description {
   max-width: 300px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.65;
   color: #5c5c5c;
 }
@@ -609,7 +609,7 @@ a:hover > .circle-link {
   font-size: 20px;
 }
 .experience-top p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 5px;
 }
@@ -622,7 +622,7 @@ a:hover > .circle-link {
   list-style: disc;
   padding-left: 16px;
   margin-top: 18px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--muted);
 }
@@ -749,7 +749,7 @@ details summary::-webkit-details-marker {
 }
 .project-caption > .eyebrow {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 .project-title-row {
   display: flex;
@@ -767,7 +767,7 @@ details summary::-webkit-details-marker {
 .project-links {
   display: flex;
   gap: 13px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   flex-shrink: 0;
   padding-top: 5px;
@@ -782,7 +782,7 @@ details summary::-webkit-details-marker {
   height: 12px;
 }
 .project-caption > p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--muted);
   margin-top: 15px;
@@ -791,7 +791,7 @@ details summary::-webkit-details-marker {
   display: flex;
   flex-wrap: wrap;
   gap: 6px 14px;
-  font-size: 9px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.035em;
   color: #646464;
@@ -823,7 +823,7 @@ details summary::-webkit-details-marker {
   font-weight: 300;
 }
 .client-section-heading > p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
   color: var(--muted);
   max-width: 300px;
@@ -839,7 +839,7 @@ details summary::-webkit-details-marker {
   border-radius: 100px;
   padding: 10px 16px;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 12px;
   transition:
     background 0.2s,
     color 0.2s;
@@ -887,7 +887,7 @@ details summary::-webkit-details-marker {
   background: #fff;
   border: 1px solid var(--rule);
   border-radius: 100px;
-  font-size: 8px;
+  font-size: 12px;
   text-transform: uppercase;
   padding: 5px 9px;
 }
@@ -911,18 +911,18 @@ details summary::-webkit-details-marker {
   height: 15px;
 }
 .client-tagline {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
   margin-top: 5px;
 }
 .featured-label {
   display: inline-block;
-  font-size: 8px;
+  font-size: 14px;
   margin-top: 12px;
 }
 .client-description {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.75;
   color: var(--muted);
   margin-top: 7px;
@@ -931,7 +931,7 @@ details summary::-webkit-details-marker {
   border-top: 1px solid var(--rule);
   margin-top: 16px;
   padding-top: 12px;
-  font-size: 9px;
+  font-size: 14px;
   color: var(--muted);
   display: flex;
   justify-content: space-between;
@@ -962,7 +962,7 @@ details summary::-webkit-details-marker {
   letter-spacing: -0.03em;
 }
 .all-work-link p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 7px;
 }
@@ -991,7 +991,7 @@ details summary::-webkit-details-marker {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 .skill-row h3 {
   font-size: 24px;
@@ -1001,7 +1001,7 @@ details summary::-webkit-details-marker {
 }
 .skill-preview {
   margin-left: auto;
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
 }
 .skill-toggle {
@@ -1016,16 +1016,16 @@ details summary::-webkit-details-marker {
   transition: transform 0.25s;
 }
 .skill-row[open] {
-  background: #1b1b1b;
-  color: #fff;
+  background: var(--color-paper);
+  color: #1b1b1b;
   border-color: #1b1b1b;
 }
 .skill-row[open] .skill-number,
 .skill-row[open] .skill-toggle {
-  border-color: #6c6c6c;
+  border-color: #1b1b1b;
 }
 .skill-row[open] .skill-preview {
-  color: #bdbdbd;
+  color: var(--muted);
 }
 .skill-row[open] .skill-toggle .arrow-icon {
   transform: rotate(180deg);
@@ -1034,8 +1034,8 @@ details summary::-webkit-details-marker {
   padding: 5px 78px 30px;
 }
 .skill-content > p {
-  font-size: 12px;
-  color: #d0d0d0;
+  font-size: 14px;
+  color: var(--muted);
   line-height: 1.7;
 }
 .skill-content ul {
@@ -1045,10 +1045,11 @@ details summary::-webkit-details-marker {
   margin-top: 19px;
 }
 .skill-content li {
-  font-size: 11px;
+  font-size: 14px;
   padding: 8px 13px;
   border-radius: 100px;
-  border: 1px solid #606060;
+  border: 1px solid #c9c9c5;
+  background: #fff;
 }
 .services-page-link {
   margin-top: 26px;
@@ -1060,7 +1061,7 @@ details summary::-webkit-details-marker {
   gap: 15px 26px;
   border-block: 1px solid var(--rule);
   padding-block: 22px;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -1097,7 +1098,7 @@ details summary::-webkit-details-marker {
 }
 .contact-intro > p:last-child {
   max-width: 320px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   line-height: 1.7;
 }
@@ -1177,7 +1178,7 @@ details summary::-webkit-details-marker {
   font-size: 21px;
 }
 .contact-addresses .contact-note {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.8;
   color: var(--muted);
   margin-top: 8px;
@@ -1198,7 +1199,7 @@ details summary::-webkit-details-marker {
   display: flex;
   align-items: center;
   gap: 18px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .contact-socials .arrow-icon {
   width: 15px;
@@ -1237,7 +1238,7 @@ details summary::-webkit-details-marker {
   padding-bottom: 55px;
 }
 .content-page [aria-label="Breadcrumb"] {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 0.04em;
 }
 .content-page [class*="rounded-2xl"]:not(img):not(a):not(button),
@@ -1342,7 +1343,7 @@ details summary::-webkit-details-marker {
   margin: 0;
 }
 .site-footer .footer-bottom > a {
-  font-size: 10px;
+  font-size: 14px;
   white-space: nowrap;
 }
 
@@ -1488,7 +1489,7 @@ details summary::-webkit-details-marker {
   }
   .nav-contact {
     padding: 9px 13px;
-    font-size: 9px;
+    font-size: 11px;
     gap: 10px;
   }
   .menu-toggle {
@@ -1508,7 +1509,7 @@ details summary::-webkit-details-marker {
     border-bottom: 1px solid var(--rule);
   }
   .expanded-extra-links a {
-    font-size: 12px;
+    font-size: 13px;
     padding-block: 12px;
   }
   .expanded-nav {
@@ -1521,7 +1522,7 @@ details summary::-webkit-details-marker {
     padding-top: 27px;
   }
   .hero-topline {
-    font-size: 8px;
+    font-size: 11px;
     margin-bottom: 28px;
   }
   .hero-topline > span:last-child {
@@ -1535,7 +1536,7 @@ details summary::-webkit-details-marker {
     font-size: clamp(28px, 6.1vw, 46px);
   }
   .hero-location {
-    font-size: 10px;
+    font-size: 13px;
     margin-top: 17px;
   }
   .hero-stage {
@@ -1552,7 +1553,7 @@ details summary::-webkit-details-marker {
     z-index: 1;
   }
   .hero-aside-left > .eyebrow {
-    font-size: 8px;
+    font-size: 11px;
     display: block;
     max-width: 110px;
   }
@@ -1560,7 +1561,7 @@ details summary::-webkit-details-marker {
     align-items: start;
     max-width: 100px;
     line-height: 1.7;
-    font-size: 9px;
+    font-size: 13px;
   }
   .hero-aside-left .availability > span {
     margin-top: 5px;
@@ -1588,11 +1589,11 @@ details summary::-webkit-details-marker {
   }
   .hero-portrait figcaption {
     left: 40px;
-    font-size: 8px;
+    font-size: 11px;
     bottom: 6px;
   }
   .hero-portrait figcaption span {
-    font-size: 7px;
+    font-size: 11px;
   }
   .hero-aside-right {
     grid-column: 1 / -1;
@@ -1606,17 +1607,17 @@ details summary::-webkit-details-marker {
     margin-bottom: 27px;
   }
   .hero-aside-right > p {
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.75;
   }
   .hero-disciplines {
     margin-top: 0;
     gap: 9px;
     text-align: right;
-    font-size: 8px;
+    font-size: 11px;
   }
   .hero-bottomline {
-    font-size: 8px;
+    font-size: 11px;
     padding-block: 16px;
   }
   .hero-bottomline > span:nth-child(2) {
@@ -1637,7 +1638,7 @@ details summary::-webkit-details-marker {
   }
   .section-heading .eyebrow {
     margin-bottom: 17px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .display-heading {
     font-size: 54px;
@@ -1653,7 +1654,7 @@ details summary::-webkit-details-marker {
     height: 18px;
   }
   .section-description {
-    font-size: 11px;
+    font-size: 13px;
     max-width: 310px;
   }
   .about-intro {
@@ -1667,14 +1668,14 @@ details summary::-webkit-details-marker {
   }
   .about-name > .eyebrow {
     grid-column: 1 / -1;
-    font-size: 9px;
+    font-size: 11px;
   }
   .about-name > p {
     margin: 12px 0 0;
     font-size: 16px;
   }
   .about-name .text-link {
-    font-size: 10px;
+    font-size: 13px;
     gap: 10px;
   }
   .about-statement {
@@ -1695,7 +1696,7 @@ details summary::-webkit-details-marker {
     font-size: 44px;
   }
   .stats-grid .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
     letter-spacing: 0.04em;
   }
   .about-focus {
@@ -1703,11 +1704,11 @@ details summary::-webkit-details-marker {
     margin: 28px 0 38px;
   }
   .about-focus .eyebrow {
-    font-size: 9px;
+    font-size: 11px;
   }
   .about-focus li,
   .about-focus p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .experience-layout {
     grid-template-columns: 1fr;
@@ -1721,10 +1722,10 @@ details summary::-webkit-details-marker {
     font-size: 20px;
   }
   .experience-top .eyebrow {
-    font-size: 9px;
+    font-size: 11px;
   }
   .experience-row ul {
-    font-size: 12px;
+    font-size: 13px;
   }
   .background-grid {
     grid-template-columns: 1fr;
@@ -1748,10 +1749,10 @@ details summary::-webkit-details-marker {
     padding-top: 18px;
   }
   .project-caption > p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .project-tech {
-    font-size: 8px;
+    font-size: 11px;
     gap: 6px 10px;
   }
   .project-tech li + li::before {
@@ -1768,14 +1769,14 @@ details summary::-webkit-details-marker {
     font-size: 37px;
   }
   .client-section-heading > p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .project-filters {
     gap: 6px;
     margin-block: 24px;
   }
   .project-filters button {
-    font-size: 9px;
+    font-size: 11px;
     padding: 9px 11px;
   }
   .project-filters button > span {
@@ -1794,23 +1795,23 @@ details summary::-webkit-details-marker {
     display: none;
   }
   .client-type {
-    font-size: 6px;
+    font-size: 11px;
     top: 7px;
     right: 7px;
     padding: 3px 6px;
   }
   .client-tagline {
-    font-size: 10px;
+    font-size: 13px;
   }
   .client-description {
-    font-size: 10px;
+    font-size: 13px;
   }
   .client-project-bottom {
     flex-wrap: wrap;
-    font-size: 8px;
+    font-size: 13px;
   }
   .client-project .project-tech {
-    font-size: 7px;
+    font-size: 11px;
   }
   .all-work-link {
     margin-top: 32px;
@@ -1820,7 +1821,7 @@ details summary::-webkit-details-marker {
     font-size: 24px;
   }
   .all-work-link p {
-    font-size: 10px;
+    font-size: 13px;
     max-width: 200px;
     line-height: 1.6;
   }
@@ -1840,7 +1841,7 @@ details summary::-webkit-details-marker {
   .skill-toggle {
     width: 39px;
     height: 39px;
-    font-size: 10px;
+    font-size: 13px;
   }
   .skill-row h3 {
     font-size: 20px;
@@ -1855,25 +1856,25 @@ details summary::-webkit-details-marker {
     padding: 4px 23px 25px 59px;
   }
   .skill-content > p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .skill-content li {
-    font-size: 10px;
+    font-size: 13px;
     padding: 6px 10px;
   }
   .services-page-link {
-    font-size: 11px;
+    font-size: 13px;
   }
   .stack-strip {
     gap: 10px 19px;
-    font-size: 8px;
+    font-size: 11px;
     padding-block: 20px;
   }
   .contact-summary {
     padding-block: 65px;
   }
   .contact-values {
-    font-size: 7px;
+    font-size: 11px;
     gap: 8px 15px;
   }
   .contact-summary > p {
@@ -1885,7 +1886,7 @@ details summary::-webkit-details-marker {
     gap: 17px;
   }
   .contact-intro > p:last-child {
-    font-size: 11px;
+    font-size: 13px;
   }
   .contact-title {
     padding-block: 30px;
@@ -1908,7 +1909,7 @@ details summary::-webkit-details-marker {
     font-size: 27px;
   }
   .contact-grid > div > p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .contact-addresses > a > span:last-child {
     font-size: 23px;
@@ -1919,15 +1920,15 @@ details summary::-webkit-details-marker {
   }
   .contact-socials > span {
     flex-basis: 100%;
-    font-size: 9px;
+    font-size: 11px;
   }
   .contact-socials a {
-    font-size: 11px;
+    font-size: 13px;
     gap: 10px;
   }
   .contact-tags {
     gap: 9px 16px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .content-page {
     padding-top: 26px;
@@ -1961,7 +1962,7 @@ details summary::-webkit-details-marker {
     gap: 13px;
   }
   .site-footer .footer-bottom p {
-    font-size: 10px;
+    font-size: 13px;
     line-height: 1.7;
   }
 }
@@ -1979,7 +1980,7 @@ details summary::-webkit-details-marker {
     grid-template-columns: 1fr;
   }
   .stats-grid .eyebrow {
-    font-size: 6px;
+    font-size: 11px;
   }
   .nav-contact {
     gap: 5px;
@@ -1996,5 +1997,116 @@ details summary::-webkit-details-marker {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Conversion + readability pass                                            */
+/* ------------------------------------------------------------------------ */
+.outline-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  color: #1b1b1b;
+  border: 1px solid #1b1b1b;
+  border-radius: 100px;
+  padding: 15px 23px;
+  font-size: 14px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.outline-button:hover {
+  background: #1b1b1b;
+  color: #fff;
+}
+.outline-button .arrow-icon {
+  width: 18px;
+  height: 18px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.hero-actions .solid-button,
+.contact-actions .solid-button {
+  gap: 14px;
+}
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+.contact-actions > a {
+  margin-top: 0;
+}
+
+/* Tighter rhythm: the page was long, mostly from section padding. */
+.section-space {
+  padding-block: 80px;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+.testimonial {
+  border: 1px solid var(--rule);
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+}
+.testimonial blockquote {
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.testimonial figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+}
+.testimonial figcaption > :last-child {
+  color: var(--muted);
+}
+
+@media (max-width: 760px) {
+  .section-space {
+    padding-block: 52px;
+  }
+  .hero-actions {
+    gap: 8px;
+    margin-top: 22px;
+  }
+  .hero-actions a {
+    padding: 13px 18px;
+    font-size: 13px;
+  }
+  /* Three stats side by side were cramped: two up, the third full width. */
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stats-grid > div:nth-child(3) {
+    grid-column: 1 / -1;
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .stats-grid > div {
+    padding: 24px 10px;
+  }
+  .stats-grid .eyebrow {
+    font-size: 11px;
   }
 }

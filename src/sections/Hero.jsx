@@ -22,6 +22,30 @@ export default function Hero() {
           in Lucknow, India
         </span>
       </h1>
+      <div className="hero-actions">
+        <a href="#work" className="solid-button">
+          View work <Arrow direction="down" />
+        </a>
+        <a
+          href={
+            "mailto:" +
+            contactInfo.email +
+            "?subject=" +
+            encodeURIComponent("Website quote request")
+          }
+          className="outline-button"
+        >
+          Get a quote <Arrow />
+        </a>
+        <a
+          href={contactInfo.whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="outline-button"
+        >
+          WhatsApp <Arrow />
+        </a>
+      </div>
       <div className="hero-stage">
         <div className="hero-aside hero-aside-left">
           <span className="eyebrow">Based in {contactInfo.location}</span>
@@ -29,13 +53,6 @@ export default function Hero() {
             <span />
             Available for freelance work
           </p>
-          <a
-            href="#about"
-            className="circle-link hero-scroll"
-            aria-label="Explore about Ritesh"
-          >
-            <Arrow direction="down" />
-          </a>
         </div>
         <figure className="hero-portrait" data-motion-delay="220">
           <Image

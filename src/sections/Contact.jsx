@@ -10,8 +10,8 @@ export default function Contact() {
       <div className="contact-intro">
         <p className="eyebrow">04 / Contact Me</p>
         <p>
-          Interested in collaborating, hiring, or building a product? Let’s
-          connect and discuss your next engineering challenge.
+          Need a new website, an online store, or a web app? Tell me what you
+          have in mind and I’ll reply with a plan and a quote.
         </p>
       </div>
       <h2 className="contact-title">
@@ -26,18 +26,34 @@ export default function Contact() {
         <div>
           <span className="eyebrow availability">
             <span />
-            Available for work
+            Taking on new projects
           </span>
-          <h3>
-            Let’s talk about product builds, team support, or freelance work.
-          </h3>
+          <h3>Let’s build a robust, future-ready website for your business.</h3>
           <p>
-            If you need a full-stack engineer who can move from UI to backend to
-            deployment without losing momentum, reach out directly.
+            One developer from design to launch: UI, backend, payments, hosting,
+            and support after go-live.
           </p>
-          <a className="solid-button" href={"mailto:" + contactInfo.email}>
-            Hire Me <Arrow />
-          </a>
+          <div className="contact-actions">
+            <a
+              className="solid-button"
+              href={
+                "mailto:" +
+                contactInfo.email +
+                "?subject=" +
+                encodeURIComponent("Website quote request")
+              }
+            >
+              Get a quote <Arrow />
+            </a>
+            <a
+              className="outline-button"
+              href={contactInfo.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              WhatsApp <Arrow />
+            </a>
+          </div>
         </div>
         <div className="contact-addresses">
           <a href={"mailto:" + contactInfo.email}>
@@ -48,7 +64,7 @@ export default function Contact() {
             </span>
           </a>
           <a href={"tel:" + contactInfo.phone.replace(/[^+\d]/g, "")}>
-            <span className="eyebrow">Phone</span>
+            <span className="eyebrow">Phone / WhatsApp</span>
             <span>
               {contactInfo.phone}
               <Arrow />
@@ -58,8 +74,7 @@ export default function Contact() {
             <span className="eyebrow">Location</span>
             <p>{contactInfo.location}</p>
             <p className="contact-note">
-              Best way to reach me is email. I usually respond quickly to
-              product, freelance, and collaboration inquiries.
+              Email or WhatsApp are quickest. I usually reply the same day.
             </p>
           </div>
         </div>
@@ -77,13 +92,6 @@ export default function Contact() {
             <Arrow />
           </a>
         ))}
-      </div>
-      <div className="contact-tags eyebrow">
-        <span>Let’s Build</span>
-        <span>Open for Work</span>
-        <span>Freelance & Full-Time</span>
-        <span>Let’s Chat</span>
-        <span>Get In Touch</span>
       </div>
     </section>
   );

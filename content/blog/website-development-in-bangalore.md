@@ -24,15 +24,15 @@ Bengaluru startups rarely need "a website". They need **a product: an MVP that r
 
 - **[MariBiz](/projects/maribiz):** a B2B marketplace connecting thousands of marine vendors with shipowners. It covers the full request-for-quote lifecycle, vendor verification, quote comparison and real-time messaging. Next.js, Node.js, Express, PostgreSQL, Prisma, Socket.IO.
 - **[TatVivah Trends](/projects/tatvivahtrends):** a multi-vendor wedding-wear marketplace with 3,000+ products, verified sellers, occasion-based filtering and Razorpay payments.
-- **[Explore Fusion](https://explorefusion.online):** a travel app built as microservices behind an API gateway, with AI trip planning on the Groq SDK, travel-buddy matching and real-time messaging.
-- **[JARVIS AI](https://jarvisai.riteshgiri.dev):** an AI chat platform with JWT auth and long-term conversational memory, using Google Gemini for responses and Pinecone as a vector store.
+- **[MariMail](https://mail.maribiz.ai):** a SaaS for marine intelligence and ETA-triggered email automation, with worker services on Prisma, PostgreSQL, Redis and BullMQ.
+- **[NextMentor](https://nextmentor.in):** an e-learning and affiliate platform with Razorpay checkout, signed HLS video and a commission engine on an append-only wallet ledger.
 
 ## AI features that hold up in production
 
 Most AI features fail in production for unglamorous reasons: no memory between sessions, answers that drift from your actual data, costs that grow with every user, and no fallback when the model is slow or wrong. What I put in place:
 
 - **Retrieval over your own data** (RAG), so answers come from your documents and catalogue rather than the model's general knowledge.
-- **Long-term memory** stored in a vector database, as in JARVIS, so the assistant remembers context across sessions.
+- **Long-term memory** stored in a vector database (I built this with Pinecone and Gemini), so the assistant remembers context across sessions.
 - **Choosing the right model for each job**: fast, cheap models for routine steps and stronger ones only where they make a difference.
 - **Guardrails and handoff**, so the feature knows when to say "I don't know" and route to a person.
 

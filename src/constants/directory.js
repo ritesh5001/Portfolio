@@ -688,4 +688,6 @@ export const directoryProjects = [
 // Sites whose domain is still serving the client's site. Offline entries stay
 // listed as past work, but get no outbound link: their domains have lapsed,
 // been parked, or (in one case) now redirect to an unrelated spam site.
-export const liveProjects = directoryProjects.filter((project) => !project.offline);
+export const liveProjects = directoryProjects.filter(
+  (project) => !project.offline,
+);

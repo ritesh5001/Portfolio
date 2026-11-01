@@ -20,7 +20,7 @@ export const absoluteUrl = (path = "/") => {
 export const homeSeo = {
   title: `Ritesh Giri — Freelance Full-Stack & WordPress Developer in ${LOCALITY}`,
   description:
-    "Freelance full-stack and WordPress developer based in Lucknow. 50+ live websites, MERN and Next.js products, WooCommerce and Shopify builds for clients across India. Available for project work.",
+    "Freelance full-stack and WordPress developer based in Lucknow. 65+ live websites, MERN and Next.js products, WooCommerce and Shopify builds for clients across India. Available for project work.",
   canonical: `${SITE_URL}/`,
 };
 

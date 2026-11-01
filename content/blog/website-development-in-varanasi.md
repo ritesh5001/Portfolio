@@ -34,7 +34,7 @@ Visitors to Varanasi plan carefully, especially from abroad: where to stay near 
 - **Room or tour pages with real photos** and exact location: which ghat, how far from the main sites.
 - **Bookable experiences**: sunrise boat rides, aarti viewing, Sarnath day trips, puja arrangements.
 - **Multilingual pages** for your main visitor countries, properly translated.
-- **An AI itinerary planner** that suggests a two- or three-day plan from a visitor's dates. I built one for [Explore Fusion](https://explorefusion.online) with the Groq AI SDK.
+- **An AI itinerary planner** that suggests a two- or three-day plan from a visitor's dates. I built one for Explore Fusion with the Groq AI SDK.
 
 ## Working together
 

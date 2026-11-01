@@ -32,10 +32,10 @@ I'm Ritesh Kumar Giri, a full-stack developer based in Lucknow. Through my own s
 
 AI is useful when it saves your team time or answers customers faster, not as a badge on the homepage. The practical uses I build:
 
-- **Support assistants** that answer questions about products, shipping and returns from your own catalogue and policies, around the clock. I built [JARVIS AI](https://jarvisai.riteshgiri.dev), a chat platform with long-term memory using Google Gemini and Pinecone.
+- **Support assistants** that answer questions about products, shipping and returns from your own catalogue and policies, around the clock. I built JARVIS AI, a chat platform with long-term memory using Google Gemini and Pinecone.
 - **Multilingual content** in Hindi and regional languages, drafted with AI and checked by a human.
 - **Smarter search** that understands "red silk saree for wedding under 5000" instead of needing exact keywords.
-- **Planning and recommendation tools.** [Explore Fusion](https://explorefusion.online), my travel app, generates trip plans with the Groq AI SDK.
+- **Planning and recommendation tools.** Explore Fusion, my travel app, generates trip plans with the Groq AI SDK.
 
 ## City guides
 

@@ -38,7 +38,7 @@ Hyderabad is one of India's centres for AI work, and the useful applications for
 
 - **Document and enquiry assistants** that read incoming emails, orders or RFQs and draft responses from your own data.
 - **Internal knowledge search** over SOPs, product documentation and policies, so staff get answers in seconds instead of hunting through folders.
-- **Chat assistants with memory.** I built [JARVIS AI](https://jarvisai.riteshgiri.dev) with Google Gemini and a Pinecone vector store so conversations keep context across sessions.
+- **Chat assistants with memory.** I built JARVIS AI with Google Gemini and a Pinecone vector store so conversations keep context across sessions.
 
 Under the hood these use retrieval over your own documents, so answers stay grounded in your information, with a human handoff when the assistant isn't sure.
 

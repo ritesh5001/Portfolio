@@ -4,7 +4,7 @@ import ServiceSummary from "../sections/ServiceSummary";
 import Services from "../sections/Services";
 import About from "../sections/About";
 import Works from "../sections/Works";
-import ContactSummary from "../sections/ContactSummary";
+import Testimonials from "../sections/Testimonials";
 import Contact from "../sections/Contact";
 
 export default function HomeClient({ showBlog = false, footer = null }) {
@@ -15,9 +15,9 @@ export default function HomeClient({ showBlog = false, footer = null }) {
         <Hero />
         <About />
         <Works />
+        <Testimonials />
         <Services />
         <ServiceSummary />
-        <ContactSummary />
         <Contact />
       </main>
       {footer}

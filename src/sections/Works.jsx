@@ -1,6 +1,5 @@
 "use client";
 
-import useAnimatedFilter from "../components/useAnimatedFilter";
 import Link from "next/link";
 import { ViewTransition } from "react";
 import Image from "next/image";
@@ -11,7 +10,12 @@ import SectionHeading from "../components/SectionHeading";
 import Arrow from "../components/Arrow";
 import styles from "./Works.module.css";
 
-const filters = ["All", "Next.js / Full-Stack", "WooCommerce", "WordPress"];
+// The homepage shows a short selection; /work has every project. Projects
+// already featured in the section above are not repeated here.
+const featuredSlugs = new Set(projects.map((p) => p.caseStudy).filter(Boolean));
+const homeClientProjects = clientProjects
+  .filter((project) => !featuredSlugs.has(project.slug))
+  .slice(0, 6);
 // The personal Tat Vivah capture is an old 503 screen; reuse its saved case-study image.
 const previewOverrides = {
   "/assets/projects/personal/tatvivah.webp":
@@ -23,7 +27,6 @@ const projectCards = projects.map((project) => ({
 }));
 
 export default function Works() {
-  const { active, select, gridRef } = useAnimatedFilter();
   return (
     <section
       id="work"
@@ -39,11 +42,20 @@ export default function Works() {
         {projectCards.map((project, index) => (
           <article key={project.id} className="project-card">
             <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={
+                project.caseStudy
+                  ? "/projects/" + project.caseStudy
+                  : project.liveUrl
+              }
+              {...(project.caseStudy
+                ? {}
+                : { target: "_blank", rel: "noopener noreferrer" })}
               className={"project-image project-image-" + index}
-              aria-label={"View " + project.name + " live"}
+              aria-label={
+                project.caseStudy
+                  ? "Read the " + project.name + " case study"
+                  : "View " + project.name + " live"
+              }
             >
               <div className="project-browser-bar">
                 <span />
@@ -77,6 +89,11 @@ export default function Works() {
               <div className="project-title-row">
                 <h3>{project.name}</h3>
                 <div className="project-links">
+                  {project.caseStudy && (
+                    <Link href={"/projects/" + project.caseStudy}>
+                      Case study <Arrow />
+                    </Link>
+                  )}
                   <a
                     href={project.liveUrl}
                     target="_blank"
@@ -113,33 +130,13 @@ export default function Works() {
           e-commerce, B2B marketplaces, service platforms, and more.
         </p>
       </div>
-      <div className="project-filters" aria-label="Filter client projects">
-        {filters.map((filter) => (
-          <button
-            key={filter}
-            type="button"
-            aria-pressed={active === filter}
-            onClick={() => select(filter)}
-            className={active === filter ? "is-active" : ""}
-          >
-            {filter === "Next.js / Full-Stack" ? "Full-Stack" : filter}
-            <span>
-              {filter === "All"
-                ? clientProjects.length
-                : clientProjects.filter((project) => project.type === filter)
-                    .length}
-            </span>
-          </button>
-        ))}
-      </div>
-      <div ref={gridRef} data-filter-grid className="client-grid">
-        {clientProjects.map((project) => (
+      <div className="client-grid">
+        {homeClientProjects.map((project) => (
           <article
             key={project.id}
             className={
               "client-project " + (project.featured ? "client-featured " : "")
             }
-            hidden={active !== "All" && active !== project.type}
           >
             <Link
               href={"/projects/" + project.slug}
@@ -214,7 +211,10 @@ export default function Works() {
       <Link href="/work" className="all-work-link">
         <div>
           <span>See all {liveProjects.length} live sites</span>
-          <p>E-commerce, service and custom builds delivered to date</p>
+          <p>
+            {clientProjects.length} case studies plus every e-commerce, service
+            and custom build delivered to date
+          </p>
         </div>
         <span className="circle-link">
           <Arrow direction="right" />

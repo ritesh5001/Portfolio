@@ -18,7 +18,7 @@ Most tourists book Agra before they arrive, often from abroad, and usually throu
 - **Online booking with payment**, or at least instant WhatsApp confirmation. International visitors want a booking confirmed before they fly.
 - **Multiple languages** for your main markets, written properly, not machine-translated and left unchecked.
 - **Reviews and trust**: a real address, licensing details, and reviews that link to Google or TripAdvisor.
-- **An AI trip planner** that builds a day or multi-day itinerary from a visitor's dates and interests. I built one into [Explore Fusion](https://explorefusion.online) using the Groq AI SDK, and the same approach works for a tour operator's site.
+- **An AI trip planner** that builds a day or multi-day itinerary from a visitor's dates and interests. I built one into Explore Fusion using the Groq AI SDK, and the same approach works for a tour operator's site.
 
 For hotels and guesthouses: room pages with real photos, a booking engine, and a reason to book direct, such as a better rate, free breakfast or a late checkout.
 

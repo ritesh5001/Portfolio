@@ -67,7 +67,7 @@ export default function Navbar({ showBlog = false }) {
             aria-label={contactInfo.name + " — Home"}
             onClick={() => setIsOpen(false)}
           >
-            RITESH GIRI<span className="wordmark-dot">®</span>
+            RITESH GIRI
           </Link>
           <nav className="desktop-nav" aria-label="Main">
             {/* Positioned by the motion engine; invisible without it. */}

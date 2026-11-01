@@ -30,7 +30,7 @@ Goa runs on tourism, and tourism in Goa runs through booking platforms. **For mo
 
 ## AI for Goa tourism businesses
 
-- **A trip planner** that builds an itinerary around your property or tours from a guest's dates and interests. I built AI trip planning into [Explore Fusion](https://explorefusion.online) with the Groq AI SDK.
+- **A trip planner** that builds an itinerary around your property or tours from a guest's dates and interests. I built AI trip planning into Explore Fusion with the Groq AI SDK.
 - **A guest assistant** that answers check-in, directions, Wi-Fi and house-rule questions instantly, from your own information, on the website or WhatsApp.
 - **Review replies and listing copy** drafted by AI and edited by you, to keep listings fresh without hours of writing.
 
